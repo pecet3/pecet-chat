@@ -10,7 +10,7 @@ export interface IContext {
   setUser: React.Dispatch<React.SetStateAction<User | null>>;
 }
 export const ChatContextProvider: React.FC<IProvider> = ({ children }) => {
-  const [user, setUser] = React.useState(null);
+  const [user, setUser] = React.useState<IContext["user"]>(null);
   return (
     <Context.Provider value={{ user, setUser }}>{children}</Context.Provider>
   );
