@@ -1,5 +1,7 @@
 import React from "react";
 import { BiImageAdd } from "react-icons/bi";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebaseConfig";
 
 export interface IRegisterData {
   email: string;
@@ -22,6 +24,7 @@ const Register: React.FC = () => {
       ...registerInput,
       [e.target.name]: e.target.value,
     });
+
     if (inputElement.files === null) return;
     setRegisterInput({
       ...registerInput,
@@ -29,9 +32,23 @@ const Register: React.FC = () => {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+  const handleSubmit = async (
+    e: React.FormEvent<HTMLFormElement>
+  ): Promise<IRegisterData | void> => {
     e.preventDefault();
-    e.target;
+    if (registerInput.file === null || undefined)
+      return alert("Avatar is required");
+
+    try {
+      const response = await createUserWithEmailAndPassword(
+        auth,
+        registerInput.email,
+        registerInput.password
+      );
+      console.log(response);
+    } catch (err) {
+      alert(err);
+    }
   };
 
   React.useEffect(() => {
@@ -58,6 +75,7 @@ const Register: React.FC = () => {
         placeholder="Email"
         onChange={registerOnChange}
         required={true}
+        minLength={5}
       />
       <input
         type="password"
@@ -66,11 +84,18 @@ const Register: React.FC = () => {
         value={registerInput.password}
         placeholder="Password"
         onChange={registerOnChange}
+        minLength={6}
         pattern="(?=^.{6,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"
         required={true}
       />
-      <input type="file" name="file" id="file" className="hidden" />
-      <label htmlFor="file" className="flex items-center">
+      <input
+        type="file"
+        name="file"
+        id="filee"
+        className="hidden"
+        onChange={registerOnChange}
+      />
+      <label htmlFor="filee" className="flex items-center">
         <BiImageAdd size="32" />
         <p>Add an Avatar</p>
       </label>
