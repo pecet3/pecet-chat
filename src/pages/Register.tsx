@@ -1,21 +1,45 @@
 import React from "react";
+import { BiImageAdd } from "react-icons/bi";
+
+export interface IRegisterData {
+  email: string;
+  password: string;
+  name: string;
+  file: File | null;
+}
 
 const Register: React.FC = () => {
-  const [registerInput, setRegisterInput] = React.useState({
+  const [registerInput, setRegisterInput] = React.useState<IRegisterData>({
     email: "",
     password: "",
     name: "",
+    file: null,
   });
 
   const registerOnChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    const inputElement = e.target as HTMLInputElement;
     setRegisterInput({
       ...registerInput,
       [e.target.name]: e.target.value,
     });
+    if (inputElement.files === null) return;
+    setRegisterInput({
+      ...registerInput,
+      file: inputElement.files[0],
+    });
   };
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+    e.preventDefault();
+    e.target;
+  };
+
+  React.useEffect(() => {
+    console.log(registerInput);
+  }, [registerInput]);
+
   return (
-    <form className="form">
+    <form className="form" onSubmit={handleSubmit}>
       <legend>Register here!</legend>
       <input
         type="text"
@@ -23,7 +47,7 @@ const Register: React.FC = () => {
         name="name"
         maxLength={16}
         value={registerInput.name}
-        placeholder="Enter your name..."
+        placeholder="Name"
         onChange={registerOnChange}
       />
       <input
@@ -31,7 +55,7 @@ const Register: React.FC = () => {
         className="inputElement"
         name="email"
         value={registerInput.email}
-        placeholder="Enter your email"
+        placeholder="Email"
         onChange={registerOnChange}
         required={true}
       />
@@ -40,13 +64,15 @@ const Register: React.FC = () => {
         name="password"
         className="inputElement"
         value={registerInput.password}
-        placeholder="password"
+        placeholder="Password"
         onChange={registerOnChange}
         pattern="(?=^.{6,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"
         required={true}
       />
-      <label htmlFor="file">
-        <span>Add an avatar</span>
+      <input type="file" name="file" id="file" className="hidden" />
+      <label htmlFor="file" className="flex items-center">
+        <BiImageAdd size="32" />
+        <p>Add an Avatar</p>
       </label>
       <button className="submitButton bg-teal-500 px-6">Register</button>
     </form>
