@@ -1,7 +1,12 @@
 import React from "react";
 import { BiImageAdd } from "react-icons/bi";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebaseConfig";
+import {
+  createUserWithEmailAndPassword,
+  updateProfile,
+  onAuthStateChanged,
+} from "firebase/auth";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { auth, storage } from "../firebaseConfig";
 
 export interface IRegisterData {
   email: string;
@@ -17,6 +22,8 @@ const Register: React.FC = () => {
     name: "",
     file: null,
   });
+
+  const [errorMessage, setErrorMessage] = React.useState("");
 
   const registerOnChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const inputElement = e.target as HTMLInputElement;
@@ -36,8 +43,9 @@ const Register: React.FC = () => {
     e: React.FormEvent<HTMLFormElement>
   ): Promise<IRegisterData | void> => {
     e.preventDefault();
+
     if (registerInput.file === null || undefined)
-      return alert("Avatar is required");
+      return setErrorMessage("Avatar is required");
 
     try {
       const response = await createUserWithEmailAndPassword(
@@ -45,62 +53,80 @@ const Register: React.FC = () => {
         registerInput.email,
         registerInput.password
       );
-      console.log(response);
-    } catch (err) {
-      alert(err);
+
+      const storageRef = ref(storage, registerInput.name);
+      const uploadTask = uploadBytesResumable(storageRef, registerInput.file);
+      uploadTask.on("state_changed", () => {
+        getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+          await updateProfile(response.user, {
+            displayName: registerInput.name,
+            photoURL: downloadURL,
+          });
+        });
+      });
+    } catch (err: any) {
+      setErrorMessage(err.code);
     }
   };
 
   React.useEffect(() => {
-    console.log(registerInput);
-  }, [registerInput]);
+    const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
+      console.log(currentUser);
+    });
+
+    return () => unSubscribe();
+  }, []);
 
   return (
-    <form className="form" onSubmit={handleSubmit}>
-      <legend>Register here!</legend>
-      <input
-        type="text"
-        className="inputElement"
-        name="name"
-        maxLength={16}
-        value={registerInput.name}
-        placeholder="Name"
-        onChange={registerOnChange}
-      />
-      <input
-        type="text"
-        className="inputElement"
-        name="email"
-        value={registerInput.email}
-        placeholder="Email"
-        onChange={registerOnChange}
-        required={true}
-        minLength={5}
-      />
-      <input
-        type="password"
-        name="password"
-        className="inputElement"
-        value={registerInput.password}
-        placeholder="Password"
-        onChange={registerOnChange}
-        minLength={6}
-        pattern="(?=^.{6,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"
-        required={true}
-      />
-      <input
-        type="file"
-        name="file"
-        id="filee"
-        className="hidden"
-        onChange={registerOnChange}
-      />
-      <label htmlFor="filee" className="flex items-center">
-        <BiImageAdd size="32" />
-        <p>Add an Avatar</p>
-      </label>
-      <button className="submitButton bg-teal-500 px-6">Register</button>
-    </form>
+    <>
+      <form className="form" onSubmit={handleSubmit}>
+        <legend>Register here!</legend>
+        <input
+          type="text"
+          className="inputElement"
+          name="name"
+          minLength={3}
+          maxLength={16}
+          value={registerInput.name}
+          placeholder="Name"
+          onChange={registerOnChange}
+        />
+        <input
+          type="text"
+          className="inputElement"
+          name="email"
+          value={registerInput.email}
+          placeholder="Email"
+          onChange={registerOnChange}
+          required={true}
+          minLength={5}
+        />
+        <input
+          type="password"
+          name="password"
+          className="inputElement"
+          value={registerInput.password}
+          placeholder="Password"
+          onChange={registerOnChange}
+          minLength={6}
+          // pattern="(?=^.{6,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"
+          required={true}
+        />
+        <input
+          type="file"
+          name="file"
+          id="filee"
+          className="hidden"
+          onChange={registerOnChange}
+        />
+        <label htmlFor="filee" className="flex items-center">
+          <BiImageAdd size="32" />
+          <p>Add an Avatar</p>
+        </label>
+        <button className="submitButton bg-teal-500 px-6">Register</button>
+      </form>
+      <p>{errorMessage !== "" && errorMessage}</p>
+    </>
   );
 };
 
