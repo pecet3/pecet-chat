@@ -1,6 +1,8 @@
 import React from "react";
+import Context, { IContext } from "../ChatContext";
 
 const Navbar: React.FC = () => {
+  const { user } = React.useContext(Context) as IContext;
   return (
     <>
       <nav className="flex flex-col bg-slate-700 p-2 text-gray-200">
@@ -8,10 +10,10 @@ const Navbar: React.FC = () => {
         <span className="flex justify-between">
           <span className="flex gap-1">
             <img
-              src="https://scontent-prg1-1.xx.fbcdn.net/v/t39.30808-6/342983146_611869417529412_5788840550914142154_n.jpg?stp=dst-jpg_p526x296&_nc_cat=111&ccb=1-7&_nc_sid=730e14&_nc_ohc=TOGhmaPmYJoAX8OqXuK&_nc_ht=scontent-prg1-1.xx&oh=00_AfAiZ7_chTvohjG3-Bv4S3FaVKe84uXJzYsCirbhA4HK0A&oe=644BD945"
+              src={user?.photoURL ? user?.photoURL : ""}
               className="h-6 w-6 rounded-full"
             />
-            Jakub
+            <p>{user && user.displayName}</p>
           </span>
 
           <button className=" rounded-md bg-slate-300 px-1 text-xs text-slate-900">
