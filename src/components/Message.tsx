@@ -18,7 +18,7 @@ const Message: React.FC = () => {
         <img
           src="https://ath2.unileverservices.com/wp-content/uploads/sites/4/2020/02/IG-annvmariv.jpg"
           alt="photo which user sent"
-          className=" max-h-32 self-start"
+          className="max-h-48 self-start rounded-sm"
         />
       </span>
     </div>
