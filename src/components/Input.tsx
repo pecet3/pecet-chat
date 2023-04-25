@@ -4,7 +4,7 @@ import { MdAttachFile } from "react-icons/md";
 
 const Input: React.FC = () => {
   return (
-    <div className="flex gap-1 bg-gray-300 p-1">
+    <div className=" flex gap-1 bg-gray-300 p-1">
       <input
         type="text"
         placeholder="enter your message"
