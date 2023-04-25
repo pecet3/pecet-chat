@@ -4,7 +4,7 @@ import Sidebar from ".././components/Sidebar";
 
 const Home: React.FC = () => {
   return (
-    <div className="m-auto flex h-[500px] max-w-[768px] justify-center overflow-hidden rounded-xl">
+    <div className="m-auto flex h-[700px] max-w-[1000px] justify-center overflow-hidden rounded-xl">
       <Sidebar />
       <Chat />
     </div>
