@@ -7,6 +7,7 @@ import {
 } from "firebase/auth";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { auth, storage } from "../firebaseConfig";
+import Context, { IContext } from "../ChatContext";
 
 export interface IRegisterData {
   email: string;
@@ -24,6 +25,7 @@ const Register: React.FC = () => {
   });
 
   const [errorMessage, setErrorMessage] = React.useState("");
+  const { user, setUser } = React.useContext(Context) as IContext;
 
   const registerOnChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const inputElement = e.target as HTMLInputElement;
@@ -71,7 +73,7 @@ const Register: React.FC = () => {
 
   React.useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
-      console.log(currentUser);
+      setUser(currentUser);
     });
 
     return () => unSubscribe();
