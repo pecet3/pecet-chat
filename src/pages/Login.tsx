@@ -4,7 +4,6 @@ const Login: React.FC = () => {
   const [loginInput, setLoginInput] = React.useState({
     email: "",
     password: "",
-    name: "",
   });
 
   const loginOnChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
