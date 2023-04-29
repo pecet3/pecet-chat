@@ -6,7 +6,8 @@ import {
   onAuthStateChanged,
 } from "firebase/auth";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { auth, storage } from "../firebaseConfig";
+import { doc, setDoc } from "firebase/firestore";
+import { auth, storage, db } from "../firebaseConfig";
 import Context, { IContext } from "../ChatContext";
 
 export interface IRegisterData {
@@ -25,7 +26,7 @@ const Register: React.FC = () => {
   });
 
   const [errorMessage, setErrorMessage] = React.useState("");
-  const { setUser } = React.useContext(Context) as IContext;
+  const { setUser, user } = React.useContext(Context) as IContext;
 
   const registerOnChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const inputElement = e.target as HTMLInputElement;
@@ -64,8 +65,15 @@ const Register: React.FC = () => {
             displayName: registerInput.name,
             photoURL: downloadURL,
           });
+          await setDoc(doc(db, "users", response.user.uid), {
+            uid: response.user.uid,
+            displayName: response.user.displayName,
+            email: response.user.email,
+            photoURL: downloadURL,
+          });
         });
       });
+      setUser(response.user);
     } catch (err: any) {
       setErrorMessage(err.code);
     }
