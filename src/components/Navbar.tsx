@@ -13,7 +13,7 @@ const Navbar: React.FC = () => {
               src={user?.photoURL ? user?.photoURL : ""}
               className="h-6 w-6 rounded-full"
             />
-            <p>{user && user.displayName}</p>
+            <p>{user?.displayName ? user.displayName : ""}</p>
           </span>
 
           <button className=" rounded-md bg-slate-300 px-1 text-xs text-slate-900">
