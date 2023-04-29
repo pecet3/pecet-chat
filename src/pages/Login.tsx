@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Login: React.FC = () => {
   const [loginInput, setLoginInput] = React.useState({
@@ -37,7 +38,12 @@ const Login: React.FC = () => {
       />
 
       <button className="submitButton bg-teal-500 px-6">Sign In</button>
-      <p>Don't Have an Account? Register here</p>
+      <p>
+        Don't have an account?
+        <Link to="/register">
+          <a className="text-blue-700 underline">Register Here</a>
+        </Link>
+      </p>
     </form>
   );
 };
