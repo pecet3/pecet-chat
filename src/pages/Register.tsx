@@ -26,7 +26,7 @@ const Register: React.FC = () => {
   });
 
   const [errorMessage, setErrorMessage] = React.useState("");
-  const { setUser, user } = React.useContext(Context) as IContext;
+  const { setUser } = React.useContext(Context) as IContext;
 
   const registerOnChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const inputElement = e.target as HTMLInputElement;
