@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { BiImageAdd } from "react-icons/bi";
 import {
   createUserWithEmailAndPassword,
@@ -24,6 +25,7 @@ const Register: React.FC = () => {
     name: "",
     file: null,
   });
+  const navigate = useNavigate();
 
   const [errorMessage, setErrorMessage] = React.useState("");
   const { setUser } = React.useContext(Context) as IContext;
@@ -74,19 +76,11 @@ const Register: React.FC = () => {
         });
       });
       setUser(response.user);
+      navigate("/");
     } catch (err: any) {
       setErrorMessage(err.code);
     }
   };
-
-  React.useEffect(() => {
-    const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-    });
-
-    return () => unSubscribe();
-  }, []);
-
   return (
     <>
       <form className="form" onSubmit={handleSubmit}>
