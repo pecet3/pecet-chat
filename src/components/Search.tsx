@@ -1,16 +1,34 @@
 import React from "react";
-import { collection, query, where, getDocs } from "firebase/firestore";
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  DocumentData,
+} from "firebase/firestore";
 import { db } from "../firebaseConfig";
 
 const Search: React.FC = () => {
   const [input, setInput] = React.useState("");
+  const [findedUser, setFindedUser] = React.useState<DocumentData | null>(null);
 
-  React.useEffect(() => {
-    console.log(input);
-  }, [input]);
+  // React.useEffect(() => {
+  //   console.log(input);
+  // }, [input]);
 
-  const handleSearch = () => {
-    const q = query(collection(db, "users"), where("displayName", "==", input))
+  const handleSearch = async () => {
+    try {
+      const q = query(
+        collection(db, "users"),
+        where("displayName", "==", input)
+      );
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach((doc) => {
+        setFindedUser(doc.data());
+      });
+    } catch (err) {
+      alert(err);
+    }
   };
 
   const handleKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
