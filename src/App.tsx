@@ -3,19 +3,32 @@ import Register from "./pages/Register";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { ChatContextProvider } from "./ChatContext";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home />,
+    element: (
+      <ChatContextProvider>
+        <Home />
+      </ChatContextProvider>
+    ),
   },
   {
     path: "register",
-    element: <Register />,
+    element: (
+      <ChatContextProvider>
+        <Register />
+      </ChatContextProvider>
+    ),
   },
   {
     path: "login",
-    element: <Login />,
+    element: (
+      <ChatContextProvider>
+        <Login />
+      </ChatContextProvider>
+    ),
   },
 ]);
 
