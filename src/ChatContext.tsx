@@ -1,5 +1,6 @@
 import React from "react";
-import { User } from "firebase/auth";
+import { User, onAuthStateChanged } from "firebase/auth";
+import { auth } from "./firebaseConfig";
 
 interface IProvider {
   children: React.ReactNode;
@@ -11,6 +12,15 @@ export interface IContext {
 }
 export const ChatContextProvider: React.FC<IProvider> = ({ children }) => {
   const [user, setUser] = React.useState<IContext["user"]>(null);
+
+  React.useEffect(() => {
+    const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+
+    return () => unSubscribe();
+  }, []);
+
   return (
     <Context.Provider value={{ user, setUser }}>{children}</Context.Provider>
   );
