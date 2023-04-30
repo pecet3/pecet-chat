@@ -1,5 +1,5 @@
 import React from "react";
-import Context, { IContext } from "../ChatContext";
+import Context, { IContext } from "../AuthContext";
 
 const Navbar: React.FC = () => {
   const { user } = React.useContext(Context) as IContext;
