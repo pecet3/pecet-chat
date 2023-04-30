@@ -9,7 +9,7 @@ import {
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { doc, setDoc } from "firebase/firestore";
 import { auth, storage, db } from "../firebaseConfig";
-import Context, { IContext } from "../ChatContext";
+import Context, { IContext } from "../AuthContext";
 
 export interface IRegisterData {
   email: string;
