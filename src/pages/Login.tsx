@@ -38,12 +38,12 @@ const Login: React.FC = () => {
       />
 
       <button className="submitButton bg-teal-500 px-6">Sign In</button>
-      <p>
+      <span>
         Don't have an account?
-        <Link to="/register">
-          <a className="text-blue-700 underline">Register Here</a>
-        </Link>
-      </p>
+        <p className="text-blue-700 underline">
+          <Link to="/register">Register Here</Link>
+        </p>
+      </span>
     </form>
   );
 };
