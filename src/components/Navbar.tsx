@@ -1,4 +1,6 @@
 import React from "react";
+import { signOut } from "firebase/auth";
+import { auth } from "../firebaseConfig";
 import Context, { IContext } from "../AuthContext";
 
 const Navbar: React.FC = () => {
@@ -16,7 +18,10 @@ const Navbar: React.FC = () => {
             <p>{user?.displayName ? user.displayName : ""}</p>
           </span>
 
-          <button className=" rounded-md bg-slate-300 px-1 text-xs text-slate-900">
+          <button
+            className="rounded-md bg-slate-300 px-1 text-xs text-slate-900 transition-all duration-200 hover:rounded-lg"
+            onClick={() => signOut(auth)}
+          >
             Log Out
           </button>
         </span>
