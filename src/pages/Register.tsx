@@ -70,7 +70,7 @@ const Register: React.FC = () => {
             photoURL: downloadURL,
           });
 
-          await setDoc(doc(db, "usersChat", response.user.uid), {});
+          await setDoc(doc(db, "userChats", response.user.uid), {});
         });
       });
       setUser(response.user);
