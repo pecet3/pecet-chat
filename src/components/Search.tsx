@@ -4,13 +4,20 @@ import {
   query,
   where,
   getDocs,
+  getDoc,
   DocumentData,
+  updateDoc,
+  setDoc,
+  doc,
+  serverTimestamp,
 } from "firebase/firestore";
 import { db } from "../firebaseConfig";
+import Context, { IContext } from "../AuthContext";
 
 const Search: React.FC = () => {
   const [input, setInput] = React.useState("");
   const [findedUser, setFindedUser] = React.useState<DocumentData | null>(null);
+  const { user } = React.useContext(Context) as IContext;
 
   React.useEffect(() => {
     console.log(findedUser?.displayName);
@@ -33,6 +40,31 @@ const Search: React.FC = () => {
 
   const handleKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
     e.code === "Enter" && handleSearch();
+  };
+
+  const handleSelect = async () => {
+    if (user === null || findedUser === null) return;
+    const combinedId =
+      user.uid > findedUser.uid
+        ? user.uid + findedUser.uid
+        : findedUser.uid + user.uid;
+    try {
+      const response = await getDoc(doc(db, "chats", combinedId));
+      if (!response.exists()) {
+        setDoc(doc(db, "chats", combinedId), { messages: [] });
+
+        await updateDoc(doc(db, "userChats", user.uid), {
+          [combinedId + ".userInfo"]: {
+            uid: user.uid,
+            displayName: user.displayName,
+            photoURL: user.photoURL,
+          },
+          [combinedId + ".date"]: serverTimestamp(),
+        });
+      }
+    } catch (err) {
+      alert(err);
+    }
   };
 
   return (
