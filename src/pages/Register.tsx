@@ -69,6 +69,8 @@ const Register: React.FC = () => {
             email: response.user.email,
             photoURL: downloadURL,
           });
+
+          await setDoc(doc(db, "usersChat", response.user.uid), {});
         });
       });
       setUser(response.user);
