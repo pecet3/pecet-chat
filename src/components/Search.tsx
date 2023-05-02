@@ -53,6 +53,15 @@ const Search: React.FC = () => {
       if (!response.exists()) {
         setDoc(doc(db, "chats", combinedId), { messages: [] });
 
+        await updateDoc(doc(db, "userChats", findedUser.uid), {
+          [combinedId + ".userInfo"]: {
+            uid: findedUser.uid,
+            displayName: findedUser.displayName,
+            photoURL: findedUser.photoURL,
+          },
+          [combinedId + ".date"]: serverTimestamp(),
+        });
+
         await updateDoc(doc(db, "userChats", user.uid), {
           [combinedId + ".userInfo"]: {
             uid: user.uid,
@@ -78,7 +87,10 @@ const Search: React.FC = () => {
           onKeyDown={handleKey}
         />
         {findedUser && (
-          <div className="flex items-center gap-1 bg-slate-500 py-1 text-left duration-200 hover:bg-slate-600">
+          <div
+            className="flex items-center gap-1 bg-slate-500 py-1 text-left duration-200 hover:bg-slate-600"
+            onClick={handleSelect}
+          >
             <img
               src={findedUser.photoURL}
               className="ml-1 h-10 w-10 rounded-full object-cover"
