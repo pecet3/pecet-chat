@@ -52,18 +52,18 @@ const Search: React.FC = () => {
 
         await updateDoc(doc(db, "userChats", user.uid), {
           [combinedId + ".userInfo"]: {
-            uid: user.uid,
-            displayName: user.displayName,
-            photoURL: user.photoURL,
+            uid: findedUser.uid,
+            displayName: findedUser.displayName,
+            photoURL: findedUser.photoURL,
           },
           [combinedId + ".date"]: serverTimestamp(),
         });
 
         await updateDoc(doc(db, "userChats", findedUser.uid), {
           [combinedId + ".userInfo"]: {
-            uid: findedUser.uid,
-            displayName: findedUser.displayName,
-            photoURL: findedUser.photoURL,
+            uid: user.uid,
+            displayName: user.displayName,
+            photoURL: user.photoURL,
           },
           [combinedId + ".date"]: serverTimestamp(),
         });
