@@ -1,4 +1,5 @@
 import React from "react";
+import { DocumentData } from "firebase/firestore";
 import AuthContext, { IAuthContext } from "./AuthContext";
 
 interface IProvider {
@@ -7,14 +8,10 @@ interface IProvider {
 
 interface IChatState {
   chatId: string;
-  user: Object;
+  user: DocumentData;
 }
 
-interface IUser {
-  uid: string;
-}
-
-type TChatAction = { type: "CHANGE_USER"; payload: IUser };
+type TChatAction = { type: "CHANGE_USER"; payload: DocumentData };
 
 export interface IChatContext {
   state: IChatState;
