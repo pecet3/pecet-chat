@@ -19,11 +19,8 @@ const Search: React.FC = () => {
   const [findedUser, setFindedUser] = React.useState<DocumentData | null>(null);
   const { user } = React.useContext(Context) as IContext;
 
-  React.useEffect(() => {
-    console.log(findedUser?.displayName);
-  }, [findedUser]);
-
   const handleSearch = async () => {
+    if (input === user?.displayName) return;
     try {
       const q = query(
         collection(db, "users"),
@@ -53,15 +50,6 @@ const Search: React.FC = () => {
       if (!response.exists()) {
         setDoc(doc(db, "chats", combinedId), { messages: [] });
 
-        await updateDoc(doc(db, "userChats", findedUser.uid), {
-          [combinedId + ".userInfo"]: {
-            uid: findedUser.uid,
-            displayName: findedUser.displayName,
-            photoURL: findedUser.photoURL,
-          },
-          [combinedId + ".date"]: serverTimestamp(),
-        });
-
         await updateDoc(doc(db, "userChats", user.uid), {
           [combinedId + ".userInfo"]: {
             uid: user.uid,
@@ -70,10 +58,21 @@ const Search: React.FC = () => {
           },
           [combinedId + ".date"]: serverTimestamp(),
         });
+
+        await updateDoc(doc(db, "userChats", findedUser.uid), {
+          [combinedId + ".userInfo"]: {
+            uid: findedUser.uid,
+            displayName: findedUser.displayName,
+            photoURL: findedUser.photoURL,
+          },
+          [combinedId + ".date"]: serverTimestamp(),
+        });
       }
     } catch (err) {
       alert(err);
     }
+    setInput("");
+    setFindedUser(null);
   };
 
   return (
