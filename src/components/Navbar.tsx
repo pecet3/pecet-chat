@@ -1,7 +1,7 @@
 import React from "react";
 import { signOut } from "firebase/auth";
 import { auth } from "../firebaseConfig";
-import Context, { IContext } from "../AuthContext";
+import Context, { IContext } from "../context/AuthContext";
 
 const Navbar: React.FC = () => {
   const { user } = React.useContext(Context) as IContext;

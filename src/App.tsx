@@ -8,7 +8,7 @@ import {
   RouterProvider,
   Navigate,
 } from "react-router-dom";
-import Context, { IContext } from "./AuthContext";
+import Context, { IContext } from "./context/AuthContext";
 
 interface IProtectedRoute {
   children: React.ReactNode;

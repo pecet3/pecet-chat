@@ -2,7 +2,7 @@ import React from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebaseConfig";
 import { Link, useNavigate } from "react-router-dom";
-import Context, { IContext } from "../AuthContext";
+import Context, { IContext } from "../context/AuthContext";
 
 export interface ILoginData {
   email: string;

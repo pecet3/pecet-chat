@@ -1,7 +1,7 @@
 import React from "react";
 import { doc, onSnapshot, DocumentData } from "firebase/firestore";
 import { db } from "../firebaseConfig";
-import Context, { IContext } from "../AuthContext";
+import Context, { IContext } from "../context/AuthContext";
 const UserChats: React.FC = () => {
   const [chats, setChats] = React.useState<DocumentData | undefined>([]);
 

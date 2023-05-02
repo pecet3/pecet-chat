@@ -12,7 +12,7 @@ import {
   serverTimestamp,
 } from "firebase/firestore";
 import { db } from "../firebaseConfig";
-import Context, { IContext } from "../AuthContext";
+import Context, { IContext } from "../context/AuthContext";
 
 const Search: React.FC = () => {
   const [input, setInput] = React.useState("");
