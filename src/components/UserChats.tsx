@@ -1,12 +1,13 @@
 import React from "react";
 import { doc, onSnapshot, DocumentData } from "firebase/firestore";
 import { db } from "../firebaseConfig";
-import Context, { IAuthContext } from "../context/AuthContext";
+import AuthContext, { IAuthContext } from "../context/AuthContext";
+import ChatContext, { IChatContext } from "../context/ChatContext";
 const UserChats: React.FC = () => {
   const [chats, setChats] = React.useState<DocumentData | undefined>([]);
 
-  const { user } = React.useContext(Context) as IAuthContext;
-
+  const { user } = React.useContext(AuthContext) as IAuthContext;
+  const { dispatch } = React.useContext(ChatContext) as IChatContext;
   React.useEffect(() => {
     if (!user) return;
     const unsub = onSnapshot(doc(db, "userChats", user.uid), (doc) => {
@@ -18,6 +19,11 @@ const UserChats: React.FC = () => {
   React.useEffect(() => {
     if (chats) console.log(Object.entries(chats));
   }, [chats]);
+
+  const handleSelect = (user: DocumentData) => {
+    if (!chats) return;
+    dispatch({ type: "CHANGE_USER", payload: user });
+  };
   return (
     <>
       {chats &&
@@ -25,6 +31,7 @@ const UserChats: React.FC = () => {
           <div
             key={chat[0]}
             className="flex items-center gap-1 text-left duration-200 hover:bg-slate-600"
+            onClick={() => handleSelect(chat[1].userInfo)}
           >
             <img
               src={chat[1].userInfo.photoURL}
