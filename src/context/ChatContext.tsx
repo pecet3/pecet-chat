@@ -20,7 +20,7 @@ export interface IChatContext {
 export const ChatContextProvider: React.FC<IProvider> = ({ children }) => {
   const { user } = React.useContext(AuthContext) as IAuthContext;
   const INITIAL_STATE: IChatState = {
-    chatId: "",
+    chatId: "null",
     user: {},
   };
   const chatReducer = (state: IChatState, action: TChatAction) => {
