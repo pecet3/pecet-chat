@@ -6,12 +6,12 @@ interface IProvider {
   children: React.ReactNode;
 }
 
-export interface IContext {
+export interface IAuthContext {
   user: User | null;
   setUser: React.Dispatch<React.SetStateAction<User | null>>;
 }
 export const AuthContextProvider: React.FC<IProvider> = ({ children }) => {
-  const [user, setUser] = React.useState<IContext["user"]>(null);
+  const [user, setUser] = React.useState<IAuthContext["user"]>(null);
 
   React.useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -26,6 +26,6 @@ export const AuthContextProvider: React.FC<IProvider> = ({ children }) => {
   );
 };
 
-const Context = React.createContext<IContext | null>(null);
+const Context = React.createContext<IAuthContext | null>(null);
 
 export default Context;

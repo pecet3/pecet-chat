@@ -8,7 +8,7 @@ import {
   RouterProvider,
   Navigate,
 } from "react-router-dom";
-import Context, { IContext } from "./context/AuthContext";
+import Context, { IAuthContext } from "./context/AuthContext";
 
 interface IProtectedRoute {
   children: React.ReactNode;
@@ -19,7 +19,7 @@ type TProtectedRouteReturn = React.ReactElement | null;
 const ProtectedRoute: React.FC<IProtectedRoute> = ({
   children,
 }): TProtectedRouteReturn => {
-  const { user } = React.useContext(Context) as IContext;
+  const { user } = React.useContext(Context) as IAuthContext;
   if (!user) return <Navigate to="/login" replace />;
   return children as React.ReactElement;
 };

@@ -12,12 +12,12 @@ import {
   serverTimestamp,
 } from "firebase/firestore";
 import { db } from "../firebaseConfig";
-import Context, { IContext } from "../context/AuthContext";
+import Context, { IAuthContext } from "../context/AuthContext";
 
 const Search: React.FC = () => {
   const [input, setInput] = React.useState("");
   const [findedUser, setFindedUser] = React.useState<DocumentData | null>(null);
-  const { user } = React.useContext(Context) as IContext;
+  const { user } = React.useContext(Context) as IAuthContext;
 
   const handleSearch = async () => {
     if (input === user?.displayName) return;

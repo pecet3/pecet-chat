@@ -1,10 +1,10 @@
 import React from "react";
 import { signOut } from "firebase/auth";
 import { auth } from "../firebaseConfig";
-import Context, { IContext } from "../context/AuthContext";
+import Context, { IAuthContext } from "../context/AuthContext";
 
 const Navbar: React.FC = () => {
-  const { user } = React.useContext(Context) as IContext;
+  const { user } = React.useContext(Context) as IAuthContext;
   return (
     <>
       <nav className="flex flex-col bg-slate-700 p-2 text-gray-200">

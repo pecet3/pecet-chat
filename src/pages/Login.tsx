@@ -2,7 +2,7 @@ import React from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebaseConfig";
 import { Link, useNavigate } from "react-router-dom";
-import Context, { IContext } from "../context/AuthContext";
+import Context, { IAuthContext } from "../context/AuthContext";
 
 export interface ILoginData {
   email: string;
@@ -17,7 +17,7 @@ const Login: React.FC = () => {
 
   const [errorMessage, setErrorMessage] = React.useState("");
 
-  const { setUser } = React.useContext(Context) as IContext;
+  const { setUser } = React.useContext(Context) as IAuthContext;
 
   const navigate = useNavigate();
 

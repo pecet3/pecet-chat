@@ -5,7 +5,7 @@ import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { doc, setDoc } from "firebase/firestore";
 import { auth, storage, db } from "../firebaseConfig";
-import Context, { IContext } from "../context/AuthContext";
+import Context, { IAuthContext } from "../context/AuthContext";
 
 export interface IRegisterData {
   email: string;
@@ -24,7 +24,7 @@ const Register: React.FC = () => {
   const navigate = useNavigate();
 
   const [errorMessage, setErrorMessage] = React.useState("");
-  const { setUser } = React.useContext(Context) as IContext;
+  const { setUser } = React.useContext(Context) as IAuthContext;
 
   const registerOnChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const inputElement = e.target as HTMLInputElement;
