@@ -1,6 +1,10 @@
 import React from "react";
 
-const Message: React.FC = () => {
+interface IMessage {
+  message: string;
+}
+
+const Message: React.FC<IMessage> = ({ message }) => {
   return (
     <div className="flex gap-1 text-slate-200">
       <span>
@@ -13,7 +17,7 @@ const Message: React.FC = () => {
       </span>
       <span className="flex flex-col gap-1">
         <p className="flex flex-col justify-center rounded-b-lg rounded-r-lg bg-slate-600 p-1 text-left">
-          Lorem ipsum
+          {message && message}
         </p>
         <img
           src="https://ath2.unileverservices.com/wp-content/uploads/sites/4/2020/02/IG-annvmariv.jpg"
