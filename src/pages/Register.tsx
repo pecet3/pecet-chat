@@ -5,6 +5,7 @@ import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { doc, setDoc } from "firebase/firestore";
 import { auth, storage, db } from "../firebaseConfig";
+import { Link } from "react-router-dom";
 import Context, { IAuthContext } from "../context/AuthContext";
 import Header from "../components/Header";
 
@@ -84,7 +85,7 @@ const Register: React.FC = () => {
     <>
       <Header />
       <form className="form" onSubmit={handleSubmit}>
-        <legend>Register here!</legend>
+        <legend>Enter your register data</legend>
         <input
           type="text"
           className="inputElement"
@@ -130,7 +131,13 @@ const Register: React.FC = () => {
           <BiImageAdd size="32" />
           <p>Add an Avatar</p>
         </label>
-        <button className="submitButton bg-teal-500 px-6">Register</button>
+        <button className="submitButton bg-teal-500 px-6">Sign up</button>
+        <span>
+          Do you have an account?
+          <p className="text-blue-700 underline">
+            <Link to="/login">Login Here</Link>
+          </p>
+        </span>
       </form>
       <p>{errorMessage !== "" && errorMessage}</p>
     </>
