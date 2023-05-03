@@ -8,7 +8,7 @@ const Navbar: React.FC = () => {
   return (
     <>
       <nav className="flex flex-col bg-slate-700 p-2 text-gray-200">
-        <h1 className="font-bold ">JakubChat</h1>
+        <h1 className="font-bold ">pecetChat</h1>
         <span className="flex justify-between">
           {user && (
             <span className="flex gap-1">
