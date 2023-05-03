@@ -6,6 +6,7 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { doc, setDoc } from "firebase/firestore";
 import { auth, storage, db } from "../firebaseConfig";
 import Context, { IAuthContext } from "../context/AuthContext";
+import Header from "../components/Header";
 
 export interface IRegisterData {
   email: string;
@@ -81,6 +82,7 @@ const Register: React.FC = () => {
   };
   return (
     <>
+      <Header />
       <form className="form" onSubmit={handleSubmit}>
         <legend>Register here!</legend>
         <input
