@@ -50,13 +50,13 @@ const Login: React.FC = () => {
     <>
       <Header />
       <form className="form" onSubmit={handleSubmit}>
-        <legend>Log In here!</legend>
+        <legend>Enter your login data</legend>
         <input
           type="text"
           className="inputElement"
           name="email"
           value={loginInput.email}
-          placeholder="Enter your email"
+          placeholder="Email"
           onChange={loginOnChange}
           required={true}
         />
@@ -65,7 +65,7 @@ const Login: React.FC = () => {
           name="password"
           className="inputElement"
           value={loginInput.password}
-          placeholder="password"
+          placeholder="Password"
           onChange={loginOnChange}
           // pattern="(?=^.{6,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"
           required={true}
