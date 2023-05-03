@@ -123,7 +123,10 @@ const Register: React.FC = () => {
           className="hidden"
           onChange={registerOnChange}
         />
-        <label htmlFor="filee" className="flex items-center">
+        <label
+          htmlFor="filee"
+          className="flex items-center hover:cursor-pointer"
+        >
           <BiImageAdd size="32" />
           <p>Add an Avatar</p>
         </label>
