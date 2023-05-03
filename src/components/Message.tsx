@@ -1,10 +1,13 @@
 import React from "react";
+import ChatContext, { IChatContext } from "../context/ChatContext";
 
 interface IMessage {
   message: string;
 }
 
 const Message: React.FC<IMessage> = ({ message }) => {
+  const { state } = React.useContext(ChatContext);
+
   return (
     <div className="flex gap-1 text-slate-200">
       <span>
