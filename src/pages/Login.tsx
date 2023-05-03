@@ -3,6 +3,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebaseConfig";
 import { Link, useNavigate } from "react-router-dom";
 import Context, { IAuthContext } from "../context/AuthContext";
+import Header from "../components/Header";
 
 export interface ILoginData {
   email: string;
@@ -47,6 +48,7 @@ const Login: React.FC = () => {
 
   return (
     <>
+      <Header />
       <form className="form" onSubmit={handleSubmit}>
         <legend>Log In here!</legend>
         <input
