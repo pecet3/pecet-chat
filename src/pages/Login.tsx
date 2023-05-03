@@ -71,7 +71,7 @@ const Login: React.FC = () => {
           required={true}
         />
 
-        <button className="submitButton bg-teal-500 px-6">Sign In</button>
+        <button className="submitButton px-6">Sign In</button>
         <span>
           Don't have an account?
           <p className="text-blue-700 underline">

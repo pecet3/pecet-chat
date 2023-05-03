@@ -131,7 +131,7 @@ const Register: React.FC = () => {
           <BiImageAdd size="32" />
           <p>Add an Avatar</p>
         </label>
-        <button className="submitButton bg-teal-500 px-6">Sign up</button>
+        <button className="submitButton  px-6">Sign up</button>
         <span>
           Do you have an account?
           <p className="text-blue-700 underline">
