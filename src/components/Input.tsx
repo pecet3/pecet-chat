@@ -1,9 +1,11 @@
 import React from "react";
 import { BiImageAdd } from "react-icons/bi";
 import { MdAttachFile } from "react-icons/md";
-import { updatedDoc, doc, arrayUnion } from "firebase/firestore";
+import { updateDoc, doc, arrayUnion, Timestamp } from "firebase/firestore";
+import { db } from "../firebaseConfig";
 import ChatContext, { IChatContext } from "../context/ChatContext";
 import AuthContext, { IAuthContext } from "../context/AuthContext";
+import { nanoid } from "nanoid";
 
 export type TInput = {
   message: string;
@@ -33,8 +35,19 @@ const Input: React.FC = () => {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (input.file !== null) {
+    } else {
+      await updateDoc(doc(db, "chats", state.chatId), {
+        messages: arrayUnion({
+          id: nanoid(),
+          message: input.message,
+          senderId: user?.uid,
+          date: Timestamp.now(),
+        }),
+      });
+    }
   };
   return (
     <form className=" flex gap-1 bg-gray-300 p-1" onSubmit={handleSubmit}>
