@@ -1,6 +1,9 @@
 import React from "react";
 import { BiImageAdd } from "react-icons/bi";
 import { MdAttachFile } from "react-icons/md";
+import { updatedDoc, doc, arrayUnion } from "firebase/firestore";
+import ChatContext, { IChatContext } from "../context/ChatContext";
+import AuthContext, { IAuthContext } from "../context/AuthContext";
 
 export type TInput = {
   message: string;
@@ -12,6 +15,9 @@ const Input: React.FC = () => {
     message: "",
     file: null,
   });
+
+  const { state } = React.useContext(ChatContext) as IChatContext;
+  const { user } = React.useContext(AuthContext) as IAuthContext;
 
   const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputElement = e.target as HTMLInputElement;
