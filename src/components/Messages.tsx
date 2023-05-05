@@ -20,8 +20,8 @@ const Messages: React.FC = () => {
   }, [messages]);
   return (
     <div className="flex h-[calc(100%-112px)] flex-col gap-1 overflow-y-scroll p-1">
-      {messages?.map((message: string) => (
-        <Message message={message} key={message} />
+      {messages?.map((message: DocumentData) => (
+        <Message message={message} key={message.id} />
       ))}
     </div>
   );
