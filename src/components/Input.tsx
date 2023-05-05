@@ -2,7 +2,8 @@ import React from "react";
 import { BiImageAdd } from "react-icons/bi";
 import { MdAttachFile } from "react-icons/md";
 import { updateDoc, doc, arrayUnion, Timestamp } from "firebase/firestore";
-import { db } from "../firebaseConfig";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import { db, storage } from "../firebaseConfig";
 import ChatContext, { IChatContext } from "../context/ChatContext";
 import AuthContext, { IAuthContext } from "../context/AuthContext";
 import { nanoid } from "nanoid";
@@ -37,17 +38,41 @@ const Input: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (input.file !== null) {
-    } else {
-      await updateDoc(doc(db, "chats", state.chatId), {
-        messages: arrayUnion({
-          id: nanoid(),
-          message: input.message,
-          senderId: user?.uid,
-          date: Timestamp.now(),
-        }),
-      });
+    if (input.message.trim() === "" && input.file == null) return;
+    try {
+      if (input.file) {
+        const storageRef = ref(storage, nanoid());
+        const uploadTask = uploadBytesResumable(storageRef, input.file);
+        uploadTask.on("state_changed", () => {
+          getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+            await updateDoc(doc(db, "chats", state.chatId), {
+              messages: arrayUnion({
+                id: nanoid(),
+                text: input.message,
+                senderId: user?.uid,
+                date: Timestamp.now(),
+                img: downloadURL,
+              }),
+            });
+          });
+        });
+      } else {
+        await updateDoc(doc(db, "chats", state.chatId), {
+          messages: arrayUnion({
+            id: nanoid(),
+            text: input.message,
+            senderId: user?.uid,
+            date: Timestamp.now(),
+          }),
+        });
+      }
+    } catch (err) {
+      alert(err);
     }
+    setInput({
+      message: "",
+      file: null,
+    });
   };
   return (
     <form className=" flex gap-1 bg-gray-300 p-1" onSubmit={handleSubmit}>
