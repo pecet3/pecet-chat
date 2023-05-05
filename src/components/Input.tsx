@@ -1,7 +1,13 @@
 import React from "react";
 import { BiImageAdd } from "react-icons/bi";
 import { MdAttachFile } from "react-icons/md";
-import { updateDoc, doc, arrayUnion, Timestamp } from "firebase/firestore";
+import {
+  updateDoc,
+  doc,
+  arrayUnion,
+  Timestamp,
+  serverTimestamp,
+} from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { db, storage } from "../firebaseConfig";
 import ChatContext, { IChatContext } from "../context/ChatContext";
@@ -38,6 +44,7 @@ const Input: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!user) return;
     if (input.message.trim() === "" && input.file == null) return;
     try {
       if (input.file) {
@@ -66,6 +73,15 @@ const Input: React.FC = () => {
           }),
         });
       }
+      await updateDoc(doc(db, "userChats", user.uid), {
+        [state.chatId + ".lastMessage"]: input.message,
+        [state.chatId + ".date"]: serverTimestamp(),
+      });
+
+      await updateDoc(doc(db, "userChats", state.user.uid), {
+        [state.chatId + ".lastMessage"]: input.message,
+        [state.chatId + ".date"]: serverTimestamp(),
+      });
     } catch (err) {
       alert(err);
     }
