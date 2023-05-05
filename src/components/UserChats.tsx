@@ -37,7 +37,7 @@ const UserChats: React.FC = () => {
               <p className="font-bold text-slate-200 ">
                 {chat[1].userInfo.displayName}
               </p>
-              <p>Lorem ipsum dolor sit.</p>
+              <p>{chat[1].lastMessage}</p>
             </span>
           </div>
         ))}
