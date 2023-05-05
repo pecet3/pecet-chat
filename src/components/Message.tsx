@@ -24,7 +24,7 @@ const Message: React.FC<IMessage> = ({ message }) => {
         </span>
         <span className="flex flex-col gap-1">
           {message && message.text !== "" && (
-            <p className="flex flex-col justify-center rounded-b-lg rounded-l-lg bg-zinc-600 p-1 text-left">
+            <p className="flex flex-col justify-center rounded-b-lg rounded-l-lg bg-zinc-600 p-1 px-2 text-right ">
               {message.text}
             </p>
           )}
@@ -52,7 +52,7 @@ const Message: React.FC<IMessage> = ({ message }) => {
         </span>
         <span className="flex flex-col gap-1">
           {message && message.text !== "" && (
-            <p className="flex flex-col justify-center rounded-b-lg rounded-r-lg bg-slate-600 p-1 text-left">
+            <p className="flex flex-col justify-center rounded-b-lg rounded-r-lg bg-slate-600 p-1 px-2 text-left">
               {message.text}
             </p>
           )}
