@@ -16,10 +16,6 @@ const UserChats: React.FC = () => {
     return () => unsub();
   }, [user?.uid]);
 
-  React.useEffect(() => {
-    if (chats) console.log(Object.entries(chats));
-  }, [chats]);
-
   const handleSelect = (user: DocumentData) => {
     if (!chats) return;
     dispatch({ type: "CHANGE_USER", payload: user });

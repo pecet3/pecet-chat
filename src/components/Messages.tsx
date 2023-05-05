@@ -15,9 +15,6 @@ const Messages: React.FC = () => {
     return () => unsub();
   }, [state.chatId]);
 
-  React.useEffect(() => {
-    console.log(messages);
-  }, [messages]);
   return (
     <div className="flex h-[calc(100%-112px)] flex-col gap-1 overflow-y-scroll p-1">
       {messages?.map((message: DocumentData) => (
