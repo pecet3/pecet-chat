@@ -26,7 +26,7 @@ const UserChats: React.FC = () => {
         Object.entries(chats).map((chat) => (
           <div
             key={chat[0]}
-            className="flex items-center gap-1 text-left duration-200 hover:bg-slate-600"
+            className="flex items-center gap-1 py-1 text-left duration-200 hover:bg-slate-600"
             onClick={() => handleSelect(chat[1].userInfo)}
           >
             <img
@@ -34,10 +34,14 @@ const UserChats: React.FC = () => {
               className="ml-1 h-10 w-10 rounded-full object-cover"
             />
             <span>
-              <p className="font-bold text-slate-200 ">
+              <p className="font-bold text-white ">
                 {chat[1].userInfo.displayName}
               </p>
-              <p>{chat[1].lastMessage}</p>
+              {chat[1].lastMessage ? (
+                <p className="text-sm text-slate-200">{chat[1].lastMessage}</p>
+              ) : (
+                <p className="text-sm italic text-slate-400">no messages</p>
+              )}
             </span>
           </div>
         ))}
