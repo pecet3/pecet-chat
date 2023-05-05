@@ -1,8 +1,9 @@
 import React from "react";
 import ChatContext, { IChatContext } from "../context/ChatContext";
+import { DocumentData } from "firebase/firestore";
 
 interface IMessage {
-  message: string;
+  message: DocumentData;
 }
 
 const Message: React.FC<IMessage> = ({ message }) => {
@@ -20,13 +21,15 @@ const Message: React.FC<IMessage> = ({ message }) => {
       </span>
       <span className="flex flex-col gap-1">
         <p className="flex flex-col justify-center rounded-b-lg rounded-r-lg bg-slate-600 p-1 text-left">
-          {message && message}
+          {message && message.text}
         </p>
-        <img
-          src="https://ath2.unileverservices.com/wp-content/uploads/sites/4/2020/02/IG-annvmariv.jpg"
-          alt="photo which user sent"
-          className="max-h-48 self-start rounded-sm"
-        />
+        {message.img && (
+          <img
+            src={message.img ? message.img : ""}
+            alt="photo which user sent"
+            className="max-h-48 self-start rounded-sm"
+          />
+        )}
       </span>
     </div>
   );
