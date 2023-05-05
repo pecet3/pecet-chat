@@ -6,7 +6,7 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { doc, setDoc } from "firebase/firestore";
 import { auth, storage, db } from "../firebaseConfig";
 import { Link } from "react-router-dom";
-import Context, { IAuthContext } from "../context/AuthContext";
+import AuthContext, { IAuthContext } from "../context/AuthContext";
 import Header from "../components/Header";
 
 export interface IRegisterData {
@@ -24,9 +24,9 @@ const Register: React.FC = () => {
     file: null,
   });
   const navigate = useNavigate();
+  const { setInfo } = React.useContext(AuthContext) as IAuthContext;
 
   const [errorMessage, setErrorMessage] = React.useState("");
-  const { setUser } = React.useContext(Context) as IAuthContext;
 
   const registerOnChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const inputElement = e.target as HTMLInputElement;
@@ -59,7 +59,7 @@ const Register: React.FC = () => {
 
       const storageRef = ref(storage, registerInput.name);
       const uploadTask = uploadBytesResumable(storageRef, registerInput.file);
-      uploadTask.on("state_changed", () => {
+      await uploadTask.on("state_changed", () => {
         getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
           await updateProfile(response.user, {
             displayName: registerInput.name,
@@ -75,8 +75,8 @@ const Register: React.FC = () => {
           await setDoc(doc(db, "userChats", response.user.uid), {});
         });
       });
-      setUser(response.user);
-      navigate("/");
+      navigate("/login");
+      setInfo((prev) => (prev = !prev));
     } catch (err: any) {
       setErrorMessage(err.code);
     }
