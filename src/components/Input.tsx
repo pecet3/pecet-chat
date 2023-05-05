@@ -13,7 +13,7 @@ const Input: React.FC = () => {
     file: null,
   });
 
-  const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputElement = e.target as HTMLInputElement;
     setInput({
       ...input,
@@ -26,15 +26,19 @@ const Input: React.FC = () => {
       file: inputElement.files[0],
     });
   };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+  };
   return (
-    <form className=" flex gap-1 bg-gray-300 p-1">
+    <form className=" flex gap-1 bg-gray-300 p-1" onSubmit={handleSubmit}>
       <input
         type="text"
         name="message"
         placeholder="enter your message"
         className="w-full rounded-md p-1 text-left"
         value={input.message}
-        onChange={changeHandler}
+        onChange={onInputChange}
       />
       <span className="flex items-center">
         <BiImageAdd size="28" />
@@ -42,7 +46,7 @@ const Input: React.FC = () => {
           type="file"
           id="file"
           className="hidden"
-          onChange={changeHandler}
+          onChange={onInputChange}
         />
         <label htmlFor="file">
           <MdAttachFile size="28" />
