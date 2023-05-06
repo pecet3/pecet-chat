@@ -76,7 +76,7 @@ const Register: React.FC = () => {
         });
       });
       navigate("/login");
-      setInfo((prev) => (prev = !prev));
+      setInfo((prev) => (prev = "Please, sign up after register"));
     } catch (err: any) {
       setErrorMessage(err.code);
     }
@@ -85,7 +85,7 @@ const Register: React.FC = () => {
     <>
       <Header />
       <form className="form" onSubmit={handleSubmit}>
-        <legend>Enter your register data</legend>
+        <legend className="legend">Enter your register data</legend>
         <input
           type="text"
           className="inputElement"
