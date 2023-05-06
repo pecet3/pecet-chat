@@ -19,4 +19,8 @@
    border-blue-400 bg-slate-300 p-2 py-4 shadow-lg shadow-slate-400
   }
 
+  .legend {
+    @apply text-lg font-thin
+  }
+
 }
