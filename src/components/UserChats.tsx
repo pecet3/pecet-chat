@@ -4,7 +4,7 @@ import { db } from "../firebaseConfig";
 import AuthContext, { IAuthContext } from "../context/AuthContext";
 import ChatContext, { IChatContext } from "../context/ChatContext";
 const UserChats: React.FC = () => {
-  const [chats, setChats] = React.useState<DocumentData | undefined>([]);
+  const [chats, setChats] = React.useState<DocumentData | undefined>(undefined);
 
   const { user } = React.useContext(AuthContext) as IAuthContext;
   const { dispatch } = React.useContext(ChatContext) as IChatContext;
