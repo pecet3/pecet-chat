@@ -3,6 +3,8 @@ import "./App.css";
 import Register from "./pages/Register";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
+import Cookies from "universal-cookie";
+const cookies = new Cookies();
 import {
   createBrowserRouter,
   RouterProvider,
@@ -20,7 +22,8 @@ const ProtectedRoute: React.FC<IProtectedRoute> = ({
   children,
 }): TProtectedRouteReturn => {
   const { user } = React.useContext(Context) as IAuthContext;
-  if (!user) return <Navigate to="/login" replace />;
+  if (!user && !cookies.get("auth-token"))
+    return <Navigate to="/login" replace />;
   return children as React.ReactElement;
 };
 
