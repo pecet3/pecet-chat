@@ -10,10 +10,18 @@ interface IMessage {
 const Message: React.FC<IMessage> = ({ message }) => {
   const { state } = React.useContext(ChatContext) as IChatContext;
   const { user } = React.useContext(AuthContext) as IAuthContext;
+  const messageRef = React.useRef<HTMLDivElement | null>(null);
+
+  React.useEffect(() => {
+    messageRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [message]);
 
   if (user?.uid === message.senderId) {
     return (
-      <div className="flex flex-row-reverse gap-1 text-slate-200">
+      <div
+        ref={messageRef}
+        className="flex flex-row-reverse gap-1 text-slate-200"
+      >
         <span>
           <img
             src={user?.photoURL || ""}
@@ -41,7 +49,7 @@ const Message: React.FC<IMessage> = ({ message }) => {
     );
   } else {
     return (
-      <div className="flex gap-1 text-slate-200">
+      <div ref={messageRef} className="flex gap-1 text-slate-200">
         <span>
           <img
             src={state.user.photoURL || ""}
