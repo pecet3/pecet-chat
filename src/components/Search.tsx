@@ -43,6 +43,7 @@ const Search: React.FC = () => {
 
   const handleSelect = async () => {
     if (user === null || findedUser === null) return;
+    setInput("");
 
     const combinedId =
       user.uid > findedUser.uid
@@ -74,7 +75,6 @@ const Search: React.FC = () => {
     } catch (err) {
       alert(err);
     }
-    setInput("");
     setFindedUser(null);
   };
 
@@ -86,6 +86,7 @@ const Search: React.FC = () => {
           placeholder="Find a user 🔎"
           className="w-full bg-transparent p-1 pl-2 text-slate-50 placeholder-gray-100"
           onChange={(e) => setInput(e.currentTarget.value)}
+          value={input}
           onKeyDown={handleKey}
         />
         {findedUser && (
