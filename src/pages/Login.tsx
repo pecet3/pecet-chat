@@ -18,7 +18,7 @@ const Login: React.FC = () => {
 
   const [errorMessage, setErrorMessage] = React.useState("");
 
-  const { setUser } = React.useContext(Context) as IAuthContext;
+  const { setUser, info } = React.useContext(Context) as IAuthContext;
 
   const navigate = useNavigate();
 
@@ -49,6 +49,11 @@ const Login: React.FC = () => {
   return (
     <>
       <Header />
+      {info && (
+        <p className="my-6 text-xl text-violet-700">
+          Please, sign in after register!
+        </p>
+      )}
       <form className="form" onSubmit={handleSubmit}>
         <legend>Enter your login data</legend>
         <input
