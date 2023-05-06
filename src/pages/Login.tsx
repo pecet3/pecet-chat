@@ -4,6 +4,9 @@ import { auth } from "../firebaseConfig";
 import { Link, useNavigate } from "react-router-dom";
 import Context, { IAuthContext } from "../context/AuthContext";
 import Header from "../components/Header";
+import Cookies from "universal-cookie";
+
+const cookies = new Cookies();
 
 export interface ILoginData {
   email: string;
@@ -17,6 +20,8 @@ const Login: React.FC = () => {
   });
 
   const [errorMessage, setErrorMessage] = React.useState("");
+
+  const [rememberMe, setRememberMe] = React.useState(false);
 
   const { setUser, info } = React.useContext(Context) as IAuthContext;
 
@@ -40,6 +45,7 @@ const Login: React.FC = () => {
         loginInput.password
       );
       setUser(response.user);
+      rememberMe && cookies.set("auth-token", response.user.refreshToken);
       navigate("/");
     } catch (err: any) {
       setErrorMessage(err.code);
@@ -49,15 +55,11 @@ const Login: React.FC = () => {
   return (
     <>
       <Header />
-      {info && (
-        <p className="my-6 text-xl text-violet-700">
-          Please, sign in after register!
-        </p>
-      )}
+      {info && <p className="my-6 text-xl text-violet-700">{info}</p>}
       <form className="form" onSubmit={handleSubmit}>
-        <legend>Enter your login data</legend>
+        <legend className="legend">Enter your login data</legend>
         <input
-          type="text"
+          type="email"
           className="inputElement"
           name="email"
           value={loginInput.email}
@@ -75,7 +77,15 @@ const Login: React.FC = () => {
           // pattern="(?=^.{6,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"
           required={true}
         />
-
+        <span className="flex gap-2">
+          <input
+            type="checkbox"
+            name="rememberMe"
+            id="rememberMe"
+            onChange={() => setRememberMe((prev) => (prev = !prev))}
+          />
+          <label htmlFor="rememberMe">Remember me</label>
+        </span>
         <button className="submitButton px-6">Sign In</button>
         <span>
           Don't have an account?
