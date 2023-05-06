@@ -36,11 +36,14 @@ const Search: React.FC = () => {
   };
 
   const handleKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    e.code === "Enter" && handleSearch();
+    if (e.code === "Enter") {
+      handleSearch();
+    }
   };
 
   const handleSelect = async () => {
     if (user === null || findedUser === null) return;
+
     const combinedId =
       user.uid > findedUser.uid
         ? user.uid + findedUser.uid
