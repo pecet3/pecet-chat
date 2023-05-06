@@ -4,6 +4,7 @@ import { auth } from "../firebaseConfig";
 import Context, { IAuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
+import { TbMessageCircle } from "react-icons/tb";
 const cookies = new Cookies();
 
 const Navbar: React.FC = () => {
@@ -18,7 +19,10 @@ const Navbar: React.FC = () => {
   return (
     <>
       <nav className="flex flex-col bg-slate-700 p-2 text-gray-200">
-        <h1 className="font-bold ">pecetChat</h1>
+        <span className="flex justify-center">
+          <h1 className="font-bold">pecetChat</h1>
+          <TbMessageCircle size="16" />
+        </span>
         <span className="flex justify-between">
           {user && (
             <span className="flex gap-1">
