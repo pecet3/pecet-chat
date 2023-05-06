@@ -7,11 +7,9 @@ import ChatContext, { IChatContext } from "../context/ChatContext";
 const Messages: React.FC = () => {
   const { state } = React.useContext(ChatContext) as IChatContext;
   const [messages, setMessages] = React.useState<DocumentData | null>([]);
-  const messageRef = React.useRef<HTMLDivElement | null>(null);
   React.useEffect(() => {
     const unsub = onSnapshot(doc(db, "chats", state.chatId), (doc) => {
       doc.exists() && setMessages(doc.data().messages);
-      messageRef.current?.scrollIntoView({ behavior: "smooth" });
     });
 
     return () => unsub();
@@ -22,7 +20,6 @@ const Messages: React.FC = () => {
       {messages?.map((message: DocumentData) => (
         <Message message={message} key={message.id} />
       ))}
-      <div ref={messageRef} className="mt-8"></div>
     </div>
   );
 };
