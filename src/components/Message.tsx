@@ -14,7 +14,7 @@ const Message: React.FC<IMessage> = ({ message }) => {
   const { user } = React.useContext(AuthContext) as IAuthContext;
   const messageRef = React.useRef<HTMLDivElement | null>(null);
 
-  const [currentDate, setCurrentDate] = React.useState(Date.now());
+  const [currentDate, setCurrentDate] = React.useState<number>(0);
 
   React.useEffect(() => {
     const interval = setInterval(() => {
@@ -56,7 +56,7 @@ const Message: React.FC<IMessage> = ({ message }) => {
           className="m-auto h-8 w-8 rounded-full object-cover"
         />
         <p className="max-w-[60px] break-words text-xs">
-          {message.date.seconds > currentDate - 10 ? "Just Now" : date}
+          {message.date.seconds > currentDate - 60 ? "Just Now" : date}
         </p>
       </span>
       <span className="flex flex-col gap-1">
