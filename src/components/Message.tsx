@@ -16,66 +16,48 @@ const Message: React.FC<IMessage> = ({ message }) => {
     messageRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [message]);
 
-  if (user?.uid === message.senderId) {
-    return (
-      <div
-        ref={messageRef}
-        className="flex flex-row-reverse gap-1 text-slate-200"
-      >
-        <span>
-          <img
-            src={user?.photoURL || ""}
-            alt="user's image"
-            className="m-auto h-8 w-8 rounded-full object-cover"
-          />
-          <p>Just now</p>
-        </span>
-        <span className="flex flex-col gap-1">
-          {message && message.text !== "" && (
-            <p className="flex flex-col justify-center rounded-b-lg rounded-l-lg bg-zinc-600 p-1 px-2 text-right ">
-              {message.text}
-            </p>
-          )}
+  return (
+    <div
+      ref={messageRef}
+      className={`flex ${
+        user?.uid === message.senderId && "flex-row-reverse"
+      } gap-1 text-slate-200`}
+    >
+      <span>
+        <img
+          src={
+            user?.uid === message.senderId
+              ? user?.photoURL?.toString()
+              : state.user.photoURL || ""
+          }
+          alt="user's image"
+          className="m-auto h-8 w-8 rounded-full object-cover"
+        />
+        <p>Just now</p>
+      </span>
+      <span className="flex flex-col gap-1">
+        {message && message.text !== "" && (
+          <p
+            className={`flex flex-col justify-center rounded-b-lg ${
+              user?.uid === message.senderId ? "rounded-l-lg" : "rounded-r-lg"
+            } bg-zinc-600 p-1 px-2 text-${
+              user?.uid === message.senderId ? "left" : "right"
+            } `}
+          >
+            {message.text}
+          </p>
+        )}
 
-          {message.img && (
-            <img
-              src={message.img || ""}
-              alt="photo which user sent"
-              className="max-h-48 self-start rounded-sm"
-            />
-          )}
-        </span>
-      </div>
-    );
-  } else {
-    return (
-      <div ref={messageRef} className="flex gap-1 text-slate-200">
-        <span>
+        {message.img && (
           <img
-            src={state.user.photoURL || ""}
-            alt="user's image"
-            className="m-auto h-8 w-8 rounded-full object-cover"
+            src={message.img || ""}
+            alt="photo which user sent"
+            className="max-h-48 self-start rounded-sm"
           />
-          <p>Just now</p>
-        </span>
-        <span className="flex flex-col gap-1">
-          {message && message.text !== "" && (
-            <p className="flex flex-col justify-center rounded-b-lg rounded-r-lg bg-slate-600 p-1 px-2 text-left">
-              {message.text}
-            </p>
-          )}
-
-          {message.img && (
-            <img
-              src={message.img || ""}
-              alt="photo which user sent"
-              className="max-h-48 self-start rounded-sm"
-            />
-          )}
-        </span>
-      </div>
-    );
-  }
+        )}
+      </span>
+    </div>
+  );
 };
 
 export default Message;
