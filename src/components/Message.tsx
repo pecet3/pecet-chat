@@ -8,12 +8,26 @@ interface IMessage {
 }
 
 const Message: React.FC<IMessage> = ({ message }) => {
+  const [date, setDate] = React.useState("");
+
   const { state } = React.useContext(ChatContext) as IChatContext;
   const { user } = React.useContext(AuthContext) as IAuthContext;
   const messageRef = React.useRef<HTMLDivElement | null>(null);
 
+  const currentDate = new Date();
+
   React.useEffect(() => {
     messageRef.current?.scrollIntoView({ behavior: "smooth" });
+    const date = new Date(message.date.seconds * 1000);
+    setDate(
+      date.toLocaleDateString(undefined, {
+        year: "numeric",
+        month: "numeric",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+      })
+    );
   }, [message]);
 
   return (
@@ -33,7 +47,7 @@ const Message: React.FC<IMessage> = ({ message }) => {
           alt="user's image"
           className="m-auto h-8 w-8 rounded-full object-cover"
         />
-        <p>Just now</p>
+        <p className="max-w-[60px] break-words text-xs">{date}</p>
       </span>
       <span className="flex flex-col gap-1">
         {message && message.text !== "" && (
