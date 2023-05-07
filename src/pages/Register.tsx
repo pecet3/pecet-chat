@@ -1,4 +1,5 @@
 import React from "react";
+import { nanoid } from "nanoid";
 import { useNavigate } from "react-router-dom";
 import { BiImageAdd } from "react-icons/bi";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
@@ -57,7 +58,7 @@ const Register: React.FC = () => {
         registerInput.password
       );
 
-      const storageRef = ref(storage, registerInput.name);
+      const storageRef = ref(storage, registerInput.name + "_" + nanoid());
       const uploadTask = uploadBytesResumable(storageRef, registerInput.file);
       await uploadTask.on("state_changed", () => {
         getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
@@ -76,7 +77,7 @@ const Register: React.FC = () => {
         });
       });
       navigate("/login");
-      setInfo((prev) => (prev = "Please, sign up after register"));
+      setInfo("Please, sign up after register");
     } catch (err: any) {
       setErrorMessage(err.code);
     }
