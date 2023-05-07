@@ -14,7 +14,15 @@ const Message: React.FC<IMessage> = ({ message }) => {
   const { user } = React.useContext(AuthContext) as IAuthContext;
   const messageRef = React.useRef<HTMLDivElement | null>(null);
 
-  const currentDate = new Date();
+  const [currentDate, setCurrentDate] = React.useState(Date.now());
+
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentDate(parseInt((Date.now() / 1000).toFixed()));
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   React.useEffect(() => {
     messageRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -47,7 +55,9 @@ const Message: React.FC<IMessage> = ({ message }) => {
           alt="user's image"
           className="m-auto h-8 w-8 rounded-full object-cover"
         />
-        <p className="max-w-[60px] break-words text-xs">{date}</p>
+        <p className="max-w-[60px] break-words text-xs">
+          {message.date.seconds > currentDate - 10 ? "Just Now" : date}
+        </p>
       </span>
       <span className="flex flex-col gap-1">
         {message && message.text !== "" && (
