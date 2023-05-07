@@ -1,6 +1,5 @@
 import React from "react";
-import { BiImageAdd } from "react-icons/bi";
-import { MdAttachFile } from "react-icons/md";
+import { BiImageAdd, BiCloudUpload } from "react-icons/bi";
 import {
   updateDoc,
   doc,
@@ -48,7 +47,7 @@ const Input: React.FC = () => {
     if (input.message.trim() === "" && input.file == null) return;
     try {
       if (input.file) {
-        const storageRef = ref(storage, nanoid());
+        const storageRef = ref(storage, user.uid + "_" + nanoid());
         const uploadTask = uploadBytesResumable(storageRef, input.file);
         uploadTask.on("state_changed", () => {
           getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
@@ -91,29 +90,35 @@ const Input: React.FC = () => {
     });
   };
   return (
-    <form className=" flex gap-1 bg-gray-300 p-1" onSubmit={handleSubmit}>
-      <input
-        type="text"
-        name="message"
-        placeholder="enter your message"
-        className="w-full rounded-md p-1 text-left"
-        value={input.message}
-        onChange={onInputChange}
-      />
-      <span className="flex items-center">
-        <BiImageAdd size="28" />
+    <>
+      <form className=" flex gap-1 bg-gray-300 p-1" onSubmit={handleSubmit}>
         <input
-          type="file"
-          id="file"
-          className="hidden"
+          type="text"
+          name="message"
+          placeholder="enter your message"
+          className="w-full rounded-md p-1 text-left"
+          value={input.message}
           onChange={onInputChange}
         />
-        <label htmlFor="file">
-          <MdAttachFile size="28" />
-        </label>
-      </span>
-      <button className="submitButton">Send</button>
-    </form>
+        <span className="flex items-center">
+          <input
+            type="file"
+            id="file"
+            accept="image/*"
+            className="hidden"
+            onChange={onInputChange}
+          />
+          <label htmlFor="file" className="hover:cursor-pointer">
+            {!input.file ? (
+              <BiImageAdd size="32" />
+            ) : (
+              <p className="w-20 text-xs ">image has been loaded</p>
+            )}
+          </label>
+        </span>
+        <button className="submitButton w-20">Send</button>
+      </form>
+    </>
   );
 };
 
