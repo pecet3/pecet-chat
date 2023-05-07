@@ -58,9 +58,9 @@ const Register: React.FC = () => {
         registerInput.password
       );
 
-      const storageRef = ref(storage, registerInput.name + "_" + nanoid());
+      const storageRef = ref(storage, registerInput.name);
       const uploadTask = uploadBytesResumable(storageRef, registerInput.file);
-      await uploadTask.on("state_changed", () => {
+      uploadTask.on("state_changed", () => {
         getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
           await updateProfile(response.user, {
             displayName: registerInput.name,
