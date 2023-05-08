@@ -59,24 +59,23 @@ const Register: React.FC = () => {
       );
 
       const storageRef = ref(storage, registerInput.name);
-      const uploadTask = uploadBytesResumable(storageRef, registerInput.file);
-      uploadTask.on("state_changed", () => {
-        getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
-          await updateProfile(response.user, {
-            displayName: registerInput.name,
-            photoURL: downloadURL,
-          });
-          await setDoc(doc(db, "users", response.user.uid), {
-            uid: response.user.uid,
-            displayName: response.user.displayName,
-            email: response.user.email,
-            photoURL: downloadURL,
-          });
+      await uploadBytesResumable(storageRef, registerInput.file);
 
-          await setDoc(doc(db, "userChats", response.user.uid), {});
+      await getDownloadURL(storageRef).then(async (downloadURL) => {
+        await updateProfile(response.user, {
+          displayName: registerInput.name,
+          photoURL: downloadURL,
         });
+        await setDoc(doc(db, "users", response.user.uid), {
+          uid: response.user.uid,
+          displayName: response.user.displayName,
+          email: response.user.email,
+          photoURL: downloadURL,
+        });
+
+        await setDoc(doc(db, "userChats", response.user.uid), {});
       });
-      navigate("/login");
+      navigate("/");
       setInfo("Please, sign up after register");
     } catch (err: any) {
       setErrorMessage(err.code);
