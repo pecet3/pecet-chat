@@ -23,7 +23,7 @@ const Login: React.FC = () => {
 
   const [rememberMe, setRememberMe] = React.useState(false);
 
-  const { setUser, info } = React.useContext(Context) as IAuthContext;
+  const { setUser } = React.useContext(Context) as IAuthContext;
 
   const navigate = useNavigate();
 
@@ -55,7 +55,9 @@ const Login: React.FC = () => {
   return (
     <>
       <Header />
-      {info && <p className="my-6 text-xl text-violet-700">{info}</p>}
+      {errorMessage !== "" && (
+        <p className="my-6 text-xl text-violet-700">{errorMessage}</p>
+      )}
       <form className="form" onSubmit={handleSubmit}>
         <legend className="legend">Enter your login data</legend>
         <input
@@ -94,7 +96,6 @@ const Login: React.FC = () => {
           </p>
         </span>
       </form>
-      <p>{errorMessage !== "" && errorMessage}</p>
     </>
   );
 };
