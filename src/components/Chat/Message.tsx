@@ -6,9 +6,11 @@ import { DocumentData } from "firebase/firestore";
 interface IMessage {
   message: DocumentData;
 }
-
 const Message: React.FC<IMessage> = ({ message }) => {
-  const [date, setDate] = React.useState("");
+  const [date, setDate] = React.useState({
+    date: "",
+    time: "",
+  });
 
   const { state } = React.useContext(ChatContext) as IChatContext;
   const { user } = React.useContext(AuthContext) as IAuthContext;
@@ -27,15 +29,17 @@ const Message: React.FC<IMessage> = ({ message }) => {
   React.useEffect(() => {
     messageRef.current?.scrollIntoView({ behavior: "smooth" });
     const date = new Date(message.date.seconds * 1000);
-    setDate(
-      date.toLocaleDateString(undefined, {
+    setDate({
+      date: date.toLocaleDateString(undefined, {
         year: "numeric",
         month: "numeric",
         day: "numeric",
+      }),
+      time: date.toLocaleDateString(undefined, {
         hour: "numeric",
         minute: "numeric",
-      })
-    );
+      }),
+    });
   }, [message]);
 
   return (
@@ -55,8 +59,10 @@ const Message: React.FC<IMessage> = ({ message }) => {
           alt="user's image"
           className="m-auto h-8 w-8 rounded-full object-cover"
         />
-        <p className="max-w-[60px] break-words text-xs">
-          {message.date.seconds > currentDate - 60 ? "Just Now" : date}
+        <p className="w-[54px] break-words text-[10px]">
+          {message.date.seconds > currentDate - 300
+            ? "Just Now"
+            : date.date + date.time.slice(10)}
         </p>
       </span>
       <span className="flex flex-col gap-1">
