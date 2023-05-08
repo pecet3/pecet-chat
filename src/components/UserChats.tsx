@@ -32,7 +32,11 @@ const UserChats: React.FC = () => {
               onClick={() => handleSelect(chat[1].userInfo)}
             >
               <img
-                src={chat[1].userInfo.photoURL}
+                src={
+                  typeof chat[1].userInfo.photoURL !== undefined
+                    ? chat[1].userInfo.photoURL
+                    : ""
+                }
                 className="ml-1 h-10 w-10 rounded-full object-cover"
               />
               <span>
