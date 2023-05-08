@@ -84,6 +84,7 @@ const Login: React.FC = () => {
             type="checkbox"
             name="rememberMe"
             id="rememberMe"
+            required={true}
             onChange={() => setRememberMe((prev) => (prev = !prev))}
           />
           <label htmlFor="rememberMe">Remember me</label>
