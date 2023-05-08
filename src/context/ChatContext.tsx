@@ -35,12 +35,13 @@ export const ChatContextProvider: React.FC<IProvider> = ({ children }) => {
     switch (action.type) {
       case "CHANGE_USER":
         return {
-          ...state,
           chatId:
             user.uid > action.payload.uid
               ? user.uid + action.payload.uid
               : action.payload.uid + user.uid,
           user: action.payload,
+          isPublic: false,
+          room: "room1",
         };
       case "CHANGE_ROOM":
         return {
@@ -55,6 +56,11 @@ export const ChatContextProvider: React.FC<IProvider> = ({ children }) => {
   const [state, dispatch] = React.useReducer<
     React.Reducer<IChatState, TChatAction>
   >(chatReducer, INITIAL_STATE);
+
+  React.useEffect(() => {
+    console.log(state);
+  }, [state]);
+
   return (
     <Context.Provider value={{ state, dispatch }}>{children}</Context.Provider>
   );
