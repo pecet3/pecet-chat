@@ -43,11 +43,12 @@ const Input: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (state.chatId === "null") return;
     if (!user) return;
     if (input.message.trim() === "" && input.file == null) return;
     try {
       if (input.file) {
-        const storageRef = ref(storage, user.uid + "_" + nanoid());
+        const storageRef = ref(storage, `${user.uid}_${nanoid()}`);
         const uploadTask = uploadBytesResumable(storageRef, input.file);
         uploadTask.on("state_changed", () => {
           getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
@@ -73,12 +74,12 @@ const Input: React.FC = () => {
         });
       }
       await updateDoc(doc(db, "userChats", user.uid), {
-        [state.chatId + ".lastMessage"]: input.message,
+        [state.chatId + ".lastMessage"]: input.message || "photo",
         [state.chatId + ".date"]: serverTimestamp(),
       });
 
       await updateDoc(doc(db, "userChats", state.user.uid), {
-        [state.chatId + ".lastMessage"]: input.message,
+        [state.chatId + ".lastMessage"]: input.message || "photo",
         [state.chatId + ".date"]: serverTimestamp(),
       });
     } catch (err) {
@@ -99,6 +100,7 @@ const Input: React.FC = () => {
           className="w-full rounded-md p-1 text-left"
           value={input.message}
           onChange={onInputChange}
+          disabled={state.chatId === "null"}
         />
         <span className="flex items-center">
           <input
@@ -107,6 +109,7 @@ const Input: React.FC = () => {
             accept="image/*"
             className="hidden"
             onChange={onInputChange}
+            disabled={state.chatId === "null"}
           />
           <label htmlFor="file" className="hover:cursor-pointer">
             {!input.file ? (
@@ -116,7 +119,12 @@ const Input: React.FC = () => {
             )}
           </label>
         </span>
-        <button className="submitButton w-20">Send</button>
+        <button
+          className="submitButton w-20"
+          disabled={state.chatId === "null"}
+        >
+          Send
+        </button>
       </form>
     </>
   );
