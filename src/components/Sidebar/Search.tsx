@@ -11,8 +11,8 @@ import {
   doc,
   serverTimestamp,
 } from "firebase/firestore";
-import { db } from "../firebaseConfig";
-import Context, { IAuthContext } from "../context/AuthContext";
+import { db } from "../../firebaseConfig";
+import Context, { IAuthContext } from "../../context/AuthContext";
 
 const Search: React.FC = () => {
   const [input, setInput] = React.useState("");

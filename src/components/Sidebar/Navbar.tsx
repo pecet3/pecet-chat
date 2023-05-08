@@ -1,7 +1,7 @@
 import React from "react";
 import { signOut } from "firebase/auth";
-import { auth } from "../firebaseConfig";
-import Context, { IAuthContext } from "../context/AuthContext";
+import { auth } from "../../firebaseConfig";
+import Context, { IAuthContext } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
 import { TbMessageCircle } from "react-icons/tb";

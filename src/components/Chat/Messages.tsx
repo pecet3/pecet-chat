@@ -1,8 +1,8 @@
 import React from "react";
 import Message from "./Message";
 import { onSnapshot, doc, DocumentData } from "firebase/firestore";
-import { db } from "../firebaseConfig";
-import ChatContext, { IChatContext } from "../context/ChatContext";
+import { db } from "../../firebaseConfig";
+import ChatContext, { IChatContext } from "../../context/ChatContext";
 
 const Messages: React.FC = () => {
   const { state } = React.useContext(ChatContext) as IChatContext;

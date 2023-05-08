@@ -1,6 +1,6 @@
 import React from "react";
-import ChatContext, { IChatContext } from "../context/ChatContext";
-import AuthContext, { IAuthContext } from "../context/AuthContext";
+import ChatContext, { IChatContext } from "../../context/ChatContext";
+import AuthContext, { IAuthContext } from "../../context/AuthContext";
 import { DocumentData } from "firebase/firestore";
 
 interface IMessage {

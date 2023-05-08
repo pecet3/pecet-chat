@@ -1,6 +1,6 @@
 import React from "react";
 import { BsCameraVideo, BsThreeDots, BsPersonAdd } from "react-icons/bs";
-import ChatContext, { IChatContext } from "../context/ChatContext";
+import ChatContext, { IChatContext } from "../../context/ChatContext";
 import Messages from "./Messages";
 import Input from "./Input";
 

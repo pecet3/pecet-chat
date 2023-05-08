@@ -8,9 +8,9 @@ import {
   serverTimestamp,
 } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
-import { db, storage } from "../firebaseConfig";
-import ChatContext, { IChatContext } from "../context/ChatContext";
-import AuthContext, { IAuthContext } from "../context/AuthContext";
+import { db, storage } from "../../firebaseConfig";
+import ChatContext, { IChatContext } from "../../context/ChatContext";
+import AuthContext, { IAuthContext } from "../../context/AuthContext";
 import { nanoid } from "nanoid";
 
 export type TInput = {

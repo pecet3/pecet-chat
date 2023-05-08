@@ -55,9 +55,6 @@ const Login: React.FC = () => {
   return (
     <>
       <Header />
-      {errorMessage !== "" && (
-        <p className="my-6 text-xl text-violet-700">{errorMessage}</p>
-      )}
       <form className="form" onSubmit={handleSubmit}>
         <legend className="legend">Enter your login data</legend>
         <input
@@ -97,6 +94,9 @@ const Login: React.FC = () => {
           </p>
         </span>
       </form>
+      {errorMessage !== "" && (
+        <p className="my-3 text-xl text-violet-700">{errorMessage}</p>
+      )}
     </>
   );
 };
