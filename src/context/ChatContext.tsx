@@ -9,9 +9,14 @@ interface IProvider {
 interface IChatState {
   chatId: string;
   user: DocumentData;
+  isPublic: boolean;
+  room: string;
 }
 
-type TChatAction = { type: "CHANGE_USER"; payload: DocumentData };
+type TChatAction = {
+  type: "CHANGE_USER" | "CHANGE_ROOM";
+  payload: DocumentData;
+};
 
 export interface IChatContext {
   state: IChatState;
@@ -22,17 +27,26 @@ export const ChatContextProvider: React.FC<IProvider> = ({ children }) => {
   const INITIAL_STATE: IChatState = {
     chatId: "null",
     user: {},
+    isPublic: false,
+    room: "room1",
   };
   const chatReducer = (state: IChatState, action: TChatAction) => {
     if (!user || !action.payload) return state;
     switch (action.type) {
       case "CHANGE_USER":
         return {
+          ...state,
           chatId:
             user.uid > action.payload.uid
               ? user.uid + action.payload.uid
               : action.payload.uid + user.uid,
           user: action.payload,
+        };
+      case "CHANGE_ROOM":
+        return {
+          ...state,
+          isPublic: true,
+          room: action.payload.room,
         };
       default:
         return state;
