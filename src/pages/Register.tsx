@@ -25,7 +25,6 @@ const Register: React.FC = () => {
     file: null,
   });
   const navigate = useNavigate();
-  const { setInfo } = React.useContext(AuthContext) as IAuthContext;
 
   const [errorMessage, setErrorMessage] = React.useState("");
 
@@ -58,7 +57,7 @@ const Register: React.FC = () => {
         registerInput.password
       );
 
-      const storageRef = ref(storage, registerInput.name);
+      const storageRef = ref(storage, `${registerInput.name}_${nanoid()}`);
       await uploadBytesResumable(storageRef, registerInput.file);
 
       await getDownloadURL(storageRef).then(async (downloadURL) => {
@@ -76,7 +75,6 @@ const Register: React.FC = () => {
         await setDoc(doc(db, "userChats", response.user.uid), {});
       });
       navigate("/");
-      setInfo("Please, sign up after register");
     } catch (err: any) {
       setErrorMessage(err.code);
     }
