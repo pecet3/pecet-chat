@@ -3,11 +3,12 @@ import { doc, onSnapshot, DocumentData } from "firebase/firestore";
 import { db } from "../../firebaseConfig";
 import AuthContext, { IAuthContext } from "../../context/AuthContext";
 import ChatContext, { IChatContext } from "../../context/ChatContext";
+
 const UserChats: React.FC = () => {
   const [chats, setChats] = React.useState<DocumentData | undefined>(undefined);
 
   const { user } = React.useContext(AuthContext) as IAuthContext;
-  const { dispatch } = React.useContext(ChatContext) as IChatContext;
+  const { dispatch, state } = React.useContext(ChatContext) as IChatContext;
   React.useEffect(() => {
     if (!user) return;
     const unsub = onSnapshot(doc(db, "userChats", user.uid), (doc) => {
@@ -17,6 +18,7 @@ const UserChats: React.FC = () => {
   }, [user?.uid]);
 
   const handleSelect = (user: DocumentData) => {
+    if (state.chatId === "null") return;
     if (!chats) return;
     dispatch({ type: "CHANGE_USER", payload: user });
   };
@@ -43,12 +45,14 @@ const UserChats: React.FC = () => {
                 <p className="font-bold text-white ">
                   {chat[1].userInfo.displayName}
                 </p>
-                {chat[1].lastMessage ? (
-                  <p className="text-sm text-slate-200">
-                    {chat[1].lastMessage}
-                  </p>
+                {chat[1].lastMessage === "photo" ? (
+                  <p className="text-sm italic text-slate-300">photo</p>
                 ) : (
-                  <p className="text-sm italic text-slate-400">no messages</p>
+                  chat[1].lastMessage && (
+                    <p className="text-sm italic text-slate-300">
+                      {chat[1].lastMessage}
+                    </p>
+                  )
                 )}
               </span>
             </div>
