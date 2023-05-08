@@ -1,26 +1,16 @@
 import React from "react";
-import {
-  collection,
-  query,
-  where,
-  getDocs,
-  getDoc,
-  DocumentData,
-  updateDoc,
-  setDoc,
-  doc,
-  serverTimestamp,
-} from "firebase/firestore";
-import { db } from "../../firebaseConfig";
-import Context, { IAuthContext } from "../../context/AuthContext";
+import ChatContext, { IChatContext } from "../../context/ChatContext";
 
 const PublicRooms: React.FC = () => {
   const [room, setRoom] = React.useState("room1");
-  const [findedUser, setFindedUser] = React.useState<DocumentData | null>(null);
-  const { user } = React.useContext(Context) as IAuthContext;
+  const { dispatch } = React.useContext(ChatContext) as IChatContext;
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setRoom(e.currentTarget.value);
+  };
+
+  const handleClick = () => {
+    dispatch({ type: "CHANGE_ROOM", payload: { room } });
   };
 
   return (
@@ -31,7 +21,9 @@ const PublicRooms: React.FC = () => {
           <option value="room2">#room2</option>
           <option value="room3">#room3</option>
         </select>
-        <button className="submitButton">Enter</button>
+        <button className="submitButton" onClick={handleClick}>
+          Enter
+        </button>
       </div>
     </>
   );
