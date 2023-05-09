@@ -59,32 +59,37 @@ const MessagePublic: React.FC<IMessage> = ({ message }) => {
           alt="user's image"
           className="m-auto h-8 w-8 rounded-full object-cover"
         />
-        <p className="w-[54px] break-words text-[10px]">
-          {message.date.seconds > currentDate - 300
-            ? "Just Now"
-            : date.date + date.time.slice(10)}
+        <p className="w-[54px] break-words text-xs text-black">
+          {message.displayName}
         </p>
       </span>
       <span className="flex flex-col gap-1">
         {message && message.text !== "" && (
           <p
-            className={`flex flex-col justify-center rounded-b-lg ${
-              user?.uid === message.senderId ? "rounded-l-lg" : "rounded-r-lg"
-            } bg-zinc-600 p-1 px-2 text-${
-              user?.uid === message.senderId ? "left" : "right"
-            } `}
+            className={`m-0 flex flex-col justify-end rounded-b-lg ${
+              user?.uid === message.senderId
+                ? "items-end rounded-l-lg text-right"
+                : "items-start rounded-r-lg text-left"
+            } bg-zinc-600 p-1 px-2 `}
           >
             {message.text}
           </p>
         )}
 
         {message.img && (
-          <img
-            src={message.img || ""}
-            alt="photo which user sent"
-            className="max-h-48 self-start rounded-sm"
-          />
+          <a href={message.img} target="_blank" rel="noopener noreferrer">
+            <img
+              src={message.img || ""}
+              alt="photo which user sent"
+              className="max-h-36 self-start rounded-sm"
+            />
+          </a>
         )}
+        <p className="m-0 text-xs">
+          {message.date.seconds > currentDate - 0
+            ? "Just Now"
+            : date.date + date.time.slice(10)}
+        </p>
       </span>
     </div>
   );
