@@ -15,13 +15,14 @@ const PublicRooms: React.FC = () => {
 
   return (
     <>
-      <div className="mt-1 flex justify-center gap-2">
+      <div className="flex items-center justify-start gap-2 bg-slate-300 p-1 ">
+        <legend className="mx-1">Public room:</legend>
         <select value={room} onChange={handleChange} className="rounded-md">
           <option value="room1">#room1</option>
           <option value="room2">#room2</option>
           <option value="room3">#room3</option>
         </select>
-        <button className="submitButton" onClick={handleClick}>
+        <button className="submitButton p-0 px-1" onClick={handleClick}>
           Enter
         </button>
       </div>
