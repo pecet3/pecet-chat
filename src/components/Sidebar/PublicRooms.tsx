@@ -17,7 +17,11 @@ const PublicRooms: React.FC = () => {
     <>
       <div className="flex items-center justify-start gap-2 bg-slate-300 p-1 ">
         <legend className="mx-1">Public room:</legend>
-        <select value={room} onChange={handleChange} className="rounded-md">
+        <select
+          value={room}
+          onChange={handleChange}
+          className="rounded-md px-1"
+        >
           <option value="room1">#room1</option>
           <option value="room2">#room2</option>
           <option value="room3">#room3</option>
