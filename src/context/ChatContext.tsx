@@ -27,7 +27,7 @@ export const ChatContextProvider: React.FC<IProvider> = ({ children }) => {
   const INITIAL_STATE: IChatState = {
     chatId: "null",
     user: {},
-    isPublic: false,
+    isPublic: true,
     room: "room1",
   };
   const chatReducer = (state: IChatState, action: TChatAction) => {
@@ -56,10 +56,6 @@ export const ChatContextProvider: React.FC<IProvider> = ({ children }) => {
   const [state, dispatch] = React.useReducer<
     React.Reducer<IChatState, TChatAction>
   >(chatReducer, INITIAL_STATE);
-
-  React.useEffect(() => {
-    console.log(state);
-  }, [state]);
 
   return (
     <Context.Provider value={{ state, dispatch }}>{children}</Context.Provider>
