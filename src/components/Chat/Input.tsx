@@ -141,7 +141,7 @@ const Input: React.FC = () => {
           className="w-full rounded-md p-1 text-left"
           value={input.message}
           onChange={onInputChange}
-          // disabled={state.chatId === "null"}
+          disabled={state.chatId === "null" && !state.isPublic}
         />
         <span className="flex items-center">
           <input
@@ -150,7 +150,7 @@ const Input: React.FC = () => {
             accept="image/*"
             className="hidden"
             onChange={onInputChange}
-            // disabled={state.chatId === "null"}
+            disabled={state.chatId === "null" && !state.isPublic}
           />
           <label htmlFor="file" className="hover:cursor-pointer">
             {!input.file ? (
@@ -162,7 +162,7 @@ const Input: React.FC = () => {
         </span>
         <button
           className="submitButton w-20"
-          // disabled={state.chatId === "null"}
+          disabled={state.chatId === "null" && !state.isPublic}
         >
           Send
         </button>
