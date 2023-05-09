@@ -9,7 +9,7 @@ const Chat: React.FC = () => {
   return (
     <div className="basis-2/3 flex-col justify-between bg-slate-400">
       <div className="flex justify-between bg-slate-500 px-2 py-5 text-slate-200">
-        <p>{state && state.user.displayName}</p>
+        <p>{state.isPublic ? state.room : state.user.displayName}</p>
         <span className="flex gap-2">
           <BsCameraVideo size="24" />
           <BsThreeDots size="24" />
