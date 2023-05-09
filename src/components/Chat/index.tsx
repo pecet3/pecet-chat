@@ -14,11 +14,11 @@ const Chat: React.FC = () => {
     >
       <div
         className={`flex justify-between ${
-          state.isPublic ? "bg-zinc-100 text-black" : "bg-slate-500 "
+          state.isPublic ? "bg-zinc-200 text-black" : "bg-slate-500 "
         } px-2 py-5 text-slate-200`}
       >
         <p className="font-bold">
-          {state.isPublic ? state.room : state.user.displayName}
+          {state.isPublic ? "#" + state.room : state.user.displayName}
         </p>
         <span className="flex gap-2">
           <BsCameraVideo size="24" />
