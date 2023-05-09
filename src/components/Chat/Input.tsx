@@ -43,24 +43,41 @@ const Input: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (state.chatId === "null") return;
+
     if (!user) return;
     if (input.message.trim() === "" && input.file == null) return;
     try {
       if (input.file) {
-        const storageRef = ref(storage, `${user.uid}_${nanoid()}`);
-        const uploadTask = uploadBytesResumable(storageRef, input.file);
-        uploadTask.on("state_changed", () => {
-          getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
-            await updateDoc(doc(db, "chats", state.chatId), {
-              messages: arrayUnion({
-                id: nanoid(),
-                text: input.message,
-                senderId: user?.uid,
-                date: Timestamp.now(),
-                img: downloadURL,
-              }),
-            });
+        const storageRef = await ref(storage, `${user.uid}_${nanoid()}`);
+        await uploadBytesResumable(storageRef, input.file);
+
+        await getDownloadURL(storageRef).then(async (downloadURL) => {
+          await updateDoc(doc(db, "chats", state.chatId), {
+            messages: arrayUnion({
+              id: nanoid(),
+              text: input.message,
+              senderId: user?.uid,
+              date: Timestamp.now(),
+              img: downloadURL,
+            }),
+          });
+        });
+      } else if (state.isPublic && input.file) {
+        const storageRef = await ref(
+          storage,
+          `${state.room}_${user.uid}_${nanoid()}`
+        );
+        await uploadBytesResumable(storageRef, input.file);
+
+        await getDownloadURL(storageRef).then(async (downloadURL) => {
+          await updateDoc(doc(db, "chats", state.chatId), {
+            messages: arrayUnion({
+              id: nanoid(),
+              text: input.message,
+              senderId: user?.uid,
+              date: Timestamp.now(),
+              img: downloadURL,
+            }),
           });
         });
       } else {
