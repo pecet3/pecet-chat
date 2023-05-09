@@ -59,18 +59,18 @@ const MessagePublic: React.FC<IMessage> = ({ message }) => {
           alt="user's image"
           className="m-auto h-8 w-8 rounded-full object-cover"
         />
-        <p className="w-[54px] break-words text-xs text-black">
+        <p className="w-[54px] break-words text-xs font-semibold text-gray-800">
           {message.displayName}
         </p>
       </span>
-      <span className="flex flex-col gap-1">
+      <span className="flex flex-col">
         {message && message.text !== "" && (
           <p
             className={`m-0 flex flex-col justify-end rounded-b-lg ${
               user?.uid === message.senderId
-                ? "items-end rounded-l-lg text-right"
-                : "items-start rounded-r-lg text-left"
-            } bg-zinc-600 p-1 px-2 `}
+                ? "items-end rounded-l-lg bg-indigo-700 text-right"
+                : "items-start rounded-r-lg bg-indigo-600 text-left"
+            } p-1 px-2 `}
           >
             {message.text}
           </p>
@@ -85,8 +85,12 @@ const MessagePublic: React.FC<IMessage> = ({ message }) => {
             />
           </a>
         )}
-        <p className="m-0 text-xs">
-          {message.date.seconds > currentDate - 0
+        <p
+          className={`m-0 ${
+            user?.uid === message.senderId ? "self-end" : "self-start"
+          } mb-1 p-0 text-[10px] italic text-zinc-200`}
+        >
+          {message.date.seconds > currentDate - 30
             ? "Just Now"
             : date.date + date.time.slice(10)}
         </p>
