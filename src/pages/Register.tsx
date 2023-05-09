@@ -95,7 +95,7 @@ const Register: React.FC = () => {
           onChange={registerOnChange}
         />
         <input
-          type="text"
+          type="email"
           className="inputElement"
           name="email"
           value={registerInput.email}
