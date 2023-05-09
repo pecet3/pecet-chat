@@ -18,7 +18,6 @@ const UserChats: React.FC = () => {
   }, [user?.uid]);
 
   const handleSelect = (user: DocumentData) => {
-    if (state.chatId === "null") return;
     if (!chats) return;
     dispatch({ type: "CHANGE_USER", payload: user });
   };
