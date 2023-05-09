@@ -7,8 +7,8 @@ const Sidebar: React.FC = () => {
   return (
     <div className="basis-1/3 bg-slate-500">
       <Navbar />
-      <Search />
       <PublicRooms />
+      <Search />
       <UserChats />
     </div>
   );
