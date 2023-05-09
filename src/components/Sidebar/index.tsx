@@ -8,8 +8,8 @@ const Sidebar: React.FC = () => {
     <div className="basis-1/3 bg-slate-500">
       <Navbar />
       <Search />
-      <UserChats />
       <PublicRooms />
+      <UserChats />
     </div>
   );
 };
