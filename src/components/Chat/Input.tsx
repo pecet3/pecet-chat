@@ -6,6 +6,7 @@ import {
   arrayUnion,
   Timestamp,
   serverTimestamp,
+  setDoc,
 } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { db, storage } from "../../firebaseConfig";
@@ -41,32 +42,55 @@ const Input: React.FC = () => {
     });
   };
 
+  const handlePublicChat = async () => {
+    if (!user) return;
+    if (input.message.trim() === "" && input.file == null) return;
+
+    if (input.file) {
+      const storageRef = ref(storage, `${state.room}_${user.uid}_${nanoid()}`);
+      await uploadBytesResumable(storageRef, input.file);
+
+      await getDownloadURL(storageRef).then(async (downloadURL) => {
+        await updateDoc(doc(db, "publicChats", state.room), {
+          messages: arrayUnion({
+            id: nanoid(),
+            senderId: user.uid,
+            text: input.message,
+            displayName: user?.uid,
+            photoURL: user?.photoURL,
+            date: Timestamp.now(),
+            img: downloadURL,
+          }),
+        });
+      });
+    } else {
+      await updateDoc(doc(db, "publicChats", state.room), {
+        messages: arrayUnion({
+          id: nanoid(),
+          senderId: user.uid,
+          text: input.message,
+          displayName: user?.uid,
+          photoURL: user?.photoURL,
+          date: Timestamp.now(),
+        }),
+      });
+    }
+    setInput({
+      message: "",
+      file: null,
+    });
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!user) return;
     if (input.message.trim() === "" && input.file == null) return;
+
+    if (state.isPublic) return handlePublicChat();
     try {
       if (input.file) {
-        const storageRef = await ref(storage, `${user.uid}_${nanoid()}`);
-        await uploadBytesResumable(storageRef, input.file);
-
-        await getDownloadURL(storageRef).then(async (downloadURL) => {
-          await updateDoc(doc(db, "chats", state.chatId), {
-            messages: arrayUnion({
-              id: nanoid(),
-              text: input.message,
-              senderId: user?.uid,
-              date: Timestamp.now(),
-              img: downloadURL,
-            }),
-          });
-        });
-      } else if (state.isPublic && input.file) {
-        const storageRef = await ref(
-          storage,
-          `${state.room}_${user.uid}_${nanoid()}`
-        );
+        const storageRef = ref(storage, `${user.uid}_${nanoid()}`);
         await uploadBytesResumable(storageRef, input.file);
 
         await getDownloadURL(storageRef).then(async (downloadURL) => {
@@ -117,7 +141,7 @@ const Input: React.FC = () => {
           className="w-full rounded-md p-1 text-left"
           value={input.message}
           onChange={onInputChange}
-          disabled={state.chatId === "null"}
+          // disabled={state.chatId === "null"}
         />
         <span className="flex items-center">
           <input
@@ -126,7 +150,7 @@ const Input: React.FC = () => {
             accept="image/*"
             className="hidden"
             onChange={onInputChange}
-            disabled={state.chatId === "null"}
+            // disabled={state.chatId === "null"}
           />
           <label htmlFor="file" className="hover:cursor-pointer">
             {!input.file ? (
@@ -138,7 +162,7 @@ const Input: React.FC = () => {
         </span>
         <button
           className="submitButton w-20"
-          disabled={state.chatId === "null"}
+          // disabled={state.chatId === "null"}
         >
           Send
         </button>
