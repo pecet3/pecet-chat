@@ -21,7 +21,7 @@ const Navbar: React.FC = () => {
       <nav className="flex flex-col bg-slate-700 p-2 text-gray-200">
         <span className="flex justify-center">
           <h1 className="font-bold">pecetChat</h1>
-          <TbMessageCircle size="16" />
+          <TbMessageCircle size="18" className="ml-[2px]" />
         </span>
         <span className="flex justify-between">
           {user && (
