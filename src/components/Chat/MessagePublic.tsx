@@ -1,5 +1,6 @@
 import React from "react";
 import AuthContext, { IAuthContext } from "../../context/AuthContext";
+import ChatContext, { IChatContext } from "../../context/ChatContext";
 import { DocumentData } from "firebase/firestore";
 
 interface IMessage {
@@ -12,6 +13,7 @@ const MessagePublic: React.FC<IMessage> = ({ message }) => {
   });
 
   const { user } = React.useContext(AuthContext) as IAuthContext;
+  const { state } = React.useContext(ChatContext) as IChatContext;
   const messageRef = React.useRef<HTMLDivElement | null>(null);
 
   const [currentDate, setCurrentDate] = React.useState<number>(0);
@@ -23,6 +25,12 @@ const MessagePublic: React.FC<IMessage> = ({ message }) => {
 
     return () => clearInterval(interval);
   }, [message]);
+
+  React.useEffect(() => {
+    setTimeout(() => {
+      messageRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, 500);
+  }, []);
 
   React.useEffect(() => {
     messageRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -38,7 +46,7 @@ const MessagePublic: React.FC<IMessage> = ({ message }) => {
         minute: "numeric",
       }),
     });
-  }, [message]);
+  }, [message, state.goDown]);
 
   return (
     <div
