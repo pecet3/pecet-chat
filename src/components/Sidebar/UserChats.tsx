@@ -8,7 +8,7 @@ const UserChats: React.FC = () => {
   const [chats, setChats] = React.useState<DocumentData | undefined>(undefined);
 
   const { user } = React.useContext(AuthContext) as IAuthContext;
-  const { dispatch, state } = React.useContext(ChatContext) as IChatContext;
+  const { dispatch } = React.useContext(ChatContext) as IChatContext;
   React.useEffect(() => {
     if (!user) return;
     const unsub = onSnapshot(doc(db, "userChats", user.uid), (doc) => {
