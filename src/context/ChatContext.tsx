@@ -47,7 +47,7 @@ export const ChatContextProvider: React.FC<IProvider> = ({ children }) => {
         return {
           ...state,
           isPublic: true,
-          room: action.payload.room,
+          room: action.payload.room as string,
         };
       default:
         return state;
