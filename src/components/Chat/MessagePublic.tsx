@@ -22,7 +22,7 @@ const MessagePublic: React.FC<IMessage> = ({ message }) => {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [message]);
 
   React.useEffect(() => {
     messageRef.current?.scrollIntoView({ behavior: "smooth" });
