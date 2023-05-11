@@ -1,11 +1,12 @@
 import React from "react";
-import { BsCameraVideo, BsThreeDots, BsPersonAdd } from "react-icons/bs";
+import { BsFillArrowDownCircleFill } from "react-icons/bs";
 import ChatContext, { IChatContext } from "../../context/ChatContext";
 import Messages from "./Messages";
 import Input from "./Input";
 
 const Chat: React.FC = () => {
   const { state } = React.useContext(ChatContext) as IChatContext;
+
   return (
     <div
       className={`basis-2/3 flex-col justify-between ${
@@ -17,13 +18,17 @@ const Chat: React.FC = () => {
           state.isPublic ? "bg-zinc-200 text-black" : "bg-slate-500 "
         } px-2 py-5 text-slate-200`}
       >
-        <p className="font-bold">
+        <p
+          className={`font-bold ${
+            state.isPublic ? "text-black" : "text-white"
+          }`}
+        >
           {state.isPublic ? "#" + state.room : state.user.displayName}
         </p>
-        <span className="flex gap-2">
-          <BsCameraVideo size="24" />
-          <BsThreeDots size="24" />
-          <BsPersonAdd size="24" />
+        <span className="flex gap-2 text-black">
+          <button>
+            <BsFillArrowDownCircleFill size="24" />
+          </button>
         </span>
       </div>
       <Messages />
