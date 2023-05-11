@@ -1,5 +1,4 @@
 import React from "react";
-import ChatContext, { IChatContext } from "../../context/ChatContext";
 import AuthContext, { IAuthContext } from "../../context/AuthContext";
 import { DocumentData } from "firebase/firestore";
 
@@ -12,7 +11,6 @@ const MessagePublic: React.FC<IMessage> = ({ message }) => {
     time: "",
   });
 
-  const { state } = React.useContext(ChatContext) as IChatContext;
   const { user } = React.useContext(AuthContext) as IAuthContext;
   const messageRef = React.useRef<HTMLDivElement | null>(null);
 
