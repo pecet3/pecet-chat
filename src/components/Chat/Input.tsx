@@ -6,7 +6,6 @@ import {
   arrayUnion,
   Timestamp,
   serverTimestamp,
-  setDoc,
 } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { db, storage } from "../../firebaseConfig";
