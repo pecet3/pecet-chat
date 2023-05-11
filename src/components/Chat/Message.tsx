@@ -27,6 +27,12 @@ const Message: React.FC<IMessage> = ({ message }) => {
   }, []);
 
   React.useEffect(() => {
+    setTimeout(() => {
+      messageRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, 500);
+  }, []);
+
+  React.useEffect(() => {
     messageRef.current?.scrollIntoView({ behavior: "smooth" });
     const date = new Date(message.date.seconds * 1000);
     setDate({
@@ -40,7 +46,7 @@ const Message: React.FC<IMessage> = ({ message }) => {
         minute: "numeric",
       }),
     });
-  }, [message]);
+  }, [message, state.goDown]);
 
   return (
     <div
