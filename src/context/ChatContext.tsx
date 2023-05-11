@@ -11,10 +11,11 @@ interface IChatState {
   user: DocumentData;
   isPublic: boolean;
   room: string;
+  goDown: boolean;
 }
 
 type TChatAction = {
-  type: "CHANGE_USER" | "CHANGE_ROOM";
+  type: "CHANGE_USER" | "CHANGE_ROOM" | "ACTIVATE_GO_DOWN";
   payload: DocumentData;
 };
 
@@ -29,6 +30,7 @@ export const ChatContextProvider: React.FC<IProvider> = ({ children }) => {
     user: {},
     isPublic: true,
     room: "room1",
+    goDown: false,
   };
   const chatReducer = (state: IChatState, action: TChatAction) => {
     if (!user || !action.payload) return state;
@@ -40,6 +42,7 @@ export const ChatContextProvider: React.FC<IProvider> = ({ children }) => {
               ? user.uid + action.payload.uid
               : action.payload.uid + user.uid,
           user: action.payload,
+          goDown: state.goDown,
           isPublic: false,
           room: "room1",
         };
@@ -48,6 +51,11 @@ export const ChatContextProvider: React.FC<IProvider> = ({ children }) => {
           ...state,
           isPublic: true,
           room: action.payload.room as string,
+        };
+      case "ACTIVATE_GO_DOWN":
+        return {
+          ...state,
+          goDown: !state.goDown,
         };
       default:
         return state;
