@@ -5,8 +5,11 @@ import Messages from "./Messages";
 import Input from "./Input";
 
 const Chat: React.FC = () => {
-  const { state } = React.useContext(ChatContext) as IChatContext;
+  const { state, dispatch } = React.useContext(ChatContext) as IChatContext;
 
+  const handleOnClick = () => {
+    dispatch({ type: "ACTIVATE_GO_DOWN", payload: {} });
+  };
   return (
     <div
       className={`basis-2/3 flex-col justify-between ${
@@ -25,8 +28,14 @@ const Chat: React.FC = () => {
         >
           {state.isPublic ? "#" + state.room : state.user.displayName}
         </p>
-        <span className="flex gap-2 text-black">
-          <button>
+        <span className="flex text-black">
+          <button
+            className={`flex items-center gap-1 ${
+              state.isPublic ? "text-black" : "text-white "
+            }`}
+            onClick={handleOnClick}
+          >
+            <p className="text-xs">the last message</p>
             <BsFillArrowDownCircleFill size="24" />
           </button>
         </span>
