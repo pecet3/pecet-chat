@@ -3,14 +3,16 @@ import "./App.css";
 import Register from "./pages/Register";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
+import EditProfile from "./pages/EditProfile";
 import Cookies from "universal-cookie";
-const cookies = new Cookies();
 import {
   createBrowserRouter,
   RouterProvider,
   Navigate,
 } from "react-router-dom";
 import Context, { IAuthContext } from "./context/AuthContext";
+
+const cookies = new Cookies();
 
 interface IProtectedRoute {
   children: React.ReactNode;
@@ -43,6 +45,14 @@ const router = createBrowserRouter([
   {
     path: "login",
     element: <Login />,
+  },
+  {
+    path: "editProfile",
+    element: (
+      <ProtectedRoute>
+        <EditProfile />
+      </ProtectedRoute>
+    ),
   },
 ]);
 
