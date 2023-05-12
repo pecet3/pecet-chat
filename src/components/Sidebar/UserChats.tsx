@@ -48,7 +48,7 @@ const UserChats: React.FC = () => {
                   <p className="text-sm italic text-slate-300">photo</p>
                 ) : (
                   chat[1].lastMessage && (
-                    <p className="text-sm italic text-slate-300">
+                    <p className="w-64 truncate text-sm italic text-slate-300">
                       {chat[1].lastMessage}
                     </p>
                   )
