@@ -17,26 +17,27 @@ export interface IRegisterData {
 }
 
 const EditProfile: React.FC = () => {
-  const [registerInput, setRegisterInput] = React.useState<IRegisterData>({
+  const colors = ["red", "blue", "green"];
+
+  const [input, setInput] = React.useState<IRegisterData>({
     email: "",
     password: "",
     name: "",
     file: null,
   });
-  const navigate = useNavigate();
-
   const [errorMessage, setErrorMessage] = React.useState("");
+  const navigate = useNavigate();
 
   const registerOnChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const inputElement = e.target as HTMLInputElement;
-    setRegisterInput({
-      ...registerInput,
+    setInput({
+      ...input,
       [e.target.name]: e.target.value,
     });
 
     if (inputElement.files === null) return;
-    setRegisterInput({
-      ...registerInput,
+    setInput({
+      ...input,
       file: inputElement.files[0],
     });
   };
@@ -46,22 +47,22 @@ const EditProfile: React.FC = () => {
   ): Promise<IRegisterData | void> => {
     e.preventDefault();
 
-    if (registerInput.file === null || undefined)
+    if (input.file === null || undefined)
       return setErrorMessage("Avatar is required");
 
     try {
       const response = await createUserWithEmailAndPassword(
         auth,
-        registerInput.email,
-        registerInput.password
+        input.email,
+        input.password
       );
 
-      const storageRef = ref(storage, `${registerInput.name}_${nanoid()}`);
-      await uploadBytesResumable(storageRef, registerInput.file);
+      const storageRef = ref(storage, `${input.name}_${nanoid()}`);
+      await uploadBytesResumable(storageRef, input.file);
 
       await getDownloadURL(storageRef).then(async (downloadURL) => {
         await updateProfile(response.user, {
-          displayName: registerInput.name,
+          displayName: input.name,
           photoURL: downloadURL,
         });
         await setDoc(doc(db, "users", response.user.uid), {
@@ -89,30 +90,9 @@ const EditProfile: React.FC = () => {
           name="name"
           minLength={3}
           maxLength={16}
-          value={registerInput.name}
+          value={input.name}
           placeholder="Name"
           onChange={registerOnChange}
-        />
-        <input
-          type="email"
-          className="inputElement"
-          name="email"
-          value={registerInput.email}
-          placeholder="Email"
-          onChange={registerOnChange}
-          required={true}
-          minLength={5}
-        />
-        <input
-          type="password"
-          name="password"
-          className="inputElement"
-          value={registerInput.password}
-          placeholder="Password"
-          onChange={registerOnChange}
-          minLength={6}
-          // pattern="(?=^.{6,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"
-          required={true}
         />
         <input
           type="file"
@@ -126,11 +106,25 @@ const EditProfile: React.FC = () => {
           className="flex items-center hover:cursor-pointer"
         >
           <BiImageAdd size="32" />
-          <p>Add an Avatar</p>
+          <p>Change an Avatar</p>
         </label>
-        <button className="submitButton  px-6">Sign up</button>
+        {colors.map((color) => (
+          <div key={color}>
+            <input
+              type="radio"
+              id={color}
+              className={`bg-${color}-500`}
+              name={color}
+              value={color}
+            />
+            <label htmlFor={color} className={`bg-${color}-300`}>
+              ======
+            </label>
+          </div>
+        ))}
+        <button className="submitButton  px-6">Update</button>
         <span>
-          <p className="text-blue-700 underline">
+          <p className="text-red-700 underline">
             <Link to="/">Cancel</Link>
           </p>
         </span>
