@@ -17,7 +17,7 @@ export interface IRegisterData {
 }
 
 const EditProfile: React.FC = () => {
-  const colors = ["red", "blue", "green"];
+  const colors = ["red", "blue", "slate"];
 
   const [input, setInput] = React.useState<IRegisterData>({
     email: "",
@@ -117,7 +117,7 @@ const EditProfile: React.FC = () => {
               name={color}
               value={color}
             />
-            <label htmlFor={color} className={`bg-${color}-300`}>
+            <label htmlFor={color} className={`bg-${color}-600`}>
               ======
             </label>
           </div>
