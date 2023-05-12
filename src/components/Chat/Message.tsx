@@ -76,14 +76,13 @@ const Message: React.FC<IMessage> = ({ message }) => {
           <p
             className={`flex flex-col justify-center rounded-b-lg ${
               user?.uid === message.senderId
-                ? "rounded-l-lg bg-zinc-700 text-left"
-                : "rounded-r-lg bg-zinc-600 text-right"
-            }  p-1 px-2  `}
+                ? "ml-[54px] rounded-l-lg bg-zinc-700 text-left"
+                : "mr-[54px] rounded-r-lg bg-zinc-600 text-right"
+            }   p-1  px-2 `}
           >
             {message.text}
           </p>
         )}
-
         {message.img && (
           <img
             src={message.img || ""}
