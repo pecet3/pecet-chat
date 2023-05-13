@@ -47,7 +47,7 @@ const Register: React.FC = () => {
   ): Promise<IRegisterData | void> => {
     e.preventDefault();
 
-    if (registerInput.file === null || undefined)
+    if (registerInput.file === null || registerInput.file === undefined)
       return setErrorMessage("Avatar is required");
 
     try {
