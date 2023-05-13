@@ -23,15 +23,15 @@ export interface IRegisterData {
 
 const EditProfile: React.FC = () => {
   const colors = [
-    { name: "red", value: "bg-red-500" },
-    { name: "blue", value: "bg-blue-500" },
-    { name: "yellow", value: "bg-yellow-500" },
-    { name: "pink", value: "bg-pink-400" },
-    { name: "purple", value: "bg-purple-500" },
-    { name: "orange", value: "bg-orange-500" },
-    { name: "green", value: "bg-green-500" },
-    { name: "black", value: "bg-black" },
-    { name: "white", value: "bg-white" },
+    { name: "red", value: "red-500" },
+    { name: "blue", value: "blue-500" },
+    { name: "yellow", value: "yellow-500" },
+    { name: "pink", value: "pink-400" },
+    { name: "purple", value: "purple-500" },
+    { name: "orange", value: "orange-500" },
+    { name: "green", value: "green-500" },
+    { name: "black", value: "black" },
+    { name: "white", value: "white" },
   ];
 
   const [userColor, setUserColor] = React.useState(
@@ -71,6 +71,15 @@ const EditProfile: React.FC = () => {
     try {
       if (user === null) return;
       if (input.file === null || input.file === undefined) {
+        await updateProfile(auth.currentUser as User, {
+          displayName: input.name === "" ? user.displayName : input.name,
+        });
+        await setDoc(doc(db, "users", user.uid), {
+          uid: user.uid,
+          displayName: input.name,
+          email: user.email,
+          color: userColor,
+        });
       } else {
         const storageRef = ref(storage, `${input.name}_${nanoid()}`);
         await uploadBytesResumable(storageRef, input.file);
@@ -138,7 +147,7 @@ const EditProfile: React.FC = () => {
               rounded-md
               p-2
               hover:cursor-pointer
-              ${color.value} ${
+              ${"bg-" + color.value} ${
                 color.name === "black" ? "text-white" : "text-black"
               }
               ${
