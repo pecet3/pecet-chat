@@ -2,6 +2,7 @@ import React from "react";
 import { BiImageAdd, BiCloudUpload } from "react-icons/bi";
 import {
   updateDoc,
+  getDoc,
   doc,
   arrayUnion,
   Timestamp,
@@ -46,6 +47,9 @@ const Input: React.FC = () => {
     if (input.message.trim() === "" && input.file == null) return;
 
     if (input.file) {
+      const docRef = doc(db, "users", user.uid);
+      const docSnap = await getDoc(docRef);
+
       const storageRef = ref(storage, `${state.room}_${user.uid}_${nanoid()}`);
       await uploadBytesResumable(storageRef, input.file);
 
@@ -59,10 +63,14 @@ const Input: React.FC = () => {
             photoURL: user?.photoURL,
             date: Timestamp.now(),
             img: downloadURL,
+            color: docSnap.data()?.color || "black",
           }),
         });
       });
     } else {
+      const docRef = doc(db, "users", user.uid);
+      const docSnap = await getDoc(docRef);
+
       await updateDoc(doc(db, "publicChats", state.room), {
         messages: arrayUnion({
           id: nanoid(),
@@ -71,6 +79,7 @@ const Input: React.FC = () => {
           displayName: user.displayName,
           photoURL: user.photoURL,
           date: Timestamp.now(),
+          color: docSnap.data()?.color || "black",
         }),
       });
     }
