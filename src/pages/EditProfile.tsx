@@ -97,7 +97,7 @@ const EditProfile: React.FC = () => {
   return (
     <>
       <Header />
-      <form className="form" onSubmit={handleSubmit}>
+      <form className="form flex-col" onSubmit={handleSubmit}>
         <legend className="legend">Edite your profile</legend>
         <input
           type="text"
@@ -123,7 +123,8 @@ const EditProfile: React.FC = () => {
           <BiImageAdd size="32" />
           <p>Change an Avatar</p>
         </label>
-        <p className="grid-">Change your color for the public rooms</p>
+        <p>Change your color for the public rooms</p>
+
         <div className="grid grid-cols-3 gap-1">
           {colors.map((color) => (
             <span
@@ -150,6 +151,7 @@ const EditProfile: React.FC = () => {
             </span>
           ))}
         </div>
+
         <button className="submitButton px-6">Update</button>
         <span>
           <p className="text-red-700 underline">
