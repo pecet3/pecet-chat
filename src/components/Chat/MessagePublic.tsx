@@ -65,7 +65,11 @@ const MessagePublic: React.FC<IMessage> = ({ message }) => {
           alt="user's image"
           className="m-auto h-8 w-8 rounded-full object-cover"
         />
-        <p className="w-[54px] break-words text-xs font-semibold text-gray-800">
+        <p
+          className={`w-[54px] break-words text-xs font-semibold text-gray-800 ${
+            message.color && "text-" + message.color
+          } `}
+        >
           {message.displayName}
         </p>
       </span>
