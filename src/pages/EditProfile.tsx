@@ -2,12 +2,17 @@ import React from "react";
 import { nanoid } from "nanoid";
 import { useNavigate } from "react-router-dom";
 import { BiImageAdd, BiCheck } from "react-icons/bi";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  updateProfile,
+  User,
+} from "firebase/auth";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { doc, setDoc } from "firebase/firestore";
 import { auth, storage, db } from "../firebaseConfig";
 import { Link } from "react-router-dom";
 import Header from "../components/Header";
+import AuthContext, { IAuthContext } from "../context/AuthContext";
 
 export interface IRegisterData {
   email: string;
@@ -39,6 +44,9 @@ const EditProfile: React.FC = () => {
     file: null,
   });
   const [errorMessage, setErrorMessage] = React.useState("");
+
+  const { user } = React.useContext(AuthContext) as IAuthContext;
+
   const navigate = useNavigate();
 
   const registerOnChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -60,35 +68,28 @@ const EditProfile: React.FC = () => {
   ): Promise<IRegisterData | void> => {
     e.preventDefault();
 
-    if (input.file === null || undefined)
-      return setErrorMessage("Avatar is required");
-
     try {
-      const response = await createUserWithEmailAndPassword(
-        auth,
-        input.email,
-        input.password
-      );
+      if (user === null) return;
+      if (input.file === null || input.file === undefined) {
+      } else {
+        const storageRef = ref(storage, `${input.name}_${nanoid()}`);
+        await uploadBytesResumable(storageRef, input.file);
 
-      const storageRef = ref(storage, `${input.name}_${nanoid()}`);
-      await uploadBytesResumable(storageRef, input.file);
-
-      await getDownloadURL(storageRef).then(async (downloadURL) => {
-        await updateProfile(response.user, {
-          displayName: input.name,
-          photoURL: downloadURL,
+        await getDownloadURL(storageRef).then(async (downloadURL) => {
+          await updateProfile(auth.currentUser as User, {
+            displayName: input.name,
+            photoURL: downloadURL,
+          });
+          await setDoc(doc(db, "users", user.uid), {
+            uid: user.uid,
+            displayName: input.name,
+            email: user.email,
+            photoURL: downloadURL,
+            color: userColor,
+          });
         });
-        await setDoc(doc(db, "users", response.user.uid), {
-          uid: response.user.uid,
-          displayName: response.user.displayName,
-          email: response.user.email,
-          photoURL: downloadURL,
-          color: userColor,
-        });
-
-        await setDoc(doc(db, "userChats", response.user.uid), {});
-      });
-      navigate("/");
+        navigate("/");
+      }
     } catch (err: any) {
       setErrorMessage(err.code);
     }
@@ -98,7 +99,7 @@ const EditProfile: React.FC = () => {
     <>
       <Header />
       <form className="form flex-col" onSubmit={handleSubmit}>
-        <legend className="legend">Edite your profile</legend>
+        <legend className="legend">Edit your profile</legend>
         <input
           type="text"
           className="inputElement"
