@@ -123,6 +123,7 @@ const EditProfile: React.FC = () => {
           <BiImageAdd size="32" />
           <p>Change an Avatar</p>
         </label>
+        <p className="grid-">Change your color for the public rooms</p>
         <div className="grid grid-cols-3 gap-1">
           {colors.map((color) => (
             <span
@@ -132,11 +133,9 @@ const EditProfile: React.FC = () => {
               margin-auto
               h-8
               w-8
-              items-center
-              justify-center
               rounded-md
               p-2
-              
+              hover:cursor-pointer
               ${color.value} ${
                 color.name === "black" ? "text-white" : "text-black"
               }
