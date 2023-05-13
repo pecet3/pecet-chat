@@ -1,7 +1,7 @@
 import React from "react";
 import { nanoid } from "nanoid";
 import { useNavigate } from "react-router-dom";
-import { BiImageAdd } from "react-icons/bi";
+import { BiImageAdd, BiCheck } from "react-icons/bi";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { doc, setDoc } from "firebase/firestore";
@@ -21,15 +21,16 @@ const EditProfile: React.FC = () => {
     { name: "red", value: "bg-red-500" },
     { name: "blue", value: "bg-blue-500" },
     { name: "yellow", value: "bg-yellow-500" },
-    { name: "pink", value: "bg-pink-500" },
+    { name: "pink", value: "bg-pink-400" },
     { name: "purple", value: "bg-purple-500" },
     { name: "orange", value: "bg-orange-500" },
-    { name: "gray", value: "bg-gray-500" },
+    { name: "green", value: "bg-green-500" },
     { name: "black", value: "bg-black" },
+    { name: "white", value: "bg-white" },
   ];
 
   const [userColor, setUserColor] = React.useState(
-    colors[colors.length - 1].value
+    colors[colors.length - 2].value
   );
   const [input, setInput] = React.useState<IRegisterData>({
     email: "",
@@ -82,6 +83,7 @@ const EditProfile: React.FC = () => {
           displayName: response.user.displayName,
           email: response.user.email,
           photoURL: downloadURL,
+          color: userColor,
         });
 
         await setDoc(doc(db, "userChats", response.user.uid), {});
@@ -92,9 +94,6 @@ const EditProfile: React.FC = () => {
     }
   };
 
-  const handleOnChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setUserColor(e.currentTarget.value);
-  };
   return (
     <>
       <Header />
@@ -124,24 +123,35 @@ const EditProfile: React.FC = () => {
           <BiImageAdd size="32" />
           <p>Change an Avatar</p>
         </label>
-        <select
-          className={`w-20 ${userColor}`}
-          value={userColor}
-          onChange={handleOnChange}
-        >
+        <div className="grid grid-cols-3 gap-1">
           {colors.map((color) => (
-            <option
+            <span
               key={color.name}
-              value={color.value}
-              className={`${color.value} w-20 ${
+              onClick={() => setUserColor(color.value)}
+              className={`
+              margin-auto
+              h-8
+              w-8
+              items-center
+              justify-center
+              rounded-md
+              p-2
+              
+              ${color.value} ${
                 color.name === "black" ? "text-white" : "text-black"
-              }`}
+              }
+              ${
+                color.value === userColor
+                  ? "scale-105 rounded-sm opacity-100"
+                  : ""
+              }
+              `}
             >
-              {color.name}
-            </option>
+              {color.value === userColor && <BiCheck size="16" className="" />}
+            </span>
           ))}
-        </select>
-        <button className="submitButton  px-6">Update</button>
+        </div>
+        <button className="submitButton px-6">Update</button>
         <span>
           <p className="text-red-700 underline">
             <Link to="/">Cancel</Link>
