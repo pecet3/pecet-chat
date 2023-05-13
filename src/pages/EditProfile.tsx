@@ -17,8 +17,20 @@ export interface IRegisterData {
 }
 
 const EditProfile: React.FC = () => {
-  const colors = ["red", "blue", "slate"];
+  const colors = [
+    { name: "red", value: "bg-red-500" },
+    { name: "blue", value: "bg-blue-500" },
+    { name: "yellow", value: "bg-yellow-500" },
+    { name: "pink", value: "bg-pink-500" },
+    { name: "purple", value: "bg-purple-500" },
+    { name: "orange", value: "bg-orange-500" },
+    { name: "gray", value: "bg-gray-500" },
+    { name: "black", value: "bg-black" },
+  ];
 
+  const [userColor, setUserColor] = React.useState(
+    colors[colors.length - 1].value
+  );
   const [input, setInput] = React.useState<IRegisterData>({
     email: "",
     password: "",
@@ -79,6 +91,10 @@ const EditProfile: React.FC = () => {
       setErrorMessage(err.code);
     }
   };
+
+  const handleOnChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setUserColor(e.currentTarget.value);
+  };
   return (
     <>
       <Header />
@@ -108,20 +124,23 @@ const EditProfile: React.FC = () => {
           <BiImageAdd size="32" />
           <p>Change an Avatar</p>
         </label>
-        {colors.map((color) => (
-          <div key={color}>
-            <input
-              type="radio"
-              id={color}
-              className={`bg-${color}-500`}
-              name={color}
-              value={color}
-            />
-            <label htmlFor={color} className={`bg-${color}-600`}>
-              ======
-            </label>
-          </div>
-        ))}
+        <select
+          className={`w-20 ${userColor}`}
+          value={userColor}
+          onChange={handleOnChange}
+        >
+          {colors.map((color) => (
+            <option
+              key={color.name}
+              value={color.value}
+              className={`${color.value} w-20 ${
+                color.name === "black" ? "text-white" : "text-black"
+              }`}
+            >
+              {color.name}
+            </option>
+          ))}
+        </select>
         <button className="submitButton  px-6">Update</button>
         <span>
           <p className="text-red-700 underline">
