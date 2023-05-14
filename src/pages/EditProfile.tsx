@@ -80,11 +80,11 @@ const EditProfile: React.FC = () => {
       if (user === null) return;
       if (input.file === null || input.file === undefined) {
         await updateProfile(auth.currentUser as User, {
-          displayName: input.name === "" ? user.displayName : input.name,
+          displayName: input.name.trim() === "" ? user.displayName : input.name,
         });
         await setDoc(doc(db, "users", user.uid), {
           uid: user.uid,
-          displayName: input.name,
+          displayName: input.name.trim() === "" ? user.displayName : input.name,
           email: user.email,
           color: userColor,
         });
@@ -94,12 +94,14 @@ const EditProfile: React.FC = () => {
 
         await getDownloadURL(storageRef).then(async (downloadURL) => {
           await updateProfile(auth.currentUser as User, {
-            displayName: input.name,
+            displayName:
+              input.name.trim() === "" ? user.displayName : input.name,
             photoURL: downloadURL,
           });
           await setDoc(doc(db, "users", user.uid), {
             uid: user.uid,
-            displayName: input.name,
+            displayName:
+              input.name.trim() === "" ? user.displayName : input.name,
             email: user.email,
             photoURL: downloadURL,
             color: userColor,
