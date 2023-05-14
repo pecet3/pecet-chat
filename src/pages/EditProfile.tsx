@@ -147,7 +147,7 @@ const EditProfile: React.FC = () => {
               rounded-md
               p-2
               hover:cursor-pointer
-              ${"bg-" + color.value} ${
+              bg-${color.value} ${
                 color.name === "black" ? "text-white" : "text-black"
               }
               ${
