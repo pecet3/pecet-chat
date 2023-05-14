@@ -46,10 +46,10 @@ const Input: React.FC = () => {
     if (!user) return;
     if (input.message.trim() === "" && input.file == null) return;
 
-    if (input.file) {
-      const docRef = doc(db, "users", user.uid);
-      const docSnap = await getDoc(docRef);
+    const docRef = doc(db, "users", user.uid);
+    const docSnap = await getDoc(docRef);
 
+    if (input.file) {
       const storageRef = ref(storage, `${state.room}_${user.uid}_${nanoid()}`);
       await uploadBytesResumable(storageRef, input.file);
 
@@ -68,9 +68,6 @@ const Input: React.FC = () => {
         });
       });
     } else {
-      const docRef = doc(db, "users", user.uid);
-      const docSnap = await getDoc(docRef);
-
       await updateDoc(doc(db, "publicChats", state.room), {
         messages: arrayUnion({
           id: nanoid(),
