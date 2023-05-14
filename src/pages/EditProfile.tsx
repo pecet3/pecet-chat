@@ -2,19 +2,15 @@ import React from "react";
 import { nanoid } from "nanoid";
 import { useNavigate } from "react-router-dom";
 import { BiImageAdd, BiCheck } from "react-icons/bi";
-import {
-  createUserWithEmailAndPassword,
-  updateProfile,
-  User,
-} from "firebase/auth";
+import { updateProfile, User } from "firebase/auth";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc } from "firebase/firestore";
 import { auth, storage, db } from "../firebaseConfig";
 import { Link } from "react-router-dom";
 import Header from "../components/Header";
 import AuthContext, { IAuthContext } from "../context/AuthContext";
 
-export interface IRegisterData {
+export interface IEditData {
   email: string;
   password: string;
   name: string;
@@ -34,10 +30,10 @@ const EditProfile: React.FC = () => {
     { name: "white", value: "white" },
   ];
 
-  const [userColor, setUserColor] = React.useState(
-    colors[colors.length - 2].value
+  const [userColor, setUserColor] = React.useState<Promise<any> | string>(
+    "black"
   );
-  const [input, setInput] = React.useState<IRegisterData>({
+  const [input, setInput] = React.useState<IEditData>({
     email: "",
     password: "",
     name: "",
@@ -48,6 +44,18 @@ const EditProfile: React.FC = () => {
   const { user } = React.useContext(AuthContext) as IAuthContext;
 
   const navigate = useNavigate();
+
+  React.useEffect(() => {
+    const getUserColor = async () => {
+      if (user === null) return;
+      const docRef = doc(db, "users", user.uid);
+      const docSnap = await getDoc(docRef);
+
+      const color = docSnap.data();
+      return setUserColor(color?.color);
+    };
+    getUserColor();
+  }, []);
 
   const registerOnChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const inputElement = e.target as HTMLInputElement;
@@ -65,7 +73,7 @@ const EditProfile: React.FC = () => {
 
   const handleSubmit = async (
     e: React.FormEvent<HTMLFormElement>
-  ): Promise<IRegisterData | void> => {
+  ): Promise<IEditData | void> => {
     e.preventDefault();
 
     try {
@@ -97,8 +105,8 @@ const EditProfile: React.FC = () => {
             color: userColor,
           });
         });
-        navigate("/");
       }
+      navigate("/");
     } catch (err: any) {
       setErrorMessage(err.code);
     }
@@ -133,7 +141,7 @@ const EditProfile: React.FC = () => {
           <BiImageAdd size="32" />
           <p>Change an Avatar</p>
         </label>
-        <p>Change your color for the public rooms</p>
+        <p className="mx-4 text-sm">Change color for the public rooms</p>
 
         <div className="grid grid-cols-3 gap-1">
           {colors.map((color) => (
@@ -147,6 +155,7 @@ const EditProfile: React.FC = () => {
               rounded-md
               p-2
               hover:cursor-pointer
+              
               bg-${color.value} ${
                 color.name === "black" ? "text-white" : "text-black"
               }
