@@ -154,8 +154,8 @@ const EditProfile: React.FC = () => {
               w-8
               rounded-md
               p-2
+              shadow-md
               hover:cursor-pointer
-              
               bg-${color.value} ${
                 color.name === "black" ? "text-white" : "text-black"
               }
@@ -168,11 +168,7 @@ const EditProfile: React.FC = () => {
               ${color.name === "pink" && "bg-pink-400"}
               ${color.name === "purple" && "bg-purple-500"}
               ${color.name === "orange" && "bg-orange-500"}
-              ${
-                color.value === userColor
-                  ? "scale-105 rounded-sm opacity-100"
-                  : ""
-              }
+              ${color.value === userColor ? "scale-105" : ""}
               `}
             >
               {color.value === userColor && <BiCheck size="16" className="" />}
