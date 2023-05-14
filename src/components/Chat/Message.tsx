@@ -76,8 +76,8 @@ const Message: React.FC<IMessage> = ({ message }) => {
           <p
             className={`flex flex-col justify-center rounded-b-lg ${
               user?.uid === message.senderId
-                ? "ml-[54px] rounded-l-lg bg-zinc-700 text-left"
-                : "mr-[54px] rounded-r-lg bg-zinc-600 text-right"
+                ? "ml-[54px] rounded-l-lg bg-indigo-600 text-left"
+                : "mr-[54px] rounded-r-lg bg-indigo-500 text-right"
             }   p-1  px-2 `}
           >
             {message.text}
