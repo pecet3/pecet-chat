@@ -125,11 +125,15 @@ const Input: React.FC = () => {
       await updateDoc(doc(db, "userChats", user.uid), {
         [state.chatId + ".lastMessage"]: input.message || "photo",
         [state.chatId + ".date"]: serverTimestamp(),
+        [state.chatId + ".userInfo.displayName"]: state.user.displayName,
+        [state.chatId + ".userInfo.photoURL"]: state.user.photoURL,
       });
 
       await updateDoc(doc(db, "userChats", state.user.uid), {
         [state.chatId + ".lastMessage"]: input.message || "photo",
         [state.chatId + ".date"]: serverTimestamp(),
+        [state.chatId + ".userInfo.displayName"]: user.displayName,
+        [state.chatId + ".userInfo.photoURL"]: user.photoURL,
       });
     } catch (err) {
       alert(err);
