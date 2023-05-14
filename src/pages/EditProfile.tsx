@@ -2,7 +2,7 @@ import React from "react";
 import { nanoid } from "nanoid";
 import { useNavigate } from "react-router-dom";
 import { BiImageAdd, BiCheck } from "react-icons/bi";
-import { updateProfile, User } from "firebase/auth";
+import { updateProfile, User, updatePassword, signOut } from "firebase/auth";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { doc, setDoc, getDoc } from "firebase/firestore";
 import { auth, storage, db } from "../firebaseConfig";
@@ -78,6 +78,11 @@ const EditProfile: React.FC = () => {
 
     try {
       if (user === null) return;
+      if (input.password !== "") {
+        const user = auth.currentUser;
+        if (user) await updatePassword(user, input.password);
+        signOut(auth);
+      }
       if (input.file === null || input.file === undefined) {
         await updateProfile(auth.currentUser as User, {
           displayName: input.name.trim() === "" ? user.displayName : input.name,
@@ -128,6 +133,16 @@ const EditProfile: React.FC = () => {
           value={input.name}
           placeholder="Name"
           onChange={registerOnChange}
+        />
+        <input
+          type="password"
+          name="password"
+          className="inputElement"
+          value={input.password}
+          placeholder="Password"
+          onChange={registerOnChange}
+          minLength={6}
+          // pattern="(?=^.{6,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"
         />
         <input
           type="file"
