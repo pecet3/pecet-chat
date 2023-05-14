@@ -80,8 +80,8 @@ const MessagePublic: React.FC<IMessage> = ({ message }) => {
               message.color ? "bg-" + message.color : "bg-indigo-600"
             } ${
               user?.uid === message.senderId
-                ? "items-end rounded-l-lg text-right"
-                : "items-start rounded-r-lg  text-left"
+                ? "ml-[54px] items-end rounded-l-lg text-right"
+                : "mr-[54px] items-start rounded-r-lg  text-left"
             } p-1 px-2 
             ${message.color === "white" && "text-black"}`}
           >
