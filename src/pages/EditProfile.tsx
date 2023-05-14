@@ -150,6 +150,15 @@ const EditProfile: React.FC = () => {
               bg-${color.value} ${
                 color.name === "black" ? "text-white" : "text-black"
               }
+              ${color.name === "black" && "bg-black"}
+              ${color.name === "white" && "bg-white"}
+              ${color.name === "red" && "bg-red-500"}
+              ${color.name === "blue" && "bg-blue-500"}
+              ${color.name === "green" && "bg-green-500"}
+              ${color.name === "yellow" && "bg-yellow-500"}
+              ${color.name === "pink" && "bg-pink-400"}
+              ${color.name === "purple" && "bg-purple-500"}
+              ${color.name === "orange" && "bg-orange-500"}
               ${
                 color.value === userColor
                   ? "scale-105 rounded-sm opacity-100"
