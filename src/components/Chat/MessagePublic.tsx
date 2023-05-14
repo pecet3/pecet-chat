@@ -76,11 +76,14 @@ const MessagePublic: React.FC<IMessage> = ({ message }) => {
       <span className="flex flex-col">
         {message && message.text !== "" && (
           <p
-            className={`m-0 flex flex-col justify-end rounded-b-lg ${
+            className={`m-0 flex flex-col justify-end rounded-b-lg  ${
+              message.color ? "bg-" + message.color : "bg-indigo-600"
+            } ${
               user?.uid === message.senderId
-                ? "items-end rounded-l-lg bg-indigo-700 text-right"
-                : "items-start rounded-r-lg bg-indigo-600 text-left"
-            } p-1 px-2 `}
+                ? "items-end rounded-l-lg text-right"
+                : "items-start rounded-r-lg  text-left"
+            } p-1 px-2 
+            ${message.color === "white" && "text-black"}`}
           >
             {message.text}
           </p>
