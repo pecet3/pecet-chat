@@ -2,7 +2,13 @@ import React from "react";
 import { nanoid } from "nanoid";
 import { useNavigate } from "react-router-dom";
 import { BiImageAdd, BiCheck } from "react-icons/bi";
-import { updateProfile, User, updatePassword, signOut } from "firebase/auth";
+import {
+  updateProfile,
+  User,
+  updatePassword,
+  updateEmail,
+  signOut,
+} from "firebase/auth";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { doc, setDoc, getDoc } from "firebase/firestore";
 import { auth, storage, db } from "../firebaseConfig";
@@ -57,7 +63,7 @@ const EditProfile: React.FC = () => {
     getUserColor();
   }, []);
 
-  const registerOnChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+  const elementOnChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const inputElement = e.target as HTMLInputElement;
     setInput({
       ...input,
@@ -78,11 +84,14 @@ const EditProfile: React.FC = () => {
 
     try {
       if (user === null) return;
-      if (input.password !== "") {
+      if (input.password !== "" || input.email !== "") {
         const user = auth.currentUser;
-        if (user) await updatePassword(user, input.password);
+        if (!user) return;
+        if (input.password !== "") await updatePassword(user, input.password);
+        else if (input.email !== "") await updateEmail(user, input.email);
         signOut(auth);
       }
+
       if (input.file === null || input.file === undefined) {
         await updateProfile(auth.currentUser as User, {
           displayName: input.name.trim() === "" ? user.displayName : input.name,
@@ -132,7 +141,17 @@ const EditProfile: React.FC = () => {
           maxLength={16}
           value={input.name}
           placeholder="Name"
-          onChange={registerOnChange}
+          onChange={elementOnChange}
+        />
+        <input
+          type="email"
+          className="inputElement"
+          name="email"
+          minLength={3}
+          maxLength={16}
+          value={input.email}
+          placeholder="E-mail"
+          onChange={elementOnChange}
         />
         <input
           type="password"
@@ -140,7 +159,7 @@ const EditProfile: React.FC = () => {
           className="inputElement"
           value={input.password}
           placeholder="Password"
-          onChange={registerOnChange}
+          onChange={elementOnChange}
           minLength={6}
           // pattern="(?=^.{6,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"
         />
@@ -149,7 +168,7 @@ const EditProfile: React.FC = () => {
           name="file"
           id="filee"
           className="hidden"
-          onChange={registerOnChange}
+          onChange={elementOnChange}
         />
         <label
           htmlFor="filee"
