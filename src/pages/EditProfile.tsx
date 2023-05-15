@@ -91,9 +91,9 @@ const EditProfile: React.FC = () => {
           uid: user.uid,
           displayName: input.name.trim() === "" ? user.displayName : input.name,
           email: user.email,
-          color: userColor,
+          color: userColor || "black",
         });
-      } else {
+      } else if (input.file !== null) {
         const storageRef = ref(storage, `${input.name}_${nanoid()}`);
         await uploadBytesResumable(storageRef, input.file);
 
