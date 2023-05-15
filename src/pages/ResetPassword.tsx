@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { sendPasswordResetEmail } from "firebase/auth";
 import { auth } from "../firebaseConfig";
 import Header from "../components/Header";
@@ -27,29 +28,31 @@ const PasswordReset: React.FC = () => {
   return (
     <div>
       {isResetSent ? (
-        <p>
-          Wiadomość z instrukcją resetowania hasła została wysłana na podany
-          adres e-mail.
+        <p className="my-10 text-2xl">
+          Email with link to reset the password has been sent.
         </p>
       ) : (
         <>
           <Header />
           <form onSubmit={handleResetPassword} className="form">
             <p className="text-sm">
-              Don't worry if you forgot a password. Write down your email
-              adress, then We send mail with link to reset the password.
+              Don't worry if you forgot a password. Enter your email adress,
+              then We send mail with link to reset the password.
             </p>
             <input
               type="email"
               value={email}
               onChange={handleEmailChange}
-              placeholder="enter your email address"
+              placeholder="email address"
               required
               className="inputElement"
             />
             <button type="submit" className="submitButton">
               Send me an email
             </button>
+            <Link to="/" className="text-red-700 underline">
+              Cancel
+            </Link>
             {error && <p>{error}</p>}
           </form>
         </>
