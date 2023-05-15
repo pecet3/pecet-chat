@@ -34,11 +34,11 @@ const PasswordReset: React.FC = () => {
       ) : (
         <>
           <Header />
-          <form onSubmit={handleResetPassword} className="form">
-            <p className="text-sm">
+          <form onSubmit={handleResetPassword} className="form max-w-sm">
+            <legend className="text-sm">
               Don't worry if you forgot a password. Enter your email adress,
               then We send mail with link to reset the password.
-            </p>
+            </legend>
             <input
               type="email"
               value={email}
