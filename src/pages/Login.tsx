@@ -92,6 +92,9 @@ const Login: React.FC = () => {
             <Link to="/register">Register Here</Link>
           </p>
         </span>
+        <p className="text-blue-700 underline">
+          <Link to="/resetPassword">I forgot a password</Link>
+        </p>
       </form>
       {errorMessage !== "" && (
         <p className="my-3 text-xl text-violet-700">{errorMessage}</p>
