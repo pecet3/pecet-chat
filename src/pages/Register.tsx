@@ -47,33 +47,45 @@ const Register: React.FC = () => {
   ): Promise<IRegisterData | void> => {
     e.preventDefault();
 
-    if (registerInput.file === null || registerInput.file === undefined)
-      return setErrorMessage("Avatar is required");
-
     try {
       const response = await createUserWithEmailAndPassword(
         auth,
         registerInput.email,
         registerInput.password
       );
-
-      const storageRef = ref(storage, `${registerInput.name}_${nanoid()}`);
-      await uploadBytesResumable(storageRef, registerInput.file);
-
-      await getDownloadURL(storageRef).then(async (downloadURL) => {
+      if (registerInput.file === null || registerInput.file === undefined) {
         await updateProfile(response.user, {
           displayName: registerInput.name,
-          photoURL: downloadURL,
+          photoURL:
+            "https://thumbs.dreamstime.com/b/male-avatar-profile-picture-vector-illustations-91554015.jpg",
         });
         await setDoc(doc(db, "users", response.user.uid), {
           uid: response.user.uid,
           displayName: response.user.displayName,
           email: response.user.email,
-          photoURL: downloadURL,
+          photoURL:
+            "https://thumbs.dreamstime.com/b/male-avatar-profile-picture-vector-illustations-91554015.jpg",
         });
+      } else if (registerInput.file !== null) {
+        const storageRef = ref(storage, `${registerInput.name}_${nanoid()}`);
+        await uploadBytesResumable(storageRef, registerInput.file);
 
-        await setDoc(doc(db, "userChats", response.user.uid), {});
-      });
+        await getDownloadURL(storageRef).then(async (downloadURL) => {
+          await updateProfile(response.user, {
+            displayName: registerInput.name,
+            photoURL: downloadURL,
+          });
+          await setDoc(doc(db, "users", response.user.uid), {
+            uid: response.user.uid,
+            displayName: response.user.displayName,
+            email: response.user.email,
+            photoURL: downloadURL,
+          });
+        });
+      }
+
+      await setDoc(doc(db, "userChats", response.user.uid), {});
+
       navigate("/");
     } catch (err: any) {
       setErrorMessage(err.code);
