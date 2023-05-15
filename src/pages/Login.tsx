@@ -92,7 +92,7 @@ const Login: React.FC = () => {
             <Link to="/register">Register Here</Link>
           </p>
         </span>
-        <p className="text-blue-700 underline">
+        <p className=" m-0 text-blue-700 underline">
           <Link to="/resetPassword">I forgot a password</Link>
         </p>
       </form>
