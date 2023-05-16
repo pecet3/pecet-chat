@@ -1,5 +1,5 @@
 import React from "react";
-import { BsFillArrowDownCircleFill } from "react-icons/bs";
+import { BsFillArrowDownCircleFill, BsList } from "react-icons/bs";
 import ChatContext, { IChatContext } from "../../context/ChatContext";
 import Messages from "./Messages";
 import Input from "./Input";
@@ -21,6 +21,9 @@ const Chat: React.FC = () => {
           state.isPublic ? "bg-zinc-200 text-black" : "bg-slate-500 "
         } px-2 py-5 text-slate-200`}
       >
+        <button>
+          <BsList size="28" className="text-black" />
+        </button>
         <p
           className={`font-bold ${
             state.isPublic ? "text-black" : "text-white"
@@ -40,6 +43,7 @@ const Chat: React.FC = () => {
           </button>
         </span>
       </div>
+
       <Messages />
       <Input />
     </div>
