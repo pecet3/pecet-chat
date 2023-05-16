@@ -23,8 +23,6 @@ const PublicRooms: React.FC = () => {
           className="rounded-md px-1"
         >
           <option value="room1">#room1</option>
-          <option value="room2">#room2</option>
-          <option value="room3">#room3</option>
         </select>
         <button className="submitButton p-0 px-1" onClick={handleClick}>
           Enter
