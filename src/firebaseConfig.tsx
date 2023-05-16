@@ -8,12 +8,12 @@ import { getFirestore } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyCsC0mV0AsdVkuebK4CPMmVtwkTSRQHPTU",
+  apiKey: import.meta.env.VITE_API_KEY,
   authDomain: "pecetchat.firebaseapp.com",
   projectId: "pecetchat",
   storageBucket: "pecetchat.appspot.com",
-  messagingSenderId: "570619898052",
-  appId: "1:570619898052:web:618ebbaa4b9b3173c50191",
+  messagingSenderId: import.meta.env.SENDER_ID,
+  appId: import.meta.env.APP_ID,
 };
 
 // Initialize Firebase
