@@ -101,6 +101,7 @@ const EditProfile: React.FC = () => {
           displayName: input.name.trim() === "" ? user.displayName : input.name,
           email: user.email,
           color: userColor || "black",
+          photoURL: user.photoURL,
         });
       } else if (input.file !== null) {
         const storageRef = ref(storage, `${input.name}_${nanoid()}`);
