@@ -27,6 +27,7 @@ const Register: React.FC = () => {
   const navigate = useNavigate();
 
   const [errorMessage, setErrorMessage] = React.useState("");
+  const [isSuccess, setIsSuccess] = React.useState(false);
 
   const registerOnChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const inputElement = e.target as HTMLInputElement;
@@ -86,7 +87,10 @@ const Register: React.FC = () => {
 
       await setDoc(doc(db, "userChats", response.user.uid), {});
 
-      navigate("/");
+      setIsSuccess(true);
+      setTimeout(() => {
+        navigate("/");
+      }, 15000);
     } catch (err: any) {
       setErrorMessage(err.code);
     }
@@ -94,62 +98,69 @@ const Register: React.FC = () => {
   return (
     <>
       <Header />
-      <form className="form" onSubmit={handleSubmit}>
-        <legend className="legend">Enter your register data</legend>
-        <input
-          type="text"
-          className="inputElement"
-          name="name"
-          minLength={3}
-          maxLength={16}
-          value={registerInput.name}
-          placeholder="Name"
-          onChange={registerOnChange}
-        />
-        <input
-          type="email"
-          className="inputElement"
-          name="email"
-          value={registerInput.email}
-          placeholder="Email"
-          onChange={registerOnChange}
-          required={true}
-          minLength={5}
-        />
-        <input
-          type="password"
-          name="password"
-          className="inputElement"
-          value={registerInput.password}
-          placeholder="Password"
-          onChange={registerOnChange}
-          minLength={6}
-          // pattern="(?=^.{6,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"
-          required={true}
-        />
-        <input
-          type="file"
-          name="file"
-          id="filee"
-          className="hidden"
-          onChange={registerOnChange}
-        />
-        <label
-          htmlFor="filee"
-          className="flex items-center hover:cursor-pointer"
-        >
-          <BiImageAdd size="32" />
-          <p>Add an Avatar</p>
-        </label>
-        <button className="submitButton  px-6">Sign up</button>
-        <span>
-          Do you have an account?
-          <p className="text-blue-700 underline">
-            <Link to="/login">Login Here</Link>
-          </p>
-        </span>
-      </form>
-      <p>{errorMessage !== "" && errorMessage}</p>
+      {!isSuccess ? (
+        <>
+          {" "}
+          <form className="form" onSubmit={handleSubmit}>
+            <legend className="legend">Enter your register data</legend>
+            <input
+              type="text"
+              className="inputElement"
+              name="name"
+              minLength={3}
+              maxLength={16}
+              value={registerInput.name}
+              placeholder="Name"
+              onChange={registerOnChange}
+            />
+            <input
+              type="email"
+              className="inputElement"
+              name="email"
+              value={registerInput.email}
+              placeholder="Email"
+              onChange={registerOnChange}
+              required={true}
+              minLength={5}
+            />
+            <input
+              type="password"
+              name="password"
+              className="inputElement"
+              value={registerInput.password}
+              placeholder="Password"
+              onChange={registerOnChange}
+              minLength={6}
+              // pattern="(?=^.{6,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"
+              required={true}
+            />
+            <input
+              type="file"
+              name="file"
+              id="filee"
+              className="hidden"
+              onChange={registerOnChange}
+            />
+            <label
+              htmlFor="filee"
+              className="flex items-center hover:cursor-pointer"
+            >
+              <BiImageAdd size="32" />
+              <p>Add an Avatar</p>
+            </label>
+            <button className="submitButton  px-6">Sign up</button>
+            <span>
+              Do you have an account?
+              <p className="text-blue-700 underline">
+                <Link to="/login">Login Here</Link>
+              </p>
+            </span>
+          </form>
+          <p>{errorMessage !== "" && errorMessage}</p>
+        </>
+      ) : (
+        <h2>We send an email to you with link to activate your profile</h2>
+      )}
     </>
   );
 };
