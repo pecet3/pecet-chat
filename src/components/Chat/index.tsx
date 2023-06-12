@@ -21,7 +21,7 @@ const Chat: React.FC = () => {
           state.isPublic ? "bg-zinc-200 text-black" : "bg-slate-500 "
         } px-2 py-5 text-slate-200`}
       >
-        <button>
+        <button className="flex sm:hidden ">
           <BsList size="28" className="text-black" />
         </button>
         <p
