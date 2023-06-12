@@ -6,6 +6,7 @@ import Input from "./Input";
 
 const Chat: React.FC = () => {
   const { state, dispatch } = React.useContext(ChatContext) as IChatContext;
+  const isPublic = state.isPublic;
 
   const handleOnPublic = () => {
     dispatch({ type: "ACTIVATE_GO_DOWN", payload: {} });
@@ -15,29 +16,25 @@ const Chat: React.FC = () => {
   };
   return (
     <div
-      className={`basis-2/3 flex-col justify-between ${
-        state.isPublic ? "bg-zinc-400 " : "bg-slate-400 "
+      className={`flex-col justify-between md:basis-2/3 ${
+        isPublic ? "bg-zinc-400 " : "bg-slate-400 "
       }`}
     >
       <div
         className={`flex justify-between ${
-          state.isPublic ? "bg-zinc-200 text-black" : "bg-slate-500 "
+          isPublic ? "bg-zinc-200 text-black" : "bg-slate-500 "
         } px-2 py-5 text-slate-200`}
       >
         <button className="flex sm:hidden" onClick={handleOnSidebar}>
           <BsList size="28" className="text-black" />
         </button>
-        <p
-          className={`font-bold ${
-            state.isPublic ? "text-black" : "text-white"
-          }`}
-        >
-          {state.isPublic ? "#" + state.room : state.user.displayName}
+        <p className={`font-bold ${isPublic ? "text-black" : "text-white"}`}>
+          {isPublic ? "#" + state.room : state.user.displayName}
         </p>
         <span className="flex text-black">
           <button
             className={`flex items-center gap-1 ${
-              state.isPublic ? "text-black" : "text-white "
+              isPublic ? "text-black" : "text-white "
             }`}
             onClick={handleOnPublic}
           >
