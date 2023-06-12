@@ -1,6 +1,6 @@
 import React from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebaseConfig";
+import { auth } from "../firebase";
 import { Link, useNavigate } from "react-router-dom";
 import Context, { IAuthContext } from "../context/AuthContext";
 import Header from "../components/Header";

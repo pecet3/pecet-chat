@@ -11,7 +11,7 @@ import {
 } from "firebase/auth";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { doc, setDoc, getDoc } from "firebase/firestore";
-import { auth, storage, db } from "../firebaseConfig";
+import { auth, storage, db } from "../firebase";
 import { Link } from "react-router-dom";
 import Header from "../components/Header";
 import AuthContext, { IAuthContext } from "../context/AuthContext";

@@ -11,7 +11,7 @@ import {
   doc,
   serverTimestamp,
 } from "firebase/firestore";
-import { db } from "../../firebaseConfig";
+import { db } from "../../firebase";
 import AuthContext, { IAuthContext } from "../../context/AuthContext";
 
 const Search: React.FC = () => {

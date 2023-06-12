@@ -1,6 +1,6 @@
 import React from "react";
 import { doc, onSnapshot, DocumentData } from "firebase/firestore";
-import { db } from "../../firebaseConfig";
+import { db } from "../../firebase";
 import AuthContext, { IAuthContext } from "../../context/AuthContext";
 import ChatContext, { IChatContext } from "../../context/ChatContext";
 

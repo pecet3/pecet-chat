@@ -1,6 +1,6 @@
 import React from "react";
 import { User, onAuthStateChanged } from "firebase/auth";
-import { auth } from "../firebaseConfig";
+import { auth } from "../firebase";
 
 interface IProvider {
   children: React.ReactNode;

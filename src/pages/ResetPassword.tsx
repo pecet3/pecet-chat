@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { sendPasswordResetEmail } from "firebase/auth";
-import { auth } from "../firebaseConfig";
+import { auth } from "../firebase";
 import Header from "../components/Header";
 
 const PasswordReset: React.FC = () => {

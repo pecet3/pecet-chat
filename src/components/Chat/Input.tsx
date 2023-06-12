@@ -9,7 +9,7 @@ import {
   serverTimestamp,
 } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
-import { db, storage } from "../../firebaseConfig";
+import { db, storage } from "../../firebase";
 import ChatContext, { IChatContext } from "../../context/ChatContext";
 import AuthContext, { IAuthContext } from "../../context/AuthContext";
 import { nanoid } from "nanoid";

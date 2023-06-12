@@ -1,6 +1,6 @@
 import React from "react";
 import { signOut } from "firebase/auth";
-import { auth } from "../../firebaseConfig";
+import { auth } from "../../firebase";
 import Context, { IAuthContext } from "../../context/AuthContext";
 import { useNavigate, Link } from "react-router-dom";
 import Cookies from "universal-cookie";

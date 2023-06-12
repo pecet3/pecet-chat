@@ -2,7 +2,7 @@ import React from "react";
 import Message from "./Message";
 import MessagePublic from "./MessagePublic";
 import { onSnapshot, doc, DocumentData } from "firebase/firestore";
-import { db } from "../../firebaseConfig";
+import { db } from "../../firebase";
 import ChatContext, { IChatContext } from "../../context/ChatContext";
 
 const Messages: React.FC = () => {
