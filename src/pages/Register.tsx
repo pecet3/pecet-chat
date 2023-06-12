@@ -7,7 +7,6 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { doc, setDoc } from "firebase/firestore";
 import { auth, storage, db } from "../firebase";
 import { Link } from "react-router-dom";
-import AuthContext, { IAuthContext } from "../context/AuthContext";
 import Header from "../components/Header";
 
 export interface IRegisterData {
