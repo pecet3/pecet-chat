@@ -7,8 +7,11 @@ import Input from "./Input";
 const Chat: React.FC = () => {
   const { state, dispatch } = React.useContext(ChatContext) as IChatContext;
 
-  const handleOnClick = () => {
+  const handleOnPublic = () => {
     dispatch({ type: "ACTIVATE_GO_DOWN", payload: {} });
+  };
+  const handleOnSidebar = () => {
+    dispatch({ type: "TOGGLE_SIDEBAR", payload: {} });
   };
   return (
     <div
@@ -21,7 +24,7 @@ const Chat: React.FC = () => {
           state.isPublic ? "bg-zinc-200 text-black" : "bg-slate-500 "
         } px-2 py-5 text-slate-200`}
       >
-        <button className="flex sm:hidden ">
+        <button className="flex sm:hidden" onClick={handleOnSidebar}>
           <BsList size="28" className="text-black" />
         </button>
         <p
@@ -36,7 +39,7 @@ const Chat: React.FC = () => {
             className={`flex items-center gap-1 ${
               state.isPublic ? "text-black" : "text-white "
             }`}
-            onClick={handleOnClick}
+            onClick={handleOnPublic}
           >
             <p className="text-xs">the last message</p>
             <BsFillArrowDownCircleFill size="24" />
