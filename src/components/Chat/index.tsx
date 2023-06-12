@@ -7,6 +7,7 @@ import Input from "./Input";
 const Chat: React.FC = () => {
   const { state, dispatch } = React.useContext(ChatContext) as IChatContext;
   const isPublic = state.isPublic;
+  const isSidebar = state.isSidebar;
 
   const handleOnPublic = () => {
     dispatch({ type: "ACTIVATE_GO_DOWN", payload: {} });
@@ -18,7 +19,8 @@ const Chat: React.FC = () => {
     <div
       className={`flex-col justify-between md:basis-2/3 ${
         isPublic ? "bg-zinc-400 " : "bg-slate-400 "
-      }`}
+      }
+       ${isSidebar && "hidden"}`}
     >
       <div
         className={`flex justify-between ${
