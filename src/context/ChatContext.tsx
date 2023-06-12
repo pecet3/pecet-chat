@@ -12,10 +12,11 @@ interface IChatState {
   isPublic: boolean;
   room: string;
   goDown: boolean;
+  isSidebar: boolean;
 }
 
 type TChatAction = {
-  type: "CHANGE_USER" | "CHANGE_ROOM" | "ACTIVATE_GO_DOWN";
+  type: "CHANGE_USER" | "CHANGE_ROOM" | "ACTIVATE_GO_DOWN" | "TOGGLE_SIDEBAR";
   payload: DocumentData;
 };
 
@@ -31,6 +32,7 @@ export const ChatContextProvider: React.FC<IProvider> = ({ children }) => {
     isPublic: true,
     room: "room1",
     goDown: false,
+    isSidebar: false,
   };
   const chatReducer = (state: IChatState, action: TChatAction) => {
     if (!user || !action.payload) return state;
@@ -44,6 +46,7 @@ export const ChatContextProvider: React.FC<IProvider> = ({ children }) => {
           user: action.payload,
           goDown: state.goDown,
           isPublic: false,
+          isSidebar: false,
           room: "room1",
         };
       case "CHANGE_ROOM":
@@ -56,6 +59,11 @@ export const ChatContextProvider: React.FC<IProvider> = ({ children }) => {
         return {
           ...state,
           goDown: !state.goDown,
+        };
+      case "TOGGLE_SIDEBAR":
+        return {
+          ...state,
+          isSidebar: !state.isSidebar,
         };
       default:
         return state;
