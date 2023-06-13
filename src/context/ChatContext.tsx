@@ -32,7 +32,7 @@ export const ChatContextProvider: React.FC<IProvider> = ({ children }) => {
     isPublic: true,
     room: "room1",
     goDown: false,
-    isSidebar: false,
+    isSidebar: true,
   };
   const chatReducer = (state: IChatState, action: TChatAction) => {
     if (!user || !action.payload) return state;
@@ -46,7 +46,7 @@ export const ChatContextProvider: React.FC<IProvider> = ({ children }) => {
           user: action.payload,
           goDown: state.goDown,
           isPublic: false,
-          isSidebar: false,
+          isSidebar: true,
           room: "room1",
         };
       case "CHANGE_ROOM":
