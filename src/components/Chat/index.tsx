@@ -16,11 +16,11 @@ const Chat: React.FC = () => {
     dispatch({ type: "TOGGLE_SIDEBAR", payload: {} });
   };
   return (
-    <div
-      className={`flex-col justify-between md:basis-2/3 ${
-        isPublic ? "bg-zinc-400 " : "bg-slate-400 "
-      }
-       ${isSidebar && "hidden"}`}
+    <main
+      className={`flex-col justify-between md:basis-2/3
+      ${!isSidebar ? "" : "hidden md:block"}
+       ${isPublic ? "bg-zinc-400 " : "bg-slate-400 "}
+       "}`}
     >
       <div
         className={`flex justify-between ${
@@ -48,7 +48,7 @@ const Chat: React.FC = () => {
 
       <Messages />
       <Input />
-    </div>
+    </main>
   );
 };
 
