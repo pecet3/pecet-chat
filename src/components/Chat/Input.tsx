@@ -1,5 +1,5 @@
 import React from "react";
-import { BiImageAdd, BiCloudUpload } from "react-icons/bi";
+import { BiImageAdd } from "react-icons/bi";
 import {
   updateDoc,
   getDoc,
