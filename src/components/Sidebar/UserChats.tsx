@@ -30,7 +30,6 @@ const UserChats: React.FC = () => {
 
   return (
     <>
-      <p>{innerWidth}</p>
       {chats &&
         Object.entries(chats)
           .sort((a, b) => b[1].date - a[1].date)
