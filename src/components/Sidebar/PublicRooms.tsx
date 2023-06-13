@@ -9,8 +9,9 @@ const PublicRooms: React.FC = () => {
     setRoom(e.currentTarget.value);
   };
 
-  const handleClick = () => {
+  const handleClick = async () => {
     dispatch({ type: "CHANGE_ROOM", payload: { room } });
+    await dispatch({ type: "TOGGLE_SIDEBAR", payload: {} });
   };
 
   return (
