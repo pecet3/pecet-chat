@@ -1,15 +1,19 @@
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { doc, onSnapshot, DocumentData } from "firebase/firestore";
 import { db } from "../../firebase";
 import AuthContext, { IAuthContext } from "../../context/AuthContext";
 import ChatContext, { IChatContext } from "../../context/ChatContext";
+import { useGetWidth } from "../../helpers/useGetWidth";
 
 const UserChats: React.FC = () => {
-  const [chats, setChats] = React.useState<DocumentData | undefined>(undefined);
+  const [chats, setChats] = useState<DocumentData | undefined>(undefined);
 
-  const { user } = React.useContext(AuthContext) as IAuthContext;
-  const { dispatch } = React.useContext(ChatContext) as IChatContext;
-  React.useEffect(() => {
+  const { user } = useContext(AuthContext) as IAuthContext;
+  const { dispatch } = useContext(ChatContext) as IChatContext;
+
+  const innerWidth = useGetWidth();
+
+  useEffect(() => {
     if (!user) return;
     const unsub = onSnapshot(doc(db, "userChats", user.uid), (doc) => {
       setChats(doc.data());
@@ -17,17 +21,21 @@ const UserChats: React.FC = () => {
     return () => unsub();
   }, [user?.uid]);
 
-  const handleSelect = (user: DocumentData) => {
+  const handleSelect = async (user: DocumentData) => {
     if (!chats) return;
     dispatch({ type: "CHANGE_USER", payload: user });
+    if (innerWidth > 768) return;
+    await dispatch({ type: "TOGGLE_SIDEBAR", payload: {} });
   };
+
   return (
     <>
+      <p>{innerWidth}</p>
       {chats &&
         Object.entries(chats)
           .sort((a, b) => b[1].date - a[1].date)
           .map((chat) => (
-            <div
+            <button
               key={chat[0]}
               className="flex items-center gap-1 py-1 text-left duration-200 hover:bg-slate-600"
               onClick={() => handleSelect(chat[1].userInfo)}
@@ -54,7 +62,7 @@ const UserChats: React.FC = () => {
                   )
                 )}
               </span>
-            </div>
+            </button>
           ))}
     </>
   );
