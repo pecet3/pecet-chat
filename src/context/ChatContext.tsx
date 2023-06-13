@@ -16,7 +16,12 @@ interface IChatState {
 }
 
 type TChatAction = {
-  type: "CHANGE_USER" | "CHANGE_ROOM" | "ACTIVATE_GO_DOWN" | "TOGGLE_SIDEBAR";
+  type:
+    | "CHANGE_USER"
+    | "CHANGE_ROOM"
+    | "ACTIVATE_GO_DOWN"
+    | "TOGGLE_SIDEBAR"
+    | "SET_SIDEBAR";
   payload: DocumentData;
 };
 
@@ -67,6 +72,11 @@ export const ChatContextProvider: React.FC<IProvider> = ({ children }) => {
         };
       default:
         return state;
+      case "SET_SIDEBAR":
+        return {
+          ...state,
+          isSidebar: action.payload.isSidebar,
+        };
     }
   };
   const [state, dispatch] = React.useReducer<
