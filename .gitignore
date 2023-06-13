@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+.firebaserc
+database.rules.jsonfirebase.json
+firestore.rulesfirestore.indexes.json
 .env
 
 # Editor directories and files
