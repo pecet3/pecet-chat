@@ -18,7 +18,7 @@ export const AuthContextProvider: React.FC<IProvider> = ({ children }) => {
   const [info, setInfo] = React.useState<IAuthContext["info"]>("");
   React.useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser((prev) => (prev = currentUser));
+      setUser(currentUser);
     });
 
     return () => unSubscribe();
