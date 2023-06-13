@@ -21,7 +21,7 @@ type TChatAction = {
     | "CHANGE_ROOM"
     | "ACTIVATE_GO_DOWN"
     | "TOGGLE_SIDEBAR"
-    | "SET_SIDEBAR";
+    | "SET_FALSE_SIDEBAR";
   payload: DocumentData;
 };
 
@@ -70,13 +70,14 @@ export const ChatContextProvider: React.FC<IProvider> = ({ children }) => {
           ...state,
           isSidebar: !state.isSidebar,
         };
-      default:
-        return state;
-      case "SET_SIDEBAR":
+      case "SET_FALSE_SIDEBAR":
         return {
           ...state,
-          isSidebar: action.payload.isSidebar,
+          isSidebar: false,
         };
+
+      default:
+        return state;
     }
   };
   const [state, dispatch] = React.useReducer<
