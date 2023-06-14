@@ -18,7 +18,7 @@ const Chat: React.FC = () => {
   return (
     <main
       className={`justify-between md:basis-2/3
-      ${!isSidebar ? "" : "hidden flex-col md:flex"}
+      ${!isSidebar ? "" : "hidden w-[800px] flex-col md:flex"}
        ${isPublic ? "bg-zinc-400 " : "bg-slate-400 "}
        "}`}
     >
@@ -35,7 +35,7 @@ const Chat: React.FC = () => {
         </p>
         <span className="flex text-black">
           <button
-            className={`mr-1 flex items-center gap-1 ${
+            className={`flex items-center gap-1 ${
               isPublic ? "text-black" : "text-white "
             }`}
             onClick={handleOnPublic}
