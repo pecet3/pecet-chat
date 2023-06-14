@@ -71,10 +71,10 @@ const Message: React.FC<IMessage> = ({ message }) => {
             : date.date + date.time.slice(10)}
         </p>
       </span>
-      <span className="flex flex-col gap-1">
+      <span className="flex max-w-[300px] flex-col gap-1 md:max-w-md">
         {message && message.text !== "" && (
           <p
-            className={`flex flex-col justify-center rounded-b-lg ${
+            className={`flex flex-col justify-center break-words rounded-b-lg ${
               user?.uid === message.senderId
                 ? "ml-[54px] rounded-l-lg bg-indigo-600 text-left"
                 : "mr-[54px] rounded-r-lg bg-indigo-500 text-right"
