@@ -113,6 +113,7 @@ const EditProfile: React.FC = () => {
               input.name.trim() === "" ? user.displayName : input.name,
             photoURL: downloadURL,
           });
+          console.log("hello");
           await setDoc(doc(db, "users", user.uid), {
             uid: user.uid,
             displayName:
