@@ -14,8 +14,8 @@ const Sidebar: React.FC = ({}) => {
   return (
     <aside
       className={` bg-slate-500 ${
-        isSidebar ? "" : "hidden md:block"
-      } md:basis-1/3`}
+        isSidebar ? "w-[800px]" : "hidden sm:flex"
+      } sm:basis-1/3`}
     >
       <Navbar />
       <PublicRooms />
