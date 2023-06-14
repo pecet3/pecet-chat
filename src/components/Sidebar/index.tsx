@@ -14,13 +14,15 @@ const Sidebar: React.FC = ({}) => {
   return (
     <aside
       className={` bg-slate-500 ${
-        isSidebar ? "w-[800px]" : "hidden sm:flex"
+        isSidebar ? "flex-1" : "hidden sm:flex"
       } sm:basis-1/3`}
     >
       <Navbar />
       <PublicRooms />
       <Search />
-      <UserChats />
+      <ul className="flex">
+        <UserChats />
+      </ul>
     </aside>
   );
 };
