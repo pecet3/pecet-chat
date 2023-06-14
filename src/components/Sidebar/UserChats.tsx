@@ -11,7 +11,7 @@ const UserChats: React.FC = () => {
   const { user } = useContext(AuthContext) as IAuthContext;
   const { dispatch } = useContext(ChatContext) as IChatContext;
 
-  const { innerWidth } = useGetWidth();
+  const innerWidth = useGetWidth();
 
   useEffect(() => {
     if (!user) return;
