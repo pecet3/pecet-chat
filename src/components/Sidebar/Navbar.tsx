@@ -29,14 +29,14 @@ const Navbar: React.FC = () => {
   return (
     <>
       <nav className="flex flex-col bg-slate-700 px-2 py-1 text-gray-200">
-        <div className="mx-6 flex justify-between pb-2 md:mx-0 md:justify-center">
-          <span className="flex">
-            <p className="font-bold">pecetChat</p>
-            <TbMessageCircle size="18" className="ml-[2px]" />
+        <div className="flex justify-center pb-2 sm:mx-6 md:mx-0">
+          <span className="m-auto flex text-green-200">
+            <p className="font-bold ">pecetChat</p>
+            <TbMessageCircle size="18" className="ml-[2px] justify-self-end" />
           </span>
           {isSidebar ? (
             <button className="flex md:hidden" onClick={handleOnSidebar}>
-              <BsList size="24" className="text-gray-200" />
+              <BsList size="28" className="text-gray-200" />
             </button>
           ) : null}
         </div>
