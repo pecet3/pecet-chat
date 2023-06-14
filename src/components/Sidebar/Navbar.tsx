@@ -28,10 +28,10 @@ const Navbar: React.FC = () => {
   };
   return (
     <>
-      <nav className="flex flex-col bg-slate-700 p-2 text-gray-200">
-        <div className="mx-6 flex justify-between md:mx-0">
+      <nav className="flex flex-col bg-slate-700 px-2 py-1 text-gray-200">
+        <div className="mx-6 flex justify-between pb-2 md:mx-0 md:justify-center">
           <span className="flex">
-            <h1 className="font-bold">pecetChat</h1>
+            <p className="font-bold">pecetChat</p>
             <TbMessageCircle size="18" className="ml-[2px]" />
           </span>
           {isSidebar ? (
