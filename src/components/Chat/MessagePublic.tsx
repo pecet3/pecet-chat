@@ -66,17 +66,17 @@ const MessagePublic: React.FC<IMessage> = ({ message }) => {
           className="m-auto h-8 w-8 rounded-full object-cover"
         />
         <p
-          className={`w-[54px] break-words text-xs font-semibold text-gray-800 ${
+          className={`max-w-[54px] break-words text-xs font-semibold text-gray-800 ${
             message.color && "text-" + message.color
           } `}
         >
           {message.displayName}
         </p>
       </span>
-      <span className="flex flex-col">
+      <span className="flex max-w-[300px] flex-col gap-1 md:max-w-md">
         {message && message.text !== "" && (
           <p
-            className={`m-0 flex flex-col justify-end rounded-b-lg  ${
+            className={`flex] flex-col justify-end break-words rounded-b-lg ${
               message.color ? "bg-" + message.color : "bg-indigo-600"
             } ${
               user?.uid === message.senderId
