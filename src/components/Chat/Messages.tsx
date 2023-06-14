@@ -27,7 +27,7 @@ const Messages: React.FC = () => {
   }, [state.room]);
 
   return (
-    <div className="flex h-[calc(100%-112px)] flex-col gap-1 overflow-y-scroll p-1">
+    <div className="flex h-[calc(100%-112px)] w-auto flex-col gap-1 overflow-y-scroll p-2">
       {!state.isPublic
         ? messages?.map((message: DocumentData) => (
             <Message message={message} key={message.id} />
