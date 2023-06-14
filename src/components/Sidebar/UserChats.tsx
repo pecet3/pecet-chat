@@ -56,7 +56,9 @@ const UserChats: React.FC = () => {
                 ) : (
                   chat[1].lastMessage && (
                     <p className="truncate text-sm italic text-slate-300">
-                      {chat[1].lastMessage}
+                      {chat[1].lastMessage.length > 30
+                        ? chat[1].lastMessage.slice(0, 30) + "..."
+                        : chat[1].lastMessage}
                     </p>
                   )
                 )}
