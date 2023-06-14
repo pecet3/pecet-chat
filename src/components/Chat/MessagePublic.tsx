@@ -66,7 +66,7 @@ const MessagePublic: React.FC<IMessage> = ({ message }) => {
           className="m-auto h-8 w-8 rounded-full object-cover"
         />
         <p
-          className={`max-w-[54px] break-words text-xs font-semibold text-gray-800 ${
+          className={`mx-2 break-words text-xs font-semibold text-gray-800 ${
             message.color && "text-" + message.color
           } `}
         >
