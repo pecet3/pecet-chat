@@ -3,10 +3,12 @@ import { useState, useEffect } from 'react';
 
 export const useGetWidth = () => {
     const [innerWidth, setInnerWidth] = useState(window.innerWidth);
+    const [innerHeight, setInnerHeight] = useState(window.innerHeight);
 
     useEffect(() => {
         const handleResize = () => {
             setInnerWidth(window.innerWidth);
+            setInnerHeight(window.innerHeight);
         };
         window.addEventListener('resize', handleResize);
 
@@ -15,5 +17,5 @@ export const useGetWidth = () => {
         };
     }, []);
 
-    return innerWidth as number;
+    return { innerWidth, innerHeight }
 }
