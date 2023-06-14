@@ -18,7 +18,7 @@ const Chat: React.FC = () => {
   return (
     <main
       className={`justify-between md:basis-2/3
-      ${!isSidebar ? "" : "hidden w-[800px] flex-col md:flex"}
+      ${!isSidebar ? "flex-1" : "hidden flex-1 flex-col md:block"}
        ${isPublic ? "bg-zinc-400 " : "bg-slate-400 "}
        "}`}
     >
@@ -27,8 +27,8 @@ const Chat: React.FC = () => {
           isPublic ? "bg-zinc-200 text-black" : "bg-slate-500 "
         } px-2 py-5 text-slate-200`}
       >
-        <button className="flex sm:hidden" onClick={handleOnSidebar}>
-          <BsList size="28" className="text-black" />
+        <button className="flex md:hidden " onClick={handleOnSidebar}>
+          <BsList size="24" className="text-black" />
         </button>
         <p className={`font-bold ${isPublic ? "text-black" : "text-white"}`}>
           {isPublic ? "#" + state.room : state.user.displayName}
