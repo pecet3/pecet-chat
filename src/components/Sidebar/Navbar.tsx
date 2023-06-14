@@ -35,7 +35,7 @@ const Navbar: React.FC = () => {
             <TbMessageCircle size="18" className="ml-[2px]" />
           </span>
           {isSidebar ? (
-            <button className="flex sm:hidden" onClick={handleOnSidebar}>
+            <button className="flex md:hidden" onClick={handleOnSidebar}>
               <BsList size="24" className="text-gray-200" />
             </button>
           ) : null}
