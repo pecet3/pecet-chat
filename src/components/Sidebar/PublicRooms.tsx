@@ -1,9 +1,11 @@
 import React from "react";
 import ChatContext, { IChatContext } from "../../context/ChatContext";
+import { useGetWidth } from "../../helpers/useGetWidth";
 
 const PublicRooms: React.FC = () => {
   const [room, setRoom] = React.useState("room1");
   const { dispatch } = React.useContext(ChatContext) as IChatContext;
+  const innerWidth = useGetWidth();
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setRoom(e.currentTarget.value);
@@ -11,6 +13,7 @@ const PublicRooms: React.FC = () => {
 
   const handleClick = async () => {
     dispatch({ type: "CHANGE_ROOM", payload: { room } });
+    if (innerWidth > 768) return;
     await dispatch({ type: "TOGGLE_SIDEBAR", payload: {} });
   };
 
