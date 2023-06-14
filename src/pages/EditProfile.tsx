@@ -171,13 +171,20 @@ const EditProfile: React.FC = () => {
           className="hidden"
           onChange={elementOnChange}
         />
-        <label
-          htmlFor="filee"
-          className="flex items-center hover:cursor-pointer"
-        >
-          <BiImageAdd size="32" />
-          <p>Change an Avatar</p>
-        </label>
+        <div className="flex flex-col items-center gap-2 rounded-md border border-gray-700 p-2">
+          <img
+            src={user!.photoURL || ""}
+            alt="your photo"
+            className="h-16 w-16 rounded-full shadow-lg shadow-gray-500"
+          />
+          <label
+            htmlFor="filee"
+            className="flex flex-col items-center hover:cursor-pointer"
+          >
+            <BiImageAdd size="32" />
+            <p>Change an Avatar</p>
+          </label>
+        </div>
         <p className="mx-4 text-sm">Change color for the public rooms</p>
 
         <div className="grid grid-cols-3 gap-1">
