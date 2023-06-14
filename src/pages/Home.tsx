@@ -7,7 +7,7 @@ const Home: React.FC = () => {
   const { state } = React.useContext(ChatContext) as IChatContext;
   const isSidebar = state.isSidebar;
   return (
-    <main className="flex h-[560px] max-h-full justify-center overflow-hidden rounded-xl shadow-xl shadow-slate-400 md:h-[700px]">
+    <main className="m-auto flex h-[700px] max-h-full w-auto max-w-6xl justify-center overflow-hidden rounded-xl shadow-xl shadow-slate-400">
       {isSidebar && <Sidebar />}
       <Chat />
     </main>
