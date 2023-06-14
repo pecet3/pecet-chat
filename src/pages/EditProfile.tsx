@@ -141,7 +141,7 @@ const EditProfile: React.FC = () => {
           minLength={3}
           maxLength={16}
           value={input.name}
-          placeholder="Name"
+          placeholder={`Name: ${user!.displayName}`}
           onChange={elementOnChange}
         />
         <input
@@ -151,7 +151,7 @@ const EditProfile: React.FC = () => {
           minLength={3}
           maxLength={16}
           value={input.email}
-          placeholder="E-mail"
+          placeholder={`Emai: ${user!.email}`}
           onChange={elementOnChange}
         />
         <input
