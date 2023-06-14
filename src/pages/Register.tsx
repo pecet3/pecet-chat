@@ -26,7 +26,6 @@ const Register: React.FC = () => {
   const navigate = useNavigate();
 
   const [errorMessage, setErrorMessage] = React.useState("");
-  const [isSuccess, setIsSuccess] = React.useState(false);
 
   const registerOnChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const inputElement = e.target as HTMLInputElement;
@@ -57,14 +56,14 @@ const Register: React.FC = () => {
         await updateProfile(response.user, {
           displayName: registerInput.name,
           photoURL:
-            "https://thumbs.dreamstime.com/b/male-avatar-profile-picture-vector-illustations-91554015.jpg",
+            "https://firebasestorage.googleapis.com/v0/b/pecetchat.appspot.com/o/defaultAvatar.webp?alt=media&token=81b2c89a-71b5-4491-a018-6665e79c695e",
         });
         await setDoc(doc(db, "users", response.user.uid), {
           uid: response.user.uid,
           displayName: response.user.displayName,
           email: response.user.email,
           photoURL:
-            "https://thumbs.dreamstime.com/b/male-avatar-profile-picture-vector-illustations-91554015.jpg",
+            "https://firebasestorage.googleapis.com/v0/b/pecetchat.appspot.com/o/defaultAvatar.webp?alt=media&token=81b2c89a-71b5-4491-a018-6665e79c695e",
         });
       } else if (registerInput.file !== null) {
         const storageRef = ref(storage, `${registerInput.name}_${nanoid()}`);
@@ -85,11 +84,7 @@ const Register: React.FC = () => {
       }
 
       await setDoc(doc(db, "userChats", response.user.uid), {});
-
-      setIsSuccess(true);
-      setTimeout(() => {
-        navigate("/");
-      }, 15000);
+      navigate("/");
     } catch (err: any) {
       setErrorMessage(err.code);
     }
@@ -97,69 +92,62 @@ const Register: React.FC = () => {
   return (
     <>
       <Header />
-      {!isSuccess ? (
-        <>
-          {" "}
-          <form className="form" onSubmit={handleSubmit}>
-            <legend className="legend">Enter your register data</legend>
-            <input
-              type="text"
-              className="inputElement"
-              name="name"
-              minLength={3}
-              maxLength={16}
-              value={registerInput.name}
-              placeholder="Name"
-              onChange={registerOnChange}
-            />
-            <input
-              type="email"
-              className="inputElement"
-              name="email"
-              value={registerInput.email}
-              placeholder="Email"
-              onChange={registerOnChange}
-              required={true}
-              minLength={5}
-            />
-            <input
-              type="password"
-              name="password"
-              className="inputElement"
-              value={registerInput.password}
-              placeholder="Password"
-              onChange={registerOnChange}
-              minLength={6}
-              // pattern="(?=^.{6,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"
-              required={true}
-            />
-            <input
-              type="file"
-              name="file"
-              id="filee"
-              className="hidden"
-              onChange={registerOnChange}
-            />
-            <label
-              htmlFor="filee"
-              className="flex items-center hover:cursor-pointer"
-            >
-              <BiImageAdd size="32" />
-              <p>Add an Avatar</p>
-            </label>
-            <button className="submitButton  px-6">Sign up</button>
-            <span>
-              Do you have an account?
-              <p className="text-blue-700 underline">
-                <Link to="/login">Login Here</Link>
-              </p>
-            </span>
-          </form>
-          <p>{errorMessage !== "" && errorMessage}</p>
-        </>
-      ) : (
-        <h2>We send an email to you with link to activate your profile</h2>
-      )}
+      <form className="form" onSubmit={handleSubmit}>
+        <legend className="legend">Enter your register data</legend>
+        <input
+          type="text"
+          className="inputElement"
+          name="name"
+          minLength={3}
+          maxLength={16}
+          value={registerInput.name}
+          placeholder="Name"
+          onChange={registerOnChange}
+        />
+        <input
+          type="email"
+          className="inputElement"
+          name="email"
+          value={registerInput.email}
+          placeholder="Email"
+          onChange={registerOnChange}
+          required={true}
+          minLength={5}
+        />
+        <input
+          type="password"
+          name="password"
+          className="inputElement"
+          value={registerInput.password}
+          placeholder="Password"
+          onChange={registerOnChange}
+          minLength={6}
+          // pattern="(?=^.{6,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"
+          required={true}
+        />
+        <input
+          type="file"
+          name="file"
+          id="filee"
+          className="hidden"
+          onChange={registerOnChange}
+        />
+        <label
+          htmlFor="filee"
+          className="flex items-center hover:cursor-pointer"
+        >
+          <BiImageAdd size="32" />
+          <p>Add an Avatar</p>
+        </label>
+        <button className="submitButton  px-6">Sign up</button>
+        <span>
+          Do you have an account?
+          <p className="text-blue-700 underline">
+            <Link to="/login">Login Here</Link>
+          </p>
+        </span>
+      </form>
+      <p>{errorMessage !== "" && errorMessage}</p>
     </>
   );
 };
