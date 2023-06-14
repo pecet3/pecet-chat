@@ -3,6 +3,12 @@
   padding: 12px;
   text-align: center;
 }
+
+@media(max-width:768px){
+  #root{
+    padding: 6px;
+  }
+}
 body{
   background-color:  rgb(144, 235, 235);
 }
