@@ -11,7 +11,7 @@ const UserChats: React.FC = () => {
   const { user } = useContext(AuthContext) as IAuthContext;
   const { dispatch } = useContext(ChatContext) as IChatContext;
 
-  const innerWidth = useGetWidth();
+  const { innerWidth } = useGetWidth();
 
   useEffect(() => {
     if (!user) return;
@@ -36,7 +36,7 @@ const UserChats: React.FC = () => {
           .map((chat) => (
             <button
               key={chat[0]}
-              className="flex items-center gap-1 py-1 text-left duration-200 hover:bg-slate-600"
+              className="flex items-center gap-1 object-contain py-1 text-left duration-200 hover:bg-slate-600"
               onClick={() => handleSelect(chat[1].userInfo)}
             >
               <img
