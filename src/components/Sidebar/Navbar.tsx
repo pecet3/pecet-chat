@@ -36,7 +36,7 @@ const Navbar: React.FC = () => {
           </span>
           {isSidebar ? (
             <button className="flex sm:hidden" onClick={handleOnSidebar}>
-              <BsList size="28" className="text-gray-200" />
+              <BsList size="24" className="text-gray-200" />
             </button>
           ) : null}
         </div>
