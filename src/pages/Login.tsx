@@ -3,8 +3,9 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
 import { Link, useNavigate } from "react-router-dom";
 import Context, { IAuthContext } from "../context/AuthContext";
-import Header from "../components/Header";
+import Header from "../components/Additional/Header";
 import Cookies from "universal-cookie";
+import { Footer } from "../components/Additional/Footer";
 
 const cookies = new Cookies();
 
@@ -99,6 +100,7 @@ const Login: React.FC = () => {
       {errorMessage !== "" && (
         <p className="my-3 text-xl text-violet-700">{errorMessage}</p>
       )}
+      <Footer />
     </>
   );
 };
