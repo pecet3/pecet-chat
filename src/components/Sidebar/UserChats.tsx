@@ -3,7 +3,7 @@ import { doc, onSnapshot, DocumentData } from "firebase/firestore";
 import { db } from "../../firebase";
 import AuthContext, { IAuthContext } from "../../context/AuthContext";
 import ChatContext, { IChatContext } from "../../context/ChatContext";
-import { useGetWidth } from "../../helpers/useGetWidth";
+import { useSize } from "../../helpers/useSize";
 
 const UserChats: React.FC = () => {
   const [chats, setChats] = useState<DocumentData | undefined>(undefined);
@@ -11,7 +11,7 @@ const UserChats: React.FC = () => {
   const { user } = useContext(AuthContext) as IAuthContext;
   const { dispatch } = useContext(ChatContext) as IChatContext;
 
-  const innerWidth = useGetWidth();
+  const { innerWidth } = useSize();
 
   useEffect(() => {
     if (!user) return;
