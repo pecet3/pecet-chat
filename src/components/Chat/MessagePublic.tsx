@@ -90,13 +90,13 @@ const MessagePublic: React.FC<IMessage> = ({ message }) => {
         )}
 
         {message.img && (
-          <a href={message.img} target="_blank" rel="noopener noreferrer">
+          <button className="group">
             <img
               src={message.img || ""}
               alt="photo which user sent"
-              className="max-h-44 rounded-sm"
+              className="max-h-44 rounded-sm group-focus:max-h-72"
             />
-          </a>
+          </button>
         )}
         <p
           className={`m-0 ${

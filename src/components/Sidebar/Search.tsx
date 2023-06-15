@@ -80,21 +80,23 @@ const Search: React.FC = () => {
 
   return (
     <>
-      <div className="flex border-b border-b-gray-400 bg-cyan-600 ">
-        <input
-          type="text"
-          placeholder="Find a user 🔎"
-          className="w-full bg-transparent p-1 pl-2 text-slate-50 placeholder-gray-100"
-          onChange={(e) => setInput(e.currentTarget.value)}
-          value={input}
-          onKeyDown={handleKey}
-        />
-        <button
-          onClick={handleSearch}
-          className="submitButton m-1 bg-slate-600 p-1 text-sm text-slate-200"
-        >
-          Search
-        </button>
+      <div className="flex flex-col border-b border-b-gray-400 bg-cyan-600 ">
+        <div className="flex">
+          <input
+            type="text"
+            placeholder="Find a user 🔎"
+            className="w-full bg-transparent p-1 pl-2 text-slate-50 placeholder-gray-100"
+            onChange={(e) => setInput(e.currentTarget.value)}
+            value={input}
+            onKeyDown={handleKey}
+          />
+          <button
+            onClick={handleSearch}
+            className="submitButton m-1 bg-slate-600 p-1 text-sm text-slate-200"
+          >
+            Search
+          </button>
+        </div>
         {findedUser && (
           <div
             className="flex items-center gap-1 bg-slate-500 py-1 text-left duration-200 hover:bg-slate-600"

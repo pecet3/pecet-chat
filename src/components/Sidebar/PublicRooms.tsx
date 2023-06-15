@@ -1,11 +1,11 @@
 import React from "react";
 import ChatContext, { IChatContext } from "../../context/ChatContext";
-import { useGetWidth } from "../../helpers/useGetWidth";
+import { useSize } from "../../helpers/useSize";
 
 const PublicRooms: React.FC = () => {
   const [room, setRoom] = React.useState("room1");
   const { dispatch } = React.useContext(ChatContext) as IChatContext;
-  const { innerWidth } = useGetWidth();
+  const { innerWidth } = useSize();
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setRoom(e.currentTarget.value);
