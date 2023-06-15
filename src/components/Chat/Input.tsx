@@ -81,6 +81,7 @@ const Input: React.FC = () => {
         });
       });
     } else if (!coolDown) {
+      setCoolDown((prev) => (prev = true));
       await updateDoc(doc(db, "publicChats", state.room), {
         messages: arrayUnion({
           id: nanoid(),
