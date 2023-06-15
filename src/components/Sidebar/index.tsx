@@ -20,7 +20,7 @@ const Sidebar: React.FC = ({}) => {
       <Navbar />
       <PublicRooms />
       <Search />
-      <ul className="flex">
+      <ul className="flex flex-col">
         <UserChats />
       </ul>
     </aside>
