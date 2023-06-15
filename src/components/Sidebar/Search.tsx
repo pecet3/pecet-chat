@@ -89,7 +89,10 @@ const Search: React.FC = () => {
           value={input}
           onKeyDown={handleKey}
         />
-        <button onClick={handleSearch} className="submitButton">
+        <button
+          onClick={handleSearch}
+          className="submitButton m-1 bg-slate-600 p-1 text-sm text-slate-200"
+        >
           Search
         </button>
         {findedUser && (
