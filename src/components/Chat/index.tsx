@@ -17,7 +17,7 @@ const Chat: React.FC = () => {
   };
   return (
     <main
-      className={`justify-between md:basis-2/3
+      className={`justify-between md:basis-2/3 
       ${!isSidebar ? "flex-1" : "hidden flex-1 flex-col md:block"}
        ${isPublic ? "bg-zinc-400 " : "bg-slate-400 "}
        "}`}
