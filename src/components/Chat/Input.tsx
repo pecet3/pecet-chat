@@ -25,6 +25,18 @@ const Input: React.FC = () => {
     file: null,
   });
 
+  const [coolDown, setCoolDown] = React.useState(false);
+
+  React.useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setCoolDown(false);
+    }, 5000);
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, [coolDown]);
+
   const { state } = React.useContext(ChatContext) as IChatContext;
   const { user } = React.useContext(AuthContext) as IAuthContext;
 
@@ -49,7 +61,8 @@ const Input: React.FC = () => {
     const docRef = doc(db, "users", user.uid);
     const docSnap = await getDoc(docRef);
 
-    if (input.file) {
+    if (input.file && !coolDown) {
+      setCoolDown((prev) => (prev = true));
       const storageRef = ref(storage, `${state.room}_${user.uid}_${nanoid()}`);
       await uploadBytesResumable(storageRef, input.file);
 
@@ -67,7 +80,7 @@ const Input: React.FC = () => {
           }),
         });
       });
-    } else {
+    } else if (!coolDown) {
       await updateDoc(doc(db, "publicChats", state.room), {
         messages: arrayUnion({
           id: nanoid(),
@@ -94,7 +107,8 @@ const Input: React.FC = () => {
 
     if (state.isPublic) return handlePublicChat();
     try {
-      if (input.file) {
+      if (input.file && !coolDown) {
+        setCoolDown((prev) => (prev = true));
         const storageRef = ref(storage, `${user.uid}_${nanoid()}`);
         await uploadBytesResumable(storageRef, input.file);
 
@@ -109,7 +123,7 @@ const Input: React.FC = () => {
             }),
           });
         });
-      } else {
+      } else if (!coolDown) {
         await updateDoc(doc(db, "chats", state.chatId), {
           messages: arrayUnion({
             id: nanoid(),
