@@ -55,7 +55,7 @@ const MessagePublic: React.FC<IMessage> = ({ message }) => {
         user?.uid === message.senderId && "flex-row-reverse"
       } gap-1 text-slate-200`}
     >
-      <span className="flex w-12  flex-col items-center">
+      <span className="flex w-14  flex-col items-center">
         <img
           src={
             user?.uid === message.senderId
@@ -63,7 +63,7 @@ const MessagePublic: React.FC<IMessage> = ({ message }) => {
               : message.photoURL || ""
           }
           alt="user's image"
-          className="m-0 h-8 w-8 rounded-full object-cover"
+          className="m-0 h-10 w-10 rounded-full object-cover"
         />
         <p
           className={`mx-2 w-14 break-words text-xs font-semibold text-gray-800 ${
@@ -73,7 +73,7 @@ const MessagePublic: React.FC<IMessage> = ({ message }) => {
           {message.displayName}
         </p>
       </span>
-      <span className="flex w-56 max-w-[300px] flex-col gap-1 md:max-w-md">
+      <span className={`flex  max-w-[500px] flex-col justify-center  gap-1 `}>
         {message && message.text !== "" && (
           <p
             className={`flex] flex-col justify-end break-words rounded-b-lg ${
@@ -94,7 +94,7 @@ const MessagePublic: React.FC<IMessage> = ({ message }) => {
             <img
               src={message.img || ""}
               alt="photo which user sent"
-              className="max-h-36 self-start rounded-sm"
+              className="max-h-44 rounded-sm"
             />
           </a>
         )}
