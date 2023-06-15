@@ -145,6 +145,7 @@ const Input: React.FC = () => {
       <form className=" flex gap-1 bg-gray-300 p-1" onSubmit={handleSubmit}>
         <input
           type="text"
+          autoComplete="off"
           name="message"
           placeholder="enter your message"
           className="w-full rounded-md p-1 text-left"
