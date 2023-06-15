@@ -80,7 +80,7 @@ const Search: React.FC = () => {
 
   return (
     <>
-      <div className="flex flex-col border-b border-b-gray-400 bg-cyan-600 ">
+      <div className="flex border-b border-b-gray-400 bg-cyan-600 ">
         <input
           type="text"
           placeholder="Find a user 🔎"
@@ -89,6 +89,9 @@ const Search: React.FC = () => {
           value={input}
           onKeyDown={handleKey}
         />
+        <button onClick={handleSearch} className="submitButton">
+          Search
+        </button>
         {findedUser && (
           <div
             className="flex items-center gap-1 bg-slate-500 py-1 text-left duration-200 hover:bg-slate-600"
