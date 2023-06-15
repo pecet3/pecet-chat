@@ -13,8 +13,9 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { doc, setDoc, getDoc } from "firebase/firestore";
 import { auth, storage, db } from "../firebase";
 import { Link } from "react-router-dom";
-import Header from "../components/Header";
+import Header from "../components/Additional/Header";
 import AuthContext, { IAuthContext } from "../context/AuthContext";
+import { Footer } from "../components/Additional/Footer";
 
 export interface IEditData {
   email: string;
@@ -133,58 +134,62 @@ const EditProfile: React.FC = () => {
   return (
     <>
       <Header />
-      <form className="form flex-col" onSubmit={handleSubmit}>
-        <legend className="legend">Edit your profile</legend>
-        <input
-          type="text"
-          className="inputElement"
-          name="name"
-          minLength={3}
-          maxLength={16}
-          value={input.name}
-          placeholder={`Name: ${user!.displayName}`}
-          onChange={elementOnChange}
-        />
-        <input
-          type="email"
-          className="inputElement"
-          name="email"
-          minLength={3}
-          maxLength={16}
-          value={input.email}
-          placeholder={`Email: ${user!.email}`}
-          onChange={elementOnChange}
-        />
-        <input
-          type="password"
-          name="password"
-          className="inputElement"
-          value={input.password}
-          placeholder="Password"
-          onChange={elementOnChange}
-          minLength={6}
-          // pattern="(?=^.{6,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"
-        />
-        <input
-          type="file"
-          name="file"
-          id="filee"
-          className="hidden"
-          onChange={elementOnChange}
-        />
-        <div className="flex flex-col items-center gap-2 rounded-md border border-gray-700 p-2">
-          <img
-            src={user!.photoURL || ""}
-            alt="your photo"
-            className="h-16 w-16 rounded-full shadow-lg shadow-gray-500"
-          />
-          <label
-            htmlFor="filee"
-            className="flex flex-col items-center hover:cursor-pointer"
-          >
-            <BiImageAdd size="32" />
-            <p>Change an Avatar</p>
-          </label>
+      <form className="form max-w-md flex-col" onSubmit={handleSubmit}>
+        <legend className="legend my-1 text-2xl">Edit your profile</legend>
+        <div className="grid md:grid-cols-2">
+          <div className="m-4 flex flex-col gap-2">
+            <input
+              type="text"
+              className="inputElement"
+              name="name"
+              minLength={3}
+              maxLength={24}
+              value={input.name}
+              placeholder={`Name: ${user!.displayName}`}
+              onChange={elementOnChange}
+            />
+            <input
+              type="email"
+              className="inputElement"
+              name="email"
+              minLength={3}
+              maxLength={16}
+              value={input.email}
+              placeholder={`Email: ${user!.email}`}
+              onChange={elementOnChange}
+            />
+            <input
+              type="password"
+              name="password"
+              className="inputElement"
+              value={input.password}
+              placeholder="Password"
+              onChange={elementOnChange}
+              minLength={6}
+              // pattern="(?=^.{6,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"
+            />
+            <input
+              type="file"
+              name="file"
+              id="filee"
+              className="hidden"
+              onChange={elementOnChange}
+            />
+          </div>
+          <div className="flex flex-col items-center gap-2 rounded-md border border-gray-700 p-2">
+            <img
+              src={user!.photoURL || ""}
+              alt="your photo"
+              className="h-16 w-16 rounded-full shadow-lg shadow-gray-500"
+            />
+            <label
+              htmlFor="filee"
+              className="flex flex-col items-center hover:cursor-pointer"
+            >
+              <BiImageAdd size="32" />
+              <p>Change an Avatar</p>
+            </label>
+          </div>
         </div>
         <p className="mx-4 text-sm">Change color for the public rooms</p>
 
@@ -222,8 +227,9 @@ const EditProfile: React.FC = () => {
             </span>
           ))}
         </div>
-
-        <button className="submitButton px-6">Update</button>
+        <button className="submitButton mt-6 px-6 ring-2 ring-indigo-800">
+          Update
+        </button>
         <span>
           <p className="text-red-700 underline">
             <Link to="/">Cancel</Link>
@@ -231,6 +237,7 @@ const EditProfile: React.FC = () => {
         </span>
       </form>
       <p>{errorMessage !== "" && errorMessage}</p>
+      <Footer />
     </>
   );
 };
