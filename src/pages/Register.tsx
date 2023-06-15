@@ -7,7 +7,8 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { doc, setDoc } from "firebase/firestore";
 import { auth, storage, db } from "../firebase";
 import { Link } from "react-router-dom";
-import Header from "../components/Header";
+import Header from "../components/Additional/Header";
+import { Footer } from "../components/Additional/Footer";
 
 export interface IRegisterData {
   email: string;
@@ -148,6 +149,7 @@ const Register: React.FC = () => {
         </span>
       </form>
       <p>{errorMessage !== "" && errorMessage}</p>
+      <Footer />
     </>
   );
 };
