@@ -27,6 +27,7 @@ const PublicRooms: React.FC = () => {
           className="rounded-md px-1"
         >
           <option value="room1">#room1</option>
+          <option value="dev">#dev</option>
         </select>
         <button
           className="submitButton p-0 px-2 shadow-md ring-2 ring-indigo-700 "
