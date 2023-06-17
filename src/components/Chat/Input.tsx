@@ -3,6 +3,7 @@ import { BiImageAdd } from "react-icons/bi";
 import {
   updateDoc,
   getDoc,
+  setDoc,
   doc,
   arrayUnion,
   Timestamp,
@@ -58,16 +59,23 @@ const Input: React.FC = () => {
     if (!user) return;
     if (input.message.trim() === "" && input.file == null) return;
 
-    const docRef = doc(db, "users", user.uid);
-    const docSnap = await getDoc(docRef);
+    const docRefChats = doc(db, "publicChats", state.room);
+    const docSnapChats = await getDoc(docRefChats);
+
+    const docRefUser = doc(db, "users", user.uid);
+    const docSnapUser = await getDoc(docRefUser);
 
     if (input.file && !coolDown) {
-      setCoolDown((prev) => (prev = true));
-      const storageRef = ref(storage, `${state.room}_${user.uid}_${nanoid()}`);
-      await uploadBytesResumable(storageRef, input.file);
+      if (!docSnapChats.exists()) {
+        await setDoc(doc(db, "publicChats", state.room), {});
+      }
 
+      const storageRef = ref(storage, `${state.room}_${user.uid}_${nanoid()}`);
+
+      await uploadBytesResumable(storageRef, input.file);
+      setCoolDown(true);
       await getDownloadURL(storageRef).then(async (downloadURL) => {
-        await updateDoc(doc(db, "publicChats", state.room), {
+        await updateDoc(docRefChats, {
           messages: arrayUnion({
             id: nanoid(),
             senderId: user.uid,
@@ -76,12 +84,15 @@ const Input: React.FC = () => {
             photoURL: user?.photoURL,
             date: Timestamp.now(),
             img: downloadURL,
-            color: docSnap.data()?.color || "black",
+            color: docSnapUser.data()?.color || "black",
           }),
         });
       });
     } else if (!coolDown) {
-      setCoolDown((prev) => (prev = true));
+      if (!docSnapChats.exists()) {
+        await setDoc(doc(db, "publicChats", state.room), {});
+      }
+
       await updateDoc(doc(db, "publicChats", state.room), {
         messages: arrayUnion({
           id: nanoid(),
@@ -90,7 +101,7 @@ const Input: React.FC = () => {
           displayName: user.displayName,
           photoURL: user.photoURL,
           date: Timestamp.now(),
-          color: docSnap.data()?.color || "black",
+          color: docSnapUser.data()?.color || "black",
         }),
       });
     }
@@ -109,10 +120,13 @@ const Input: React.FC = () => {
     if (state.isPublic) return handlePublicChat();
     try {
       if (input.file && !coolDown) {
-        setCoolDown((prev) => (prev = true));
+        setCoolDown(true);
         const storageRef = ref(storage, `${user.uid}_${nanoid()}`);
         await uploadBytesResumable(storageRef, input.file);
-
+        setInput({
+          ...input,
+          file: null,
+        });
         await getDownloadURL(storageRef).then(async (downloadURL) => {
           await updateDoc(doc(db, "chats", state.chatId), {
             messages: arrayUnion({
