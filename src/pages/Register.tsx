@@ -100,7 +100,7 @@ const Register: React.FC = () => {
           className="inputElement"
           name="name"
           minLength={3}
-          maxLength={16}
+          maxLength={24}
           value={registerInput.name}
           placeholder="Name"
           onChange={registerOnChange}
