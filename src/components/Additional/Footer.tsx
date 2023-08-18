@@ -9,7 +9,7 @@ export const Footer = () => {
     >
       developed with ❤ by
       <span className=" font-semibold"> Jakub Pacewicz</span>
-      <p className="text-xs">version: beta 1.8</p>
+      <p className="text-xs">version: 1.0</p>
     </footer>
   );
 };
